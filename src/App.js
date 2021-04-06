@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchBoardCanva } from "./apis/get";
+import { fetchBoardCanva, addToBoard } from "./apis";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { homePage } from "./views";
 import { BoardProvider } from "./context";
@@ -10,6 +10,8 @@ const App = () => {
   useEffect(() => {
     fetchBoardCanva().then((result) => setData(result));
   }, []);
+
+  // addToBoard({ userName: "rami", userColor: "orange", x: 1017, y: 1005 });
 
   return (
     <BoardProvider boardData={data}>

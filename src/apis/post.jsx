@@ -1,29 +1,21 @@
-import axios from 'axios';
-import { apiUrl, urlDir, postHeader } from './const'
+import axios from "axios";
+import { apiUrl, urlDir, postHeader } from "./const";
 
+export const addToBoard = async ({ userName, userColor, x, y }) => {
+  try {
+    const postData = {
+      x: x,
+      y: y,
+      name: userName,
+      color: userColor,
+    };
 
+    const post = await axios.post(`${apiUrl}${urlDir.Board}`, postData, {
+      headers: postHeader,
+    });
 
-const userName = "Rami"
-const userColor = "blue"
-
-
-
-export const addToBoard = async () => {
-    try {
-        const postData = {
-            x: 1004,
-            y: 1002,
-            name: userName,
-            color: userColor
-        }
-
-        const post = await axios.post(`${apiUrl}${urlDir.Board}`, postData, {
-            headers: postHeader
-        })
-
-        console.log(post.status)
-    }
-    catch (err) {
-        console.log(err)
-    }
-}
+    console.log(post.status);
+  } catch (err) {
+    console.log(err);
+  }
+};
