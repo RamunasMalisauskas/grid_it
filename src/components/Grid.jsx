@@ -42,8 +42,8 @@ const Canvas = styled.div`
 
 const Cell = styled.div`
   position: absolute;
-  left: ${(props) => parseInt(props.left)}%;
-  top: ${(props) => parseInt(props.top)}%;
+  left: ${(props) => 50 - parseInt(props.left)}%;
+  top: ${(props) => 50 - parseInt(props.top)}%;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -54,8 +54,8 @@ const CellInfo = styled.div`
   position: absolute;
   opacity: 0;
   padding: 5px;
-  left: ${(props) => parseInt(props.left)}%;
-  top: ${(props) => parseInt(props.top)}%;
+  left: ${(props) => 50 - parseInt(props.left)}%;
+  top: ${(props) => 50 - parseInt(props.top)}%;
   &:hover {
     opacity: 1;
     cursor: default;

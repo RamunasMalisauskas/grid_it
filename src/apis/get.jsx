@@ -14,7 +14,7 @@ import { apiUrl, urlDir } from "./const";
 export const fetchBoardCanva = async () => {
   try {
     // canvas location from local storage / input
-    const canvasLocation = "?x=0&y=0&w=50&h=50";
+    const canvasLocation = "?x=0&y=0&w=20&h=20";
 
     const getBoard = await axios.get(
       `${apiUrl}${urlDir.Board}${canvasLocation}`
