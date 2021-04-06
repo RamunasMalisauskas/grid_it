@@ -9,19 +9,19 @@ export const Grid = () => {
   return (
     <Canvas>
       {boardData &&
-        boardData.map((cell) => (
+        boardData.map((cell, index) => (
           <>
             <Cell
-              key={cell.data.createdAt}
-              left={1000 - cell.x}
-              top={1000 - cell.y}
+              key={`${cell.data.createdAt}${cell.x}${index}`}
+              left={cell.x}
+              top={cell.y}
               color={cell.data.color}
             />
 
             <CellInfo
-              key={cell.x + cell.data.name}
-              left={1000 - cell.x}
-              top={1000 - cell.y}
+              key={`${cell.data.createdAt}${cell.data.name}${index}`}
+              left={cell.x}
+              top={cell.y}
             >
               {cell.data.name}
             </CellInfo>
@@ -42,8 +42,8 @@ const Canvas = styled.div`
 
 const Cell = styled.div`
   position: absolute;
-  left: ${(props) => 50 + parseInt(props.left)}%;
-  top: ${(props) => 50 + parseInt(props.top)}%;
+  left: ${(props) => parseInt(props.left)}%;
+  top: ${(props) => parseInt(props.top)}%;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -54,8 +54,8 @@ const CellInfo = styled.div`
   position: absolute;
   opacity: 0;
   padding: 5px;
-  left: ${(props) => 50 + parseInt(props.left)}%;
-  top: ${(props) => 50 + parseInt(props.top)}%;
+  left: ${(props) => parseInt(props.left)}%;
+  top: ${(props) => parseInt(props.top)}%;
   &:hover {
     opacity: 1;
     cursor: default;
