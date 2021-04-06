@@ -9,23 +9,14 @@ export const Grid = () => {
   return (
     <Canvas>
       {boardData &&
-        boardData.map((cell, index) => (
-          <>
-            <Cell
-              key={`${cell.data.createdAt}${cell.x}${index}`}
-              left={cell.x}
-              top={cell.y}
-              color={cell.data.color}
-            />
-
-            <CellInfo
-              key={`${cell.data.createdAt}${cell.data.name}${index}`}
-              left={cell.x}
-              top={cell.y}
-            >
+        boardData.map((cell) => (
+          <div key={`${cell.data.createdAt}${cell.data.name}`}>
+            <CellInfo left={cell.x} top={cell.y}>
               {cell.data.name}
             </CellInfo>
-          </>
+
+            <Cell left={cell.x} top={cell.y} color={cell.data.color} />
+          </div>
         ))}
 
       <CenterCell />
