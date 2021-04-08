@@ -1,6 +1,10 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { BoardContext } from "../context";
+import { addToBoard } from "../apis/post";
+
+const randomColor = require("randomcolor"); // import the script
+let color = randomColor(); // a hex code for an attractive color
 
 //  rethink data visualisation/ position on canvas (top left rigth bottom)
 export const Grid = () => {
@@ -11,14 +15,14 @@ export const Grid = () => {
       {boardData &&
         boardData.map((cell) => (
           <div key={`${cell.data.createdAt}${cell.data.name}`}>
-            <CellInfo left={cell.x} top={cell.y}>
-              {cell.data.name}
-            </CellInfo>
-
-            <Cell left={cell.x} top={cell.y} color={cell.data.color} />
+            <Cell
+              onClick={() => addToBoard(cell.data.name, color, cell.x, cell.y)}
+              left={cell.x}
+              top={cell.y}
+              color={cell.data.color}
+            />
           </div>
         ))}
-
       <CenterCell />
     </Canvas>
   );

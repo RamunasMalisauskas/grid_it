@@ -20,6 +20,7 @@ const App = () => {
     }, 1000);
   };
 
+
   useEffect(() => {
     fetchBoardCanva().then((result) => setData(result));
     BuildVersion();

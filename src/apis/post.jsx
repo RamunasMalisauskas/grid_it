@@ -1,7 +1,7 @@
 import axios from "axios";
 import { apiUrl, urlDir, postHeader } from "./const";
 
-export const addToBoard = async ({ userName, userColor, x, y }) => {
+export const addToBoard = async (userName, userColor, x, y) => {
   try {
     const postData = {
       x: x,
