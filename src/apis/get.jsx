@@ -1,16 +1,6 @@
 import axios from "axios";
 import { apiUrl, urlDir } from "./const";
 
-// interface fetchPromiseDataType {
-//   data: { name: "string", color: "string", createdAt: "string" }
-//   x: number
-//   y: number
-// }
-
-// type fetchPromise = {
-//   fetchData: fetchPromiseDataType[]
-// }
-
 export const fetchBoardCanva = async () => {
   try {
     // canvas location from local storage / input
