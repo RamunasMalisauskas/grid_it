@@ -45,6 +45,7 @@ const CellInfo = styled.div`
   position: absolute;
   opacity: 0;
   padding: 5px;
+  z-index: 1;
   left: ${(props) => 50 - parseInt(props.left)}%;
   top: ${(props) => 50 - parseInt(props.top)}%;
   &:hover {
