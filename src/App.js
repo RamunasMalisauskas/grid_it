@@ -1,12 +1,17 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { fetchBoardCanva, fetchBoardStatus } from "./apis";
+import React, { useEffect, useMemo } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchBoardCanva, fetchBoardStatus } from "./apis";
+import { setCanvasData } from "./state/actions";
 import { HomePage } from "./views";
-import { BoardProvider } from "./context";
 
 const App = () => {
-  const [data, setData] = useState();
+  const dispatch = useDispatch();
   const build = useMemo(() => ({ version: 0 }), []);
+
+  useEffect(() => {
+    BuildVersion();
+  });
 
   const BuildVersion = () => {
     setInterval(() => {
@@ -14,26 +19,20 @@ const App = () => {
         if (build.version < newVersion) {
           console.log("new build version is avalible");
           build.version = newVersion;
-          fetchBoardCanva().then((result) => setData(result));
+          fetchBoardCanva().then((result) => {
+            dispatch(setCanvasData(result));
+          });
         }
       });
     }, 1000);
   };
 
-
-  useEffect(() => {
-    fetchBoardCanva().then((result) => setData(result));
-    BuildVersion();
-  }, []);
-
   return (
-    <BoardProvider boardData={data}>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-        </Switch>
-      </BrowserRouter>
-    </BoardProvider>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+      </Switch>
+    </BrowserRouter>
   );
 };
 

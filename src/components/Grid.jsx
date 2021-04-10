@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { BoardContext } from "../context";
 import { addToBoard } from "../apis/post";
 
 //  rethink data visualisation/ position on canvas (top left rigth bottom)
 export const Grid = () => {
-  const boardData = useContext(BoardContext).boardData;
+  const boardData = useSelector((state) => state.userData.canvasData);
   const randomColor = require("randomcolor");
 
   return (
