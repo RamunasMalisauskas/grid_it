@@ -1,0 +1,3 @@
+export const SET_CIRCLE_COLOR = "SET_CIRCLE_COLOR";
+export const SET_CANVAS_DATA = "SET_CANVAS_DATA";
+export const SET_USER_NAME = "SET_USER_NAME";
