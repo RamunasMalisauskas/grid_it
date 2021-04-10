@@ -1,4 +1,4 @@
-import { SET_CIRCLE_COLOR, SET_USER_NAME, SET_CANVAS_DATA } from "./constants";
+import { SET_CIRCLE_COLOR, SET_USER_NAME, SET_CANVAS_DATA } from "./constant";
 
 //   export type PainterAction = {
 //     type: string;

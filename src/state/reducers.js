@@ -1,6 +1,6 @@
-import { SET_CIRCLE_COLOR, SET_USER_NAME, SET_CANVAS_DATA } from "./constants";
-
 import { combineReducers } from "redux";
+
+import { SET_CIRCLE_COLOR, SET_USER_NAME, SET_CANVAS_DATA } from "./constant";
 
 //   export type PainterData = {
 //     name: string;
@@ -15,12 +15,12 @@ import { combineReducers } from "redux";
 // const painterName = localStorage.getItem("painterName");
 // const painterColor = localStorage.getItem("painterColor");
 
-// const InitailState: PainterData = {
-//   name: painterName ?? "user",
-//   color: painterColor ?? "#f44336",
-// };
+const InitialState = {
+  name: "user",
+  color: "#f44336",
+};
 
-const userData = ({ action, state }) => {
+const userData = (state = InitialState, action) => {
   switch (action.type) {
     case SET_CIRCLE_COLOR:
       return { ...state, color: action.value };
@@ -34,5 +34,5 @@ const userData = ({ action, state }) => {
 };
 
 export const combinedReducer = combineReducers({
-  userData,
+  userData: userData,
 });
