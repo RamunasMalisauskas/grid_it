@@ -20,7 +20,7 @@ const InitialState = {
   color: "#f44336",
 };
 
-const userData = (state = InitialState, action) => {
+const appData = (state = InitialState, action) => {
   switch (action.type) {
     case SET_CIRCLE_COLOR:
       return { ...state, color: action.value };
@@ -34,5 +34,5 @@ const userData = (state = InitialState, action) => {
 };
 
 export const combinedReducer = combineReducers({
-  userData: userData,
+  appData: appData,
 });

@@ -20,7 +20,6 @@ const App = () => {
           console.log("new build version is avalible");
           build.version = newVersion;
           fetchCanvaData().then((result) => {
-            console.log(result);
             dispatch(setCanvasData(result));
           });
         }
