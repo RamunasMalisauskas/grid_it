@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import { Grid } from "../components";
 import { addToBoard } from "../apis";
 
-export const HomePage = () => {
-  const [x, setX] = useState();
-  const [y, setY] = useState();
-  const [data, setData] = useState();
+type StageType = string
+
+export const HomePage: React.FC = () => {
+  const [x, setX] = useState<StageType>("");
+  const [y, setY] = useState<StageType>("");
+  const [data, setData] = useState<StageType>("");
   const randomColor = require("randomcolor");
 
   return (
     <>
       <Grid />
 
-      <input type="number" value={x} onChange={(e) => setX(e.target.value)} />
-      <input type="number" value={y} onChange={(e) => setY(e.target.value)} />
+      <input type="number" value={x} onChange={(e): void => setX(e.target.value)} />
+      <input type="number" value={y} onChange={(e): void => setY(e.target.value)} />
       <input
         type="text"
         value={data}

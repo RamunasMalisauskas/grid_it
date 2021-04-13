@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { fetchBoardCanva, fetchBoardStatus } from "./apis";
+import { fetchCanvaData, fetchBoardStatus } from "./apis";
 import { setCanvasData } from "./state/actions";
 import { HomePage } from "./views";
 
@@ -19,7 +19,8 @@ const App = () => {
         if (build.version < newVersion) {
           console.log("new build version is avalible");
           build.version = newVersion;
-          fetchBoardCanva().then((result) => {
+          fetchCanvaData().then((result) => {
+            console.log(result);
             dispatch(setCanvasData(result));
           });
         }
