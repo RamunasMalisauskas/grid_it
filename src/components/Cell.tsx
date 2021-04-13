@@ -3,21 +3,27 @@ import styled from "styled-components";
 import { canvaDataType } from '../apis/get'
 import { addToBoard } from "../apis/post";
 
-const randomColor = require("randomcolor");
-
 interface CellProps {
     cell: canvaDataType
+    cellPostion: number
 }
 
 type CellBlockProps = {
     key: string;
     onClick: () => void;
-    left: number;
-    top: number;
+    x: number;
+    y: number;
+    radius: number;
     color: string;
+    circle: number
 }
 
-export const Cell: React.FC<CellProps> = ({ cell }) => {
+export const Cell: React.FC<CellProps> = ({ cell, cellPostion }) => {
+
+    const circle = (window.innerWidth / 3)
+    const randomColor = require("randomcolor");
+
+
     return (
         <CellBlock
             key={cell._id}
@@ -30,19 +36,24 @@ export const Cell: React.FC<CellProps> = ({ cell }) => {
                     y: cell.y,
                 });
             }}
-            left={cell.x}
-            top={cell.y}
+            x={cell.x}
+            y={cell.y}
             color={cell.data.color}
+            radius={cellPostion}
+            circle={circle}
         />
     );
 }
 
 const CellBlock = styled.div<CellBlockProps>`
   position: absolute;
-  left:  ${(props) => 50 - (props.left)}%;
-  top: ${(props) => 50 - (props.top)}%;
-  width: 10px;
-  height: 10px;
+  left:  50%;
+  top: 50%;
+  width: ${({ circle }) => circle / 10}px;
+  height: ${({ circle }) => circle / 10}px;
   border-radius: 50%;
-  background-color: ${(props) => props.color};
+  background-color: ${({ color }) => color};
+  transform:  rotate(${({ radius }) => radius}deg) translateX(${({ circle }) => circle / 2}px) 
+ 
 `;
+
