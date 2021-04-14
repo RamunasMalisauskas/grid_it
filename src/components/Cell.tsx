@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from "styled-components";
 import { canvaDataType } from '../apis/get'
-import { addToBoard } from "../apis/post";
+
+import { deleteFromBoard } from "../apis/delete";
 
 interface CellProps {
     cell: canvaDataType
@@ -28,12 +29,9 @@ export const Cell: React.FC<CellProps> = ({ cell, cellPostion }) => {
         <CellBlock
             key={cell._id}
             onClick={() => {
-                let color = randomColor();
-                addToBoard({
-                    userName: cell.data.name,
-                    userColor: color,
-                    x: cell.x,
-                    y: cell.y,
+                // let color = randomColor();
+                deleteFromBoard({
+                    id: cell._id
                 });
             }}
             x={cell.x}
