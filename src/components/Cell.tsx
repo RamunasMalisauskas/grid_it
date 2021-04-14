@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from "styled-components";
 import { canvaDataType } from '../apis/get'
-
 import { deleteFromBoard } from "../apis/delete";
 
 interface CellProps {
@@ -20,10 +19,8 @@ type CellBlockProps = {
 }
 
 export const Cell: React.FC<CellProps> = ({ cell, cellPostion }) => {
-
     const circle = (window.innerWidth / 3)
-    const randomColor = require("randomcolor");
-
+    // const randomColor = require("randomcolor");
 
     return (
         <CellBlock
@@ -51,7 +48,7 @@ const CellBlock = styled.div<CellBlockProps>`
   height: ${({ circle }) => circle / 10}px;
   border-radius: 50%;
   background-color: ${({ color }) => color};
-  transform:  rotate(${({ radius }) => radius}deg) translateX(${({ circle }) => circle / 2}px) 
- 
+  transform: translate(-50%);
+  transform:  rotate(${({ radius }) => radius}deg) translateX(${({ circle }) => circle / 2}px);
 `;
 
