@@ -48,7 +48,12 @@ const CellBlock = styled.div<CellBlockProps>`
   height: ${({ circle }) => circle / 10}px;
   border-radius: 50%;
   background-color: ${({ color }) => color};
-  transform: translate(-50%);
-  transform:  rotate(${({ radius }) => radius}deg) translateX(${({ circle }) => circle / 2}px);
-`;
+  transform:  rotate(${({ radius }) => radius}deg) translate(${({ circle }) => circle / 2}px);
+  transition: all ease-in-out 0.3s;
+  &:hover{
+    width: ${({ circle }) => circle / 9}px;
+    height:${({ circle }) => circle / 9}px;
+    border: 2px solid gray;
 
+  }
+`;
