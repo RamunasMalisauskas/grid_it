@@ -6,17 +6,20 @@ export type postDataType = {
   y: number,
   userName: string,
   userColor: string,
-  data?: string | {},
+  cellData: {
+    value: number;
+    text?: string
+  },
 };
 
-export const addToBoard = async ({ userName, userColor, x, y, data }: postDataType): Promise<number> => {
+export const addToBoard = async ({ userName, userColor, x, y, cellData }: postDataType): Promise<number> => {
   try {
     const postData = {
       x: x,
       y: y,
       name: userName,
       color: userColor,
-      data: data,
+      data: cellData,
     };
 
     const post = await axios({

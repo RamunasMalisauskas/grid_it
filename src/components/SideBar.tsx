@@ -12,19 +12,15 @@ export const SideBar: React.FC<SideBarProps> = ({ visible }) => {
     const [x, setX] = useState<StageType>("");
     const [y, setY] = useState<StageType>("");
     const [data, setData] = useState<StageType>("");
-    const randomColor = require("randomcolor");
     const [open, setOpen] = useState<VisibleType>(visible)
+    const randomColor = require("randomcolor");
 
     return (
         < SideBlock >
             {open && <>
                 <input type="number" value={x} onChange={(e): void => setX(e.target.value)} />
                 <input type="number" value={y} onChange={(e): void => setY(e.target.value)} />
-                <input
-                    type="text"
-                    value={data}
-                    onChange={(e) => setData(e.target.value)}
-                />
+                <input type="number" value={data} onChange={(e) => setData(e.target.value)} />
 
                 <button
                     onClick={() => {
@@ -33,7 +29,7 @@ export const SideBar: React.FC<SideBarProps> = ({ visible }) => {
                             userColor: randomColor(),
                             x: parseInt(x),
                             y: parseInt(y),
-                            data: { text: data },
+                            cellData: { value: parseInt(data) },
                         });
                     }}
                 >
@@ -52,5 +48,5 @@ const SideBlock = styled.div`
  top: 0;
  width: 30%;
  height: 100%; 
- background: gray;
+ background: rgba(104, 104, 104, 0.3);
 `

@@ -1,17 +1,27 @@
 import axios from "axios";
 import { apiUrl, urlDir } from "./const";
 
-export type canvaDataType = {
+export type CellDataType = {
   _id: string;
-  data: { name: string, color: string, createdAt: string, }
+  data: CellData
   x: number;
   y: number;
+}
+
+type CellData = {
+  name: string,
+  color: string,
+  createdAt: string,
+  data: {
+    value: number,
+    text?: string
+  }
 }
 
 type boardStatusType = number
 
 
-export const fetchCanvaData = async (): Promise<canvaDataType[]> => {
+export const fetchCanvaData = async (): Promise<CellDataType[]> => {
   try {
     // canvas location from local storage / input
     const canvasLocation = "?x=0&y=0&w=20&h=20";
