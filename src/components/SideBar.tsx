@@ -51,16 +51,16 @@ export const SideBar: React.FC = () => {
                         }}
                     >
                         add cell
-             </PrimaryButton>
+                    </PrimaryButton>
 
                     <SupportButton onClick={() => dispatch(setSideBar("close"))}>X
-            </SupportButton>
+                    </SupportButton>
                 </>}
 
                 {sideBar === "close" &&
                     <SupportButton onClick={() => dispatch(setSideBar("open"))}>X
-            </SupportButton>}
-            </ SideBarContainer>
+                    </SupportButton>}
+            </SideBarContainer>
         </SideBlock >
     );
 }
@@ -69,13 +69,14 @@ const SideBlock = styled.div<SideBarProps>`
  position: absolute;
  top: 0;
  left:  ${({ open }) => open === "open" ? "0" : "-200px"};
- width: 250px;
  height: 100%; 
- text-align: right;
  background: ${({ open }) => open === "open" ? "rgba(104, 104, 104, 0.3)" : "rgba(0, 0, 0, 0)"}; 
  transition: all ease-in-out 0.3s;
 `
 
 const SideBarContainer = styled.div`
-padding:10px;
+ padding: 15px;
+ margin: 0 auto;
+ width: 270px;
+ text-align: right;
 `
