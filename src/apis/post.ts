@@ -8,7 +8,7 @@ export type postDataType = {
   userColor: string,
   cellData: {
     value: number;
-    text?: string
+    info?: string
   },
 };
 
