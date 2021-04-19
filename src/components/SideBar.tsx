@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSideBar } from "../state/actions";
 import { addToBoard } from "../apis";
 import { CellDataType } from '../apis/get'
+import { Input, PrimaryButton, SupportButton } from '../components'
 
 type BoardDataState = {
     appData: {
@@ -27,37 +28,39 @@ export const SideBar: React.FC = () => {
     const [x, setX] = useState<StageType>("");
     const [y, setY] = useState<StageType>("");
     const [data, setData] = useState<StageType>("");
-    console.log(sideBar)
-
+    const [text, setText] = useState<StageType>("");
 
     return (
         <SideBlock open={sideBar}>
-            {sideBar === "open" && <>
-                <input type="number" value={x} onChange={(e): void => setX(e.target.value)} />
-                <input type="number" value={y} onChange={(e): void => setY(e.target.value)} />
-                <input type="number" value={data} onChange={(e) => setData(e.target.value)} />
+            <SideBarContainer>
+                {sideBar === "open" && <>
+                    <Input type="number" name="enter your cordiantions" value={x} onChange={(e) => setX(e.target.value)} />
+                    <Input type="number" value={y} onChange={(e) => setY(e.target.value)} />
+                    <Input type="number" name="enter main value" value={data} onChange={(e) => setData(e.target.value)} />
+                    <Input type="text" placeholder="enter aditional info" value={text} onChange={(e) => setText(e.target.value)} />
 
-                <button
-                    onClick={() => {
-                        addToBoard({
-                            userName: "rami",
-                            userColor: randomColor(),
-                            x: parseInt(x),
-                            y: parseInt(y),
-                            cellData: { value: parseInt(data) },
-                        });
-                    }}
-                >
-                    add cell
-             </button>
+                    <PrimaryButton
+                        onClick={() => {
+                            addToBoard({
+                                userName: "rami",
+                                userColor: randomColor(),
+                                x: parseInt(x),
+                                y: parseInt(y),
+                                cellData: { value: parseInt(data), info: text },
+                            });
+                        }}
+                    >
+                        add cell
+             </PrimaryButton>
 
-                <button onClick={() => dispatch(setSideBar("close"))}>X
-            </button>
-            </>}
+                    <SupportButton onClick={() => dispatch(setSideBar("close"))}>X
+            </SupportButton>
+                </>}
 
-            {sideBar === "close" &&
-                <button onClick={() => dispatch(setSideBar("open"))}>X
-            </button>}
+                {sideBar === "close" &&
+                    <SupportButton onClick={() => dispatch(setSideBar("open"))}>X
+            </SupportButton>}
+            </ SideBarContainer>
         </SideBlock >
     );
 }
@@ -71,4 +74,8 @@ const SideBlock = styled.div<SideBarProps>`
  text-align: right;
  background: ${({ open }) => open === "open" ? "rgba(104, 104, 104, 0.3)" : "rgba(0, 0, 0, 0)"}; 
  transition: all ease-in-out 0.3s;
+`
+
+const SideBarContainer = styled.div`
+padding:10px;
 `

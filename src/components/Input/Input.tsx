@@ -1,26 +1,20 @@
 import React from 'react'
 import styled from "styled-components";
 
-interface InputProps {
-    type: string
-    value: string
-    name?: string
-    handleChange: (() => void)
-
-}
-
-export const Input: React.FC<InputProps> = ({ type, value, name, handleChange }) => {
+export const Input: React.FC<
+    React.InputHTMLAttributes<HTMLInputElement>
+> = ({ type, value, name, onChange, placeholder }) => {
     return (
         <>
             {name &&
                 <LabelBlock>
-                    <LabelDiv htmlFor={name} />
-                    <InputDiv type={type} value={value} name={name} onChange={handleChange} />
+                    <LabelDiv htmlFor={name} >{name}</LabelDiv>
+                    <InputDiv type={type} value={value} name={name} placeholder={placeholder} onChange={onChange} />
                 </LabelBlock>
             }
 
             {!name &&
-                <InputDiv type={type} value={value} name={name} onChange={handleChange} />}
+                <InputDiv type={type} value={value} name={name} placeholder={placeholder} onChange={onChange} />}
         </>
     );
 }
@@ -28,7 +22,11 @@ export const Input: React.FC<InputProps> = ({ type, value, name, handleChange })
 const InputDiv = styled.input`
 padding: 10px;
 border: 2px solid #707070;
+border-radius:5px;
 background-color: transparent;
+margin: 10px 0;
+font-family: 'Montserrat', sans-serif;
+color: white;
 `
 
 const LabelDiv = styled.label`
@@ -38,5 +36,5 @@ color: white;
 `
 
 const LabelBlock = styled.div`
-display: inline
+text-align: left;
 `
