@@ -33,6 +33,10 @@ export const SideBar: React.FC = () => {
     return (
         <SideBlock open={sideBar}>
             <SideBarContainer>
+                <SupportButton onClick={() => dispatch(setSideBar(sideBar === "close" ? "open" : "close"))}>
+                    {sideBar === "close" ? "menu" : "x"}
+                </SupportButton>
+
                 {sideBar === "open" && <>
                     <Input type="number" name="enter your cordiantions" value={x} onChange={(e) => setX(e.target.value)} />
                     <Input type="number" value={y} onChange={(e) => setY(e.target.value)} />
@@ -52,14 +56,8 @@ export const SideBar: React.FC = () => {
                     >
                         add cell
                     </PrimaryButton>
-
-                    <SupportButton onClick={() => dispatch(setSideBar("close"))}>X
-                    </SupportButton>
                 </>}
 
-                {sideBar === "close" &&
-                    <SupportButton onClick={() => dispatch(setSideBar("open"))}>X
-                    </SupportButton>}
             </SideBarContainer>
         </SideBlock >
     );
@@ -77,6 +75,6 @@ const SideBlock = styled.div<SideBarProps>`
 const SideBarContainer = styled.div`
  padding: 15px;
  margin: 0 auto;
- width: 270px;
+ width: 285px;
  text-align: right;
 `
