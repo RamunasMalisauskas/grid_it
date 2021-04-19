@@ -6,7 +6,7 @@ export const HomePage: React.FC = () => {
     <>
       <Grid />
 
-      <SideBar visible={false} />
+      <SideBar />
     </>
   );
 };
