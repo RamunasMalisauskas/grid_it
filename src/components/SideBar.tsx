@@ -1,23 +1,38 @@
 import React, { useState } from 'react'
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import { setSideBar } from "../state/actions";
 import { addToBoard } from "../apis";
+import { CellDataType } from '../apis/get'
 
-interface SideBarProps {
-    visible: boolean
+type BoardDataState = {
+    appData: {
+        color: string
+        name: string
+        sideBarState: string
+        canvasData: CellDataType[]
+    }
 }
 type StageType = string
-type VisibleType = boolean
 
-export const SideBar: React.FC<SideBarProps> = ({ visible }) => {
+type SideBarProps = {
+    open: string
+}
+
+export const SideBar: React.FC = () => {
+    const dispatch = useDispatch()
+    const randomColor = require("randomcolor");
+    const sideBar = useSelector((state: BoardDataState) => state.appData.sideBarState);
+
     const [x, setX] = useState<StageType>("");
     const [y, setY] = useState<StageType>("");
     const [data, setData] = useState<StageType>("");
-    const [open, setOpen] = useState<VisibleType>(visible)
-    const randomColor = require("randomcolor");
+    console.log(sideBar)
+
 
     return (
-        < SideBlock >
-            {open && <>
+        <SideBlock open={sideBar}>
+            {sideBar === "open" && <>
                 <input type="number" value={x} onChange={(e): void => setX(e.target.value)} />
                 <input type="number" value={y} onChange={(e): void => setY(e.target.value)} />
                 <input type="number" value={data} onChange={(e) => setData(e.target.value)} />
@@ -35,18 +50,25 @@ export const SideBar: React.FC<SideBarProps> = ({ visible }) => {
                 >
                     add cell
              </button>
+
+                <button onClick={() => dispatch(setSideBar("close"))}>X
+            </button>
             </>}
 
-            <button onClick={() => setOpen(!open)}>X
-            </button>
+            {sideBar === "close" &&
+                <button onClick={() => dispatch(setSideBar("open"))}>X
+            </button>}
         </SideBlock >
     );
 }
 
-const SideBlock = styled.div`
+const SideBlock = styled.div<SideBarProps>`
  position: absolute;
  top: 0;
- width: 30%;
+ left:  ${({ open }) => open === "open" ? "0" : "-200px"};
+ width: 250px;
  height: 100%; 
- background: rgba(104, 104, 104, 0.3);
+ text-align: right;
+ background: ${({ open }) => open === "open" ? "rgba(104, 104, 104, 0.3)" : "rgba(0, 0, 0, 0)"}; 
+ transition: all ease-in-out 0.3s;
 `
