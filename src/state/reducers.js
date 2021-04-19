@@ -1,6 +1,11 @@
 import { combineReducers } from "redux";
 
-import { SET_CIRCLE_COLOR, SET_USER_NAME, SET_CANVAS_DATA } from "./constant";
+import {
+  SET_CIRCLE_COLOR,
+  SET_USER_NAME,
+  SET_CANVAS_DATA,
+  SET_SIDEBAR,
+} from "./constant";
 
 //   export type PainterData = {
 //     name: string;
@@ -15,12 +20,13 @@ import { SET_CIRCLE_COLOR, SET_USER_NAME, SET_CANVAS_DATA } from "./constant";
 // const painterName = localStorage.getItem("painterName");
 // const painterColor = localStorage.getItem("painterColor");
 
-const InitialState = {
+const defaultState = {
   name: "user",
   color: "#f44336",
+  sideBarState: "close",
 };
 
-const appData = (state = InitialState, action) => {
+const appData = (state = defaultState, action) => {
   switch (action.type) {
     case SET_CIRCLE_COLOR:
       return { ...state, color: action.value };
@@ -28,6 +34,9 @@ const appData = (state = InitialState, action) => {
       return { ...state, name: action.value };
     case SET_CANVAS_DATA:
       return { ...state, canvasData: action.value };
+    case SET_SIDEBAR: {
+      return { ...state, sideBarState: action.value };
+    }
     default:
       return state;
   }

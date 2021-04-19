@@ -1,4 +1,9 @@
-import { SET_CIRCLE_COLOR, SET_USER_NAME, SET_CANVAS_DATA } from "./constant";
+import {
+  SET_CIRCLE_COLOR,
+  SET_USER_NAME,
+  SET_CANVAS_DATA,
+  SET_SIDEBAR,
+} from "./constant";
 
 //   export type PainterAction = {
 //     type: string;
@@ -22,6 +27,12 @@ export const setUserName = (value) => {
 export const setCanvasData = (value) => {
   return {
     type: SET_CANVAS_DATA,
+    value,
+  };
+};
+export const setSideBar = (value) => {
+  return {
+    type: SET_SIDEBAR,
     value,
   };
 };
