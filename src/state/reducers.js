@@ -5,6 +5,7 @@ import {
   SET_USER_NAME,
   SET_CANVAS_DATA,
   SET_SIDEBAR,
+  SET_LOGIN,
 } from "./constant";
 
 //   export type PainterData = {
@@ -24,6 +25,7 @@ const defaultState = {
   name: "user",
   color: "#f44336",
   sideBarState: "close",
+  login: false,
 };
 
 const appData = (state = defaultState, action) => {
@@ -34,9 +36,10 @@ const appData = (state = defaultState, action) => {
       return { ...state, name: action.value };
     case SET_CANVAS_DATA:
       return { ...state, canvasData: action.value };
-    case SET_SIDEBAR: {
+    case SET_SIDEBAR:
       return { ...state, sideBarState: action.value };
-    }
+    case SET_LOGIN:
+      return { ...state, login: action.value };
     default:
       return state;
   }
