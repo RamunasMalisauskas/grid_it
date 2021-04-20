@@ -5,7 +5,6 @@ import {
   SET_CANVAS_DATA,
   SET_SIDEBAR,
   SET_LOGIN,
-  SET_LOGIN_MENU,
 } from "./constant";
 
 //   export type PainterData = {
@@ -38,8 +37,6 @@ const appData = (state = defaultState, action) => {
       return { ...state, sideBarState: action.value };
     case SET_LOGIN:
       return { ...state, login: action.value };
-    case SET_LOGIN_MENU:
-      return { ...state, loginMenu: action.value };
     default:
       return state;
   }

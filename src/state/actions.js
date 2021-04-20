@@ -3,7 +3,6 @@ import {
   SET_CANVAS_DATA,
   SET_SIDEBAR,
   SET_LOGIN,
-  SET_LOGIN_MENU,
 } from "./constant";
 
 export const setUserName = (value) => {
@@ -34,9 +33,3 @@ export const setLogin = (value) => {
   };
 };
 
-export const setLoginMenu = (value) => {
-  return {
-    type: SET_LOGIN_MENU,
-    value,
-  };
-};
