@@ -36,30 +36,24 @@ export const LoginHeader = () => {
 
         return (
                 <Nav loggedIn={loginStatus === "loggedIn"}>
-
-                        {loginStatus === "loggedOut" && <>
-
+                        {loginStatus === "loggedOut" &&
                                 <form onSubmit={(e: React.SyntheticEvent): void => {
                                         e.preventDefault()
                                         handleLogin(userName, "loggedIn")
-
                                 }}>
-                                        <ControlBlock>
-                                                <Input
-                                                        type="text"
-                                                        name="enter your user name"
-                                                        value={userName}
-                                                        onChange={(e) => dispatch(setUserName(e.target.value))}
-                                                />
-                                        </ControlBlock>
+
+                                        <Input
+                                                type="text"
+                                                name="enter your user name"
+                                                value={userName}
+                                                onChange={(e) => dispatch(setUserName(e.target.value))}
+                                        />
+
 
                                         <SupportButton type="submit"  >
                                                 login
-                                                </SupportButton>
+                                        </SupportButton>
                                 </form>
-
-                        </>
-
                         }
 
                         {loginStatus === "loggedIn" && <>
@@ -68,9 +62,10 @@ export const LoginHeader = () => {
                                 }}>
                                         logout
                                 </PrimaryButton>
-                                <Paragraph>user: {userName}</Paragraph>
+                                <Paragraph>
+                                        user: {userName}
+                                </Paragraph>
                         </>
-
                         }
                 </Nav>
         );
@@ -81,13 +76,9 @@ text-align: center;
 position: absolute;
 z-index: 1;
 right: ${({ loggedIn }) => loggedIn ? "0%" : "50%"};
-top: ${({ loggedIn }) => loggedIn ? "0" : "115px"};
+top: ${({ loggedIn }) => loggedIn ? "0" : "20%"};
 transform: ${({ loggedIn }) => loggedIn ? "translate(0, 0)" : "translate(50%, 0)"};
 padding: 15px;
 opacity:1;
-transition: all ease-in-out 0.3s;
-`
-
-const ControlBlock = styled.div`
-margin-top: -115px;
+transition: all ease-in-out 0.3s, top ease-in-out 0.3s 0.3s;
 `
