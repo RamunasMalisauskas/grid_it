@@ -1,11 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Cell, Spinner } from '../components'
+import { Cell, Spinner, HeaderLarge } from '../components'
 import { CellDataType } from '../apis/get'
 
 type BoardDataState = {
   appData: {
+    name: string
+    sideBarState: string
+    login: string
+    loginMenu: boolean
     canvasData: CellDataType[]
   }
 }
@@ -13,12 +17,9 @@ type BoardDataState = {
 type CenterCircleProps = {
   size: number;
 }
-
-// *** TO DO ***
-// Memo data
-// data value visualisation
 export const Grid: React.FC = () => {
   const canvasData = useSelector((state: BoardDataState) => state.appData.canvasData);
+  const loginStatus = useSelector((state: BoardDataState) => state.appData.login)
 
   if (canvasData) {
     const radiusIncrement = 360 / canvasData.length
@@ -30,27 +31,36 @@ export const Grid: React.FC = () => {
 
     return (
       <Canvas>
-        <CenterCircle size={circleSize}>
-          {canvasData.map((cell, index) => (
-            <Cell
-              key={cell._id}
-              cell={cell}
-              cellRadiusIncr={startDeg += radiusIncrement}
-              valueSum={valueSum}
-              valueDif={(cell.data.data.value - valueArray.slice(1)[index]) / valueSum}
-              circleSize={circleSize}
-            />
-          ))}
-        </CenterCircle>
+        {loginStatus === "loggedIn" &&
+          <CenterCircle size={circleSize}>
+            {canvasData.map((cell, index) => (
+              <Cell
+                key={cell._id}
+                cell={cell}
+                cellRadiusIncr={startDeg += radiusIncrement}
+                valueSum={valueSum}
+                valueDif={(cell.data.data.value - valueArray.slice(1)[index]) / valueSum}
+                circleSize={circleSize}
+              />
+            ))}
+          </CenterCircle>
+        }
+        {loginStatus === "loggedOut" &&
+          <CenterBlock>
+            <HeaderLarge>
+              in order to use application you need to enter your user name
+            </HeaderLarge>
+          </CenterBlock>
+        }
       </Canvas>
     );
   }
   else {
     return (
       <Canvas>
-        <SpinerBlock>
+        <CenterBlock>
           <Spinner color="#ffffff" />
-        </SpinerBlock>
+        </CenterBlock>
       </Canvas>
     )
   }
@@ -74,10 +84,11 @@ const CenterCircle = styled.div<CenterCircleProps>`
  background-color: rgba(209, 209, 209, 0.4);
 `
 
-const SpinerBlock = styled.div`
+const CenterBlock = styled.div`
+text-align: center;
  position:absolute;
  top: 50%;
  left: 50%;
- transform: translate(-50% -50%);
+ transform: translate(-50%, -50%);
 `
 
