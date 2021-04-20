@@ -16,7 +16,7 @@ type BoardDataState = {
 }
 type StageType = string
 
-type SideBarProps = {
+interface SideBarProps {
     open: string
 }
 
@@ -38,10 +38,35 @@ export const SideBar: React.FC = () => {
                 </SupportButton>
 
                 {sideBar === "open" && <>
-                    <Input type="number" name="enter your cordiantions" value={x} onChange={(e) => setX(e.target.value)} />
-                    <Input type="number" value={y} onChange={(e) => setY(e.target.value)} />
-                    <Input type="number" name="enter main value" value={data} onChange={(e) => setData(e.target.value)} />
-                    <Input type="text" placeholder="enter aditional info" value={text} onChange={(e) => setText(e.target.value)} />
+                    <Input
+                        type="number"
+                        placeholder="X"
+                        name="enter your coordinations"
+                        value={x}
+                        onChange={(e) => setX(e.target.value)}
+                    />
+
+                    <Input
+                        type="number"
+                        placeholder="Y"
+                        value={y}
+                        onChange={(e) => setY(e.target.value)}
+                    />
+
+                    <Input
+                        type="number"
+                        placeholder="...123"
+                        name="enter main value"
+                        value={data}
+                        onChange={(e) => setData(e.target.value)}
+                    />
+
+                    <Input
+                        type="text"
+                        placeholder="enter aditional info"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                    />
 
                     <PrimaryButton
                         onClick={() => {
