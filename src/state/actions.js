@@ -1,17 +1,10 @@
 import {
-  SET_CIRCLE_COLOR,
   SET_USER_NAME,
   SET_CANVAS_DATA,
   SET_SIDEBAR,
   SET_LOGIN,
+  SET_LOGIN_MENU,
 } from "./constant";
-
-export const setCircleColor = (value) => {
-  return {
-    type: SET_CIRCLE_COLOR,
-    value,
-  };
-};
 
 export const setUserName = (value) => {
   return {
@@ -37,6 +30,13 @@ export const setSideBar = (value) => {
 export const setLogin = (value) => {
   return {
     type: SET_LOGIN,
+    value,
+  };
+};
+
+export const setLoginMenu = (value) => {
+  return {
+    type: SET_LOGIN_MENU,
     value,
   };
 };

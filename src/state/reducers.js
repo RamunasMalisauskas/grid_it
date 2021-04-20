@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 
 import {
-  SET_CIRCLE_COLOR,
   SET_USER_NAME,
   SET_CANVAS_DATA,
   SET_SIDEBAR,
   SET_LOGIN,
+  SET_LOGIN_MENU,
 } from "./constant";
 
 //   export type PainterData = {
@@ -23,15 +23,13 @@ import {
 
 const defaultState = {
   name: "user",
-  color: "#f44336",
   sideBarState: "close",
-  login: false,
+  login: "loggedOut",
+  loginMenu: false,
 };
 
 const appData = (state = defaultState, action) => {
   switch (action.type) {
-    case SET_CIRCLE_COLOR:
-      return { ...state, color: action.value };
     case SET_USER_NAME:
       return { ...state, name: action.value };
     case SET_CANVAS_DATA:
@@ -40,6 +38,8 @@ const appData = (state = defaultState, action) => {
       return { ...state, sideBarState: action.value };
     case SET_LOGIN:
       return { ...state, login: action.value };
+    case SET_LOGIN_MENU:
+      return { ...state, loginMenu: action.value };
     default:
       return state;
   }
