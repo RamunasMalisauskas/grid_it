@@ -11,9 +11,11 @@ type BoardDataState = {
         color: string
         name: string
         sideBarState: string
+        login: string
         canvasData: CellDataType[]
     }
 }
+
 type StageType = string
 
 interface SideBarProps {

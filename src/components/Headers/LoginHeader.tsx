@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName, setLoginMenu } from "../../state/actions";
-import { PrimaryButton, SupportButton, Input } from "../../components";
+import { PrimaryButton, SupportButton, Input, Paragraph } from "../../components";
 import { CellDataType } from '../../apis/get'
 
 type BoardDataState = {
@@ -15,6 +15,9 @@ type BoardDataState = {
         }
 }
 
+type NavPropsType = {
+        open: boolean
+}
 
 
 export const LoginHeader = () => {
@@ -22,69 +25,71 @@ export const LoginHeader = () => {
         const loginStatus = useSelector((state: BoardDataState) => state.appData.login)
         const loginMenu = useSelector((state: BoardDataState) => state.appData.loginMenu)
         const userName = useSelector((state: BoardDataState) => state.appData.name)
-
-        const [name, setName] = useState(userName)
+        console.log(loginMenu)
 
         const handleLogin = (name: string, login: string): void => {
-                dispatch(setLoginMenu(!loginMenu))
                 dispatch(setUserName(name));
                 dispatch(setLogin(login))
                 localStorage.setItem("userName", name);
                 localStorage.setItem("login", login);
         };
 
-        return (
-                <Nav>
+        return (<Nav open={loginMenu}>
 
-                        {loginStatus === "loggedOut" && <>
-                                {!loginMenu &&
-                                        <SupportButton onClick={() => dispatch(setLoginMenu(!loginMenu))}>
-                                                login
-                                        </SupportButton>
-                                }
+                {loginStatus === "loggedOut" && <>
 
-                                {loginMenu &&
-                                        <form onSubmit={(e: React.SyntheticEvent): void => {
-                                                e.preventDefault()
-                                                handleLogin(name, "loggedIn")
-                                        }}>
-                                                <Input
-                                                        type="text"
-                                                        name="enter your user name"
-                                                        value={name}
-                                                        onChange={(e) => setName(e.target.value)}
-                                                />
-                                                <SupportButton type="submit" >
-                                                        login
+                        <form onSubmit={(e: React.SyntheticEvent): void => {
+                                e.preventDefault()
+                                handleLogin(userName, "loggedIn")
+
+                        }}>
+                                <ControlBlock>
+                                        <Input
+                                                type="text"
+                                                name="enter your user name"
+                                                value={userName}
+                                                onChange={(e) => dispatch(setUserName(e.target.value))}
+                                        />
+                                </ControlBlock>
+
+                                <SupportButton type="submit" onClick={() => dispatch(setLoginMenu(false))} >
+                                        login
                                                 </SupportButton>
-                                        </form>
-                                }
-                        </>
+                        </form>
 
-                        }
+                </>
 
-                        {loginStatus === "loggedIn" && <>
-                                <PrimaryButton onClick={() => {
-                                        handleLogin("", "loggedOut")
-                                }}>
-                                        logout
+                }
+
+                {loginStatus === "loggedIn" && <>
+                        <PrimaryButton onClick={() => {
+                                handleLogin("", "loggedOut")
+                                dispatch(setLoginMenu(true))
+                        }}>
+                                logout
                                 </PrimaryButton>
-                                <h3>user: {name}</h3>
-                        </>
+                        <Paragraph>user: {userName}</Paragraph>
+                </>
 
-                        }
-
-
-                </Nav>
-
+                }
+        </Nav>
         );
 }
 
-const Nav = styled.div`
+const Nav = styled.div<NavPropsType>`
 text-align: center;
 position: absolute;
 z-index: 1;
-left: 50%;
+left: ${({ open }) => open ? "50%" : ""};
+right: ${({ open }) => open ? "" : "0%"};
+top: ${({ open }) => !open ? "0px" : "-115px"};
+opacity: ${({ open }) => open ? "1" : "0"};
 transform: translate(-50%, 0);
 padding: 15px;
+opacity:1;
+transition: all ease-in-out 0.3s;
+`
+
+const ControlBlock = styled.div`
+margin-top: 115px;
 `
