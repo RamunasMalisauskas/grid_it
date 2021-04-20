@@ -26,7 +26,6 @@ export const Grid: React.FC = () => {
     const valueArray = canvasData.map((x) => x.data.data.value)
     const valueSum = valueArray.reduce((a, b) => a + b, 0)
     const circleSize = 400
-
     let startDeg = 0
 
     return (
@@ -85,10 +84,11 @@ const CenterCircle = styled.div<CenterCircleProps>`
 `
 
 const CenterBlock = styled.div`
-text-align: center;
  position:absolute;
  top: 50%;
  left: 50%;
  transform: translate(-50%, -50%);
+ text-align: center;
+ width: 30vw;
 `
 
