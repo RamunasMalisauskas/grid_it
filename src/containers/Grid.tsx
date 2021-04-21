@@ -1,18 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Cell, Spinner, HeaderLarge } from '../components'
-import { CellDataType } from '../apis/get'
-
-type BoardDataState = {
-  appData: {
-    name: string
-    sideBarState: string
-    login: string
-    loginMenu: boolean
-    canvasData: CellDataType[]
-  }
-}
+import { Spinner, HeaderLarge, Cell } from '../components'
+import { BoardDataState} from '../types/types'
 
 type CenterCircleProps = {
   size: number;

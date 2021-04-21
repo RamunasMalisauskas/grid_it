@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
-import { CellDataType } from '../apis/get'
-import { deleteFromBoard } from "../apis/delete";
+import { CellDataType } from '../../types/types'
+import { deleteFromBoard } from "../../apis/delete";
 
 interface CellProps {
     cell: CellDataType
@@ -22,15 +22,10 @@ type CellBlockProps = {
 }
 
 export const Cell: React.FC<CellProps> = ({ cell, cellRadiusIncr, valueSum, valueDif, circleSize }) => {
-    // each cell portion in 100%
     const cellProportion = cell.data.data.value / valueSum * 100
-    // cell size determed by is proportion of overall data plus minimum constant size
     const cellSize = circleSize / 10 + cellProportion
-    // setting offset by value between cells and proportion size in %
     const cellOffset = isNaN(valueDif) ? 0 : valueDif + (cellProportion * 0.1)
-
     const cellcircleSize = circleSize + cellProportion
-
 
     return (
         <CellBlock

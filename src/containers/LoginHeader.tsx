@@ -1,20 +1,10 @@
 import React, { useCallback } from 'react'
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { setLogin, setUserName } from "../../state/actions";
-import { PrimaryButton, SupportButton, Input, Paragraph } from "../../components";
-import { CellDataType } from '../../apis/get'
-import { auth } from '../../firebase'
-
-type BoardDataState = {
-    appData: {
-        name: string
-        sideBarState: string
-        login: string
-        loginMenu: boolean
-        canvasData: CellDataType[]
-    }
-}
+import { setLogin, setUserName } from "../state/actions";
+import { PrimaryButton, SupportButton, Input, Paragraph } from "../components";
+import { BoardDataState } from '../types/types'
+import { auth } from '../firebase'
 
 type NavPropsType = {
     loggedIn: boolean
@@ -32,7 +22,7 @@ export const LoginHeader = () => {
             "user name": { value: userName },
             email: { value: email },
             password: { value: pass },
-            "repPassword": { value: repPass }
+            "repeat password": { value: repPass }
         } } = e
         if (pass !== repPass) {
             return

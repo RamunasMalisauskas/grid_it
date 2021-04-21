@@ -1,4 +1,4 @@
-export * from "./const";
+export * from "./constants";
 export * from "./get";
 export * from "./post";
 export * from "./delete";

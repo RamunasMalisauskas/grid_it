@@ -1,33 +1,11 @@
 import axios from "axios";
-import { apiUrl, urlDir } from "./const";
-
-export type CellDataType = {
-  _id: string;
-  data: CellData
-  x: number;
-  y: number;
-}
-
-type CellData = {
-  name: string,
-  color: string,
-  createdAt: string,
-  data: {
-    value: number,
-    text?: string
-  }
-}
-
-type boardStatusType = number
-
+import { apiUrl, urlDir, canvasLocation, methods } from "./constants";
+import { CellDataType } from '../types/types'
 
 export const fetchCanvaData = async (): Promise<CellDataType[]> => {
   try {
-    // canvas location from local storage / input
-    const canvasLocation = "?x=0&y=0&w=20&h=20";
-
     const getBoard = await axios({
-      method: "GET",
+      method: methods.get,
       url: `${apiUrl}${urlDir.Board}${canvasLocation}`
     }
 
@@ -40,10 +18,10 @@ export const fetchCanvaData = async (): Promise<CellDataType[]> => {
   }
 };
 
-export const fetchBoardStatus = async (): Promise<boardStatusType> => {
+export const fetchBoardStatus = async (): Promise<number> => {
   try {
     const getBoard = await axios({
-      method: "GET",
+      method: methods.get,
       url: `${apiUrl}${urlDir.BoardStatus}`
     });
     // latest version(update) of board
@@ -56,7 +34,7 @@ export const fetchBoardStatus = async (): Promise<boardStatusType> => {
 export const fetchCellStatus = async () => {
   try {
     const getBoard = await axios({
-      method: "GET",
+      method: methods.get,
       url: `${apiUrl}${urlDir.BoardStatus}`
     });
     // latest version(update) of board

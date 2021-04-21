@@ -3,20 +3,8 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setSideBar } from "../state/actions";
 import { addToBoard } from "../apis";
-import { CellDataType } from '../apis/get'
+import { BoardDataState } from '../types/types'
 import { Input, PrimaryButton, SupportButton } from '../components'
-
-type BoardDataState = {
-    appData: {
-        color: string
-        name: string
-        sideBarState: string
-        login: string
-        canvasData: CellDataType[]
-    }
-}
-
-type StageType = string
 
 interface SideBarProps {
     open: string
@@ -27,10 +15,10 @@ export const SideBar: React.FC = () => {
     const randomColor = require("randomcolor");
     const sideBar = useSelector((state: BoardDataState) => state.appData.sideBarState);
 
-    const [x, setX] = useState<StageType>("");
-    const [y, setY] = useState<StageType>("");
-    const [data, setData] = useState<StageType>("");
-    const [text, setText] = useState<StageType>("");
+    const [x, setX] = useState<string>("");
+    const [y, setY] = useState<string>("");
+    const [data, setData] = useState<string>("");
+    const [text, setText] = useState<string>("");
 
     return (
         <SideBlock open={sideBar}>

@@ -1,16 +1,6 @@
 import axios from "axios";
-import { apiUrl, urlDir, postHeader } from "./const";
-
-export type postDataType = {
-  x: number,
-  y: number,
-  userName: string,
-  userColor: string,
-  cellData: {
-    value: number;
-    info?: string
-  },
-};
+import { apiUrl, urlDir, postHeader, methods } from "./constants";
+import { postDataType } from '../types/types'
 
 export const addToBoard = async ({ userName, userColor, x, y, cellData }: postDataType): Promise<number> => {
   try {
@@ -23,7 +13,7 @@ export const addToBoard = async ({ userName, userColor, x, y, cellData }: postDa
     };
 
     const post = await axios({
-      method: "POST",
+      method: methods.post,
       url: `${apiUrl}${urlDir.Board}`,
       headers: postHeader,
       data: postData

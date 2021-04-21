@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchCanvaData, fetchBoardStatus } from "./apis";
 import { setCanvasData } from "./state/actions";
-import { HomePage } from "./views";
+import { HomePage } from "./containers";
 
 const App = () => {
   const dispatch = useDispatch();

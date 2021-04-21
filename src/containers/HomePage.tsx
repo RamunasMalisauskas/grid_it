@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, SideBar, LoginHeader } from "../components";
+import { SideBar, LoginHeader, Grid } from '../containers'
 
 export const HomePage: React.FC = () => {
   return (
