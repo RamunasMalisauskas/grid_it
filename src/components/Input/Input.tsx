@@ -1,19 +1,26 @@
 import React from 'react'
 import styled from "styled-components";
 
-export const Input: React.FC<
-    React.InputHTMLAttributes<HTMLInputElement>
-> = ({ type, value, name, onChange, placeholder }) => {
+type InputProps = {
+    type: string,
+    value?: string,
+    name: string,
+    label?: string,
+    onChange?: any,
+    placeholder?: string
+}
+
+export const Input: React.FC<InputProps> = ({ type, value, name, label, onChange, placeholder }) => {
     return (
         <>
-            {name &&
+            {label &&
                 <LabelBlock>
-                    <LabelDiv htmlFor={name} >{name}</LabelDiv>
+                    <LabelDiv htmlFor={label} >{label}</LabelDiv>
                     <InputDiv type={type} value={value} name={name} placeholder={placeholder} onChange={onChange} />
                 </LabelBlock>
             }
 
-            {!name &&
+            {!label &&
                 <InputDiv type={type} value={value} name={name} placeholder={placeholder} onChange={onChange} />}
         </>
     );

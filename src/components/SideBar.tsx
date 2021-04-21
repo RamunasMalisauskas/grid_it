@@ -43,31 +43,35 @@ export const SideBar: React.FC = () => {
                     <Input
                         type="number"
                         placeholder="X"
-                        name="enter your coordinations"
+                        name="x"
+                        label="enter your coordinations"
                         value={x}
-                        onChange={(e) => setX(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setX(e.target.value)}
                     />
 
                     <Input
                         type="number"
+                        name="y"
                         placeholder="Y"
                         value={y}
-                        onChange={(e) => setY(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setY(e.target.value)}
                     />
 
                     <Input
                         type="number"
                         placeholder="...123"
-                        name="enter main value"
+                        name="value"
+                        label="enter main value"
                         value={data}
-                        onChange={(e) => setData(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData(e.target.value)}
                     />
 
                     <Input
                         type="text"
+                        name="info"
                         placeholder="enter aditional info"
                         value={text}
-                        onChange={(e) => setText(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
                     />
 
                     <PrimaryButton
