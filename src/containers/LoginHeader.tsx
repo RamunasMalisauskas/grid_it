@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName } from "../state/actions";
-import { PrimaryButton, SupportButton, Input, Paragraph } from "../components";
+import { PrimaryButton, SupportButton, Input, Paragraph, HeaderLarge } from "../components";
 import { BoardDataState } from '../types/types'
 import { auth } from '../firebase'
 
@@ -10,29 +10,37 @@ type NavPropsType = {
     loggedIn: boolean
 }
 
+enum Log {
+    in = "loggedIn",
+    out = "loggedOut",
+    reg = 'register'
+}
+
 
 export const LoginHeader = () => {
     const dispatch = useDispatch()
     const loginStatus = useSelector((state: BoardDataState) => state.appData.login)
     const userName = useSelector((state: BoardDataState) => state.appData.name)
+    const [error, setError] = useState("")
 
     const handleReg = useCallback<React.FormEventHandler<HTMLFormElement>>((e) => {
         e.preventDefault()
+
         const { target: {
-            "user name": { value: userName },
+            userName: { value: userName },
             email: { value: email },
             password: { value: pass },
-            "repeat password": { value: repPass }
+            repPassword: { value: repPass }
         } } = e
         if (pass !== repPass) {
             return
         } else {
             auth.createUserWithEmailAndPassword(email, pass)
                 .then(() => {
-                    dispatch(setLogin("loggedIn"));
+                    dispatch(setLogin(Log.in));
                     dispatch(setUserName(userName))
                 })
-                .catch(e => console.log(e))
+                .catch(e => console.log(e.message))
         }
     }, [dispatch]);
 
@@ -43,21 +51,32 @@ export const LoginHeader = () => {
             password: { value: pass }
         } } = e
         auth.signInWithEmailAndPassword(email, pass)
-            .then(() => dispatch(setLogin("loggedIn")))
-            .catch(e => console.log(e))
+            .then(() => dispatch(setLogin(Log.in)))
+            .catch(e => setError(e.message))
     }, [dispatch]);
 
-    const handleLogout = useCallback(() => { console.log("logout"); dispatch(setLogin("loggedOut")) }, [dispatch])
+    const handleLogout = (() => {
+        auth.signOut()
+            .then(() => dispatch(setLogin(Log.out)))
+            .catch(e => console.log(e.message))
+    });
 
-    const handleRegState = useCallback(() => { console.log("register"); dispatch(setLogin("Register")) }, [dispatch])
+    const handleRegState = () => {
+        dispatch(setLogin(Log.reg))
+        setError("")
+    }
+    const handleLoginState = () => {
+        dispatch(setLogin(Log.out))
+        setError("")
+    }
 
-    return (
-        <Nav loggedIn={loginStatus === "loggedIn"}>
-            {loginStatus === "Register" &&
+    return (<>
+        <Nav loggedIn={loginStatus === Log.in}>
+            {loginStatus === Log.reg &&
                 <form onSubmit={handleReg}>
                     <Input
                         type="text"
-                        name="user name"
+                        name="userName"
                         label="enter user name"
                     />
                     <Input
@@ -78,9 +97,14 @@ export const LoginHeader = () => {
                     <SupportButton type="submit">
                         Register
                     </SupportButton>
+
+                    <PrimaryButton onClick={handleLoginState}>
+                        Login
+                    </PrimaryButton>
                 </form>
             }
-            {loginStatus === "loggedOut" &&
+
+            {loginStatus === Log.out &&
                 <form onSubmit={handleLogin}>
                     <Input
                         type="email"
@@ -102,7 +126,7 @@ export const LoginHeader = () => {
                 </form>
             }
 
-            {loginStatus === "loggedIn" && <>
+            {loginStatus === Log.in && <>
                 <PrimaryButton onClick={handleLogout}>
                     logout
                 </PrimaryButton>
@@ -113,7 +137,21 @@ export const LoginHeader = () => {
             </>
             }
         </Nav>
-    );
+
+        {loginStatus === Log.out &&
+            <CenterBlock>
+                <Paragraph>
+                    {error && error}
+                </Paragraph>
+                {!error &&
+                    <HeaderLarge>
+                        To use the application you have to login.
+                        Register if you dont have an account.
+                    </HeaderLarge>
+                }
+            </CenterBlock>
+        }
+    </>);
 }
 
 const Nav = styled.div<NavPropsType>`
@@ -124,6 +162,14 @@ const Nav = styled.div<NavPropsType>`
  top: ${({ loggedIn }) => loggedIn ? "0" : "10vh"};
  transform: ${({ loggedIn }) => loggedIn ? "translate(0, 0)" : "translate(50%, 0)"}; 
  padding: 15px;
- opacity:1;
  transition: all ease-in-out 0.3s, top ease-in-out 0.3s 0.3s;
+`
+const CenterBlock = styled.div`
+ position:absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ text-align: center;
+ width: 30vw;
+ z-index: 2;
 `
