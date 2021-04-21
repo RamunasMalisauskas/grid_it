@@ -17,4 +17,10 @@ export enum methods {
   delete = "DELETE"
 }
 
+export enum log {
+  in = "loggedIn",
+  out = "loggedOut",
+  reg = 'register'
+}
+
 

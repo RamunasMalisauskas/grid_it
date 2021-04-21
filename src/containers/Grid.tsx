@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Spinner, HeaderLarge, Cell } from '../components'
-import { BoardDataState} from '../types/types'
+import { Spinner, Cell } from '../components'
+import { BoardDataState } from '../types/types'
 
 type CenterCircleProps = {
   size: number;
@@ -33,13 +33,6 @@ export const Grid: React.FC = () => {
               />
             ))}
           </CenterCircle>
-        }
-        {loginStatus === "loggedOut" &&
-          <CenterBlock>
-            <HeaderLarge>
-              in order to use application you need to enter your user name
-            </HeaderLarge>
-          </CenterBlock>
         }
       </Canvas>
     );

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiUrl, urlDir, postHeader, methods } from "./constants";
+import { apiUrl, urlDir, postHeader, methods } from "../constants/constants";
 import { postDataType } from '../types/types'
 
 export const addToBoard = async ({ userName, userColor, x, y, cellData }: postDataType): Promise<number> => {

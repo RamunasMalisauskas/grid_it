@@ -3,17 +3,12 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName } from "../state/actions";
 import { PrimaryButton, SupportButton, Input, Paragraph, HeaderLarge } from "../components";
+import { log } from '../constants/constants'
 import { BoardDataState } from '../types/types'
 import { auth } from '../firebase'
 
 type NavPropsType = {
     loggedIn: boolean
-}
-
-enum Log {
-    in = "loggedIn",
-    out = "loggedOut",
-    reg = 'register'
 }
 
 
@@ -37,7 +32,7 @@ export const LoginHeader = () => {
         } else {
             auth.createUserWithEmailAndPassword(email, pass)
                 .then(() => {
-                    dispatch(setLogin(Log.in));
+                    dispatch(setLogin(log.in));
                     dispatch(setUserName(userName))
                 })
                 .catch(e => console.log(e.message))
@@ -51,28 +46,28 @@ export const LoginHeader = () => {
             password: { value: pass }
         } } = e
         auth.signInWithEmailAndPassword(email, pass)
-            .then(() => dispatch(setLogin(Log.in)))
+            .then(() => dispatch(setLogin(log.in)))
             .catch(e => setError(e.message))
     }, [dispatch]);
 
     const handleLogout = (() => {
         auth.signOut()
-            .then(() => dispatch(setLogin(Log.out)))
+            .then(() => dispatch(setLogin(log.out)))
             .catch(e => console.log(e.message))
     });
 
     const handleRegState = () => {
-        dispatch(setLogin(Log.reg))
+        dispatch(setLogin(log.reg))
         setError("")
     }
     const handleLoginState = () => {
-        dispatch(setLogin(Log.out))
+        dispatch(setLogin(log.out))
         setError("")
     }
 
     return (<>
-        <Nav loggedIn={loginStatus === Log.in}>
-            {loginStatus === Log.reg &&
+        <Nav loggedIn={loginStatus === log.in}>
+            {loginStatus === log.reg &&
                 <form onSubmit={handleReg}>
                     <Input
                         type="text"
@@ -104,7 +99,7 @@ export const LoginHeader = () => {
                 </form>
             }
 
-            {loginStatus === Log.out &&
+            {loginStatus === log.out &&
                 <form onSubmit={handleLogin}>
                     <Input
                         type="email"
@@ -126,7 +121,7 @@ export const LoginHeader = () => {
                 </form>
             }
 
-            {loginStatus === Log.in && <>
+            {loginStatus === log.in && <>
                 <PrimaryButton onClick={handleLogout}>
                     logout
                 </PrimaryButton>
@@ -138,7 +133,7 @@ export const LoginHeader = () => {
             }
         </Nav>
 
-        {loginStatus === Log.out &&
+        {loginStatus === log.out &&
             <CenterBlock>
                 <Paragraph>
                     {error && error}
