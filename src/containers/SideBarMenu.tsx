@@ -30,7 +30,7 @@ export const SideBar: React.FC = () => {
             y: parseInt(number),
             cellData: { value: parseInt(data), info: info },
         });
-    }, [])
+    }, [userName, randomColor])
 
     return (
         <SideBlock open={sideBar}>
