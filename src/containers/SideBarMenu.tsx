@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback } from 'react'
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setSideBar } from "../state/actions";
@@ -14,11 +14,23 @@ export const SideBar: React.FC = () => {
     const dispatch = useDispatch()
     const randomColor = require("randomcolor");
     const sideBar = useSelector((state: BoardDataState) => state.appData.sideBarState);
+    const userName = useSelector((state: BoardDataState) => state.appData.name);
 
-    const [x, setX] = useState<string>("");
-    const [y, setY] = useState<string>("");
-    const [data, setData] = useState<string>("");
-    const [text, setText] = useState<string>("");
+    const handleSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((e) => {
+        e.preventDefault()
+        const { target: {
+            number: { value: number },
+            data: { value: data },
+            info: { value: info }
+        } } = e
+        addToBoard({
+            userName: userName,
+            userColor: randomColor(),
+            x: parseInt(number),
+            y: parseInt(number),
+            cellData: { value: parseInt(data), info: info },
+        });
+    }, [])
 
     return (
         <SideBlock open={sideBar}>
@@ -27,56 +39,31 @@ export const SideBar: React.FC = () => {
                     {sideBar === "close" ? "menu" : "x"}
                 </SupportButton>
 
-                {sideBar === "open" && <>
-                    <Input
-                        type="number"
-                        placeholder="X"
-                        name="x"
-                        label="enter your coordinations"
-                        value={x}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setX(e.target.value)}
-                    />
-
-                    <Input
-                        type="number"
-                        name="y"
-                        placeholder="Y"
-                        value={y}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setY(e.target.value)}
-                    />
-
-                    <Input
-                        type="number"
-                        placeholder="...123"
-                        name="value"
-                        label="enter main value"
-                        value={data}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData(e.target.value)}
-                    />
-
-                    <Input
-                        type="text"
-                        name="info"
-                        placeholder="enter aditional info"
-                        value={text}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setText(e.target.value)}
-                    />
-
-                    <PrimaryButton
-                        onClick={() => {
-                            addToBoard({
-                                userName: "rami",
-                                userColor: randomColor(),
-                                x: parseInt(x),
-                                y: parseInt(y),
-                                cellData: { value: parseInt(data), info: text },
-                            });
-                        }}
-                    >
-                        add cell
-                    </PrimaryButton>
-                </>}
-
+                {sideBar === "open" &&
+                    <form onSubmit={handleSubmit}>
+                        <Input
+                            type="number"
+                            name="number"
+                            placeholder="X"
+                            label="enter cell number"
+                        />
+                        <Input
+                            type="number"
+                            name="data"
+                            placeholder="...123"
+                            label="enter cell value"
+                        />
+                        <Input
+                            type="text"
+                            name="info"
+                            placeholder="extra info"
+                            label="enter aditional data"
+                        />
+                        <PrimaryButton type="submit">
+                            add cell
+                         </PrimaryButton>
+                    </form>
+                }
             </SideBarContainer>
         </SideBlock >
     );

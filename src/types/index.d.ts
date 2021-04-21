@@ -1,10 +1,16 @@
 declare interface EventTarget {
-    "user name": 
+    userName:
     { value: string }
-    email: 
+    email:
     { value: string }
-    password: 
+    password:
     { value: string }
-    "repeat password": 
+    repPassword:
+    { value: string }
+    number:
+    { value: string }
+    data:
+    { value: string }
+    info:
     { value: string }
 }
