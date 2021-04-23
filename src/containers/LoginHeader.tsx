@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName } from "../state/actions";
-import { PrimaryButton, SupportButton, Input, Paragraph, HeaderLarge } from "../components";
+import { PrimaryButton, SupportButton, Input, Paragraph, Subtitle } from "../components";
 import { log, localStorageItems } from '../constants/constants'
 import { BoardDataState } from '../types/types'
 import { auth } from '../firebase'
@@ -81,7 +81,7 @@ export const LoginHeader = () => {
     }
 
     return (<>
-        <Nav loggedIn={loginStatus === log.in}>
+        <LoginTable loggedIn={loginStatus === log.in}>
             {loginStatus === log.reg && <>
                 <form onSubmit={handleReg}>
                     <Input
@@ -142,10 +142,10 @@ export const LoginHeader = () => {
                     {error && error}
                 </Paragraph>
                 {!error &&
-                    <HeaderLarge>
+                    <Subtitle>
                         To use the application you have to login.
                         Register if you dont have an account.
-                 </HeaderLarge>
+                    </Subtitle>
                 }
             </>
             }
@@ -160,11 +160,11 @@ export const LoginHeader = () => {
                 </Paragraph>
             </>
             }
-        </Nav>
+        </LoginTable>
     </>);
 }
 
-const Nav = styled.div<NavPropsType>`
+const LoginTable = styled.div<NavPropsType>`
  text-align: center;
  position: absolute;
  z-index: 1;
