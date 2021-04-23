@@ -9,7 +9,8 @@ export const apiUrl = {
 
 export const postHeader = { "Content-Type": "application/json" };
 
-export const canvasLocation = "?x=100&y=100&w=20&h=20";
+export const canvasPosition = [2000, 2000]
+export const canvasSize = [50, 50]
 
 export enum methods {
   post = "POST",

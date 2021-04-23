@@ -1,16 +1,22 @@
 import axios from "axios";
-import { apiUrl, baseUrl, canvasLocation, methods } from "../constants/apiConstants";
+import { apiUrl, baseUrl, canvasSize, methods } from "../constants/apiConstants";
 import { CellDataType } from '../types/types'
 
-export const fetchCanvaData = async (): Promise<CellDataType[]> => {
+type getProps = {
+  xposition: number,
+  yposition: number
+}
+
+export const fetchCanvaData = async ({ xposition, yposition }: getProps): Promise<CellDataType[]> => {
+  console.log(xposition + yposition)
   try {
     const getBoard = await axios({
       method: methods.get,
-      url: `${baseUrl}${apiUrl.Board}${canvasLocation}`
+      url: `${baseUrl}${apiUrl.Board}?x=${xposition}&y=${yposition}&w=${canvasSize[0]}&h=${canvasSize[1]}`
     }
 
     );
-
+    console.log(getBoard.data)
     return await getBoard.data;
   } catch (err) {
     console.log(err)
