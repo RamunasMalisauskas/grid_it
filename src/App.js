@@ -10,10 +10,10 @@ const App = () => {
   const build = useMemo(() => ({ version: 0 }), []);
 
   useEffect(() => {
-    BuildVersion();
+    buildVersion();
   });
 
-  const BuildVersion = () => {
+  const buildVersion = () => {
     setInterval(() => {
       fetchBoardStatus().then((newVersion) => {
         if (build.version < newVersion) {
