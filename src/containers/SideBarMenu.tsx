@@ -6,7 +6,7 @@ import { addToBoard } from "../apis";
 import { BoardDataState } from '../types/types'
 import { Input, PrimaryButton, SupportButton, Subtitle } from '../components'
 import { usersDB, auth, timeStamp } from '../firebase/firebase'
-import { sideBarState } from "../constants/stateConstants"
+import { sideBarState, log } from "../constants/stateConstants"
 
 interface SideBarProps {
     open: string
@@ -19,6 +19,7 @@ export const SideBar: React.FC = () => {
     const userName = useSelector((state: BoardDataState) => state.appData.name);
     const canva = useSelector((state: BoardDataState) => state.appData.canvasPosition);
     const error = useSelector((state: BoardDataState) => state.appData.errorMsg);
+    const login = useSelector((state: BoardDataState) => state.appData.login);
 
     const handlleBarState = () => dispatch(setSideBar(sideBar === sideBarState.close ? sideBarState.open : sideBarState.close))
 
@@ -86,48 +87,51 @@ export const SideBar: React.FC = () => {
 
     return (
         <SideBlock open={sideBar}>
-            <SideBarContainer>
-                <SupportButton onClick={handlleBarState}>
-                    {sideBar === sideBarState.close ? "menu" : "x"}
-                </SupportButton>
+            {login === log.in && <>
+                <SideBarContainer>
+                    <SupportButton onClick={handlleBarState}>
+                        {sideBar === sideBarState.close ? "menu" : "x"}
+                    </SupportButton>
 
-                {sideBar === sideBarState.open && <>
-                    <form onSubmit={handleSubmit}>
-                        <Input
-                            type="text"
-                            name="class"
-                            placeholder="...class one"
-                            label="enter class name"
-                        />
-                        <Input
-                            type="number"
-                            name="number"
-                            placeholder="1... 2... 3..."
-                            label="enter cell number"
-                        />
-                        <Input
-                            type="number"
-                            name="data"
-                            placeholder="...123"
-                            label="enter cell value"
-                        />
-                        <Input
-                            type="text"
-                            name="info"
-                            placeholder="optional"
-                            label="extra info"
-                        />
-                        <PrimaryButton type="submit">
-                            add cell
+                    {sideBar === sideBarState.open && <>
+                        <form onSubmit={handleSubmit}>
+                            <Input
+                                type="text"
+                                name="class"
+                                placeholder="...class one"
+                                label="enter class name"
+                            />
+                            <Input
+                                type="number"
+                                name="number"
+                                placeholder="1... 2... 3..."
+                                label="enter cell number"
+                            />
+                            <Input
+                                type="number"
+                                name="data"
+                                placeholder="...123"
+                                label="enter cell value"
+                            />
+                            <Input
+                                type="text"
+                                name="info"
+                                placeholder="optional"
+                                label="extra info"
+                            />
+                            <PrimaryButton type="submit">
+                                add cell
                          </PrimaryButton>
-                    </form>
-                    <Subtitle>
-                        {error}
-                    </Subtitle>
+                        </form>
 
-                </>
-                }
-            </SideBarContainer>
+                        <Subtitle>
+                            {error}
+                        </Subtitle>
+                    </>
+                    }
+                </SideBarContainer>
+            </>
+            }
         </SideBlock >
     );
 }

@@ -16,8 +16,7 @@ export const LoginHeader = () => {
     const loginStatus = useSelector((state: BoardDataState) => state.appData.login)
     const userName = useSelector((state: BoardDataState) => state.appData.name)
     const error = useSelector((state: BoardDataState) => state.appData.errorMsg)
-
-
+  
     const handleReg = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
         if (!e) return
         e.preventDefault()
@@ -113,9 +112,9 @@ export const LoginHeader = () => {
                         Login
                     </PrimaryButton>
                 </form>
-                <Paragraph>
-                    {error && error}
-                </Paragraph>
+                <Subtitle>
+                    {error}
+                </Subtitle>
             </>
             }
 
@@ -139,9 +138,11 @@ export const LoginHeader = () => {
                         Register
                     </PrimaryButton>
                 </form>
-                <Paragraph>
-                    {error && error}
-                </Paragraph>
+
+                <Subtitle>
+                    {error}
+                </Subtitle>
+
                 {!error &&
                     <Subtitle>
                         To use the application you have to login.

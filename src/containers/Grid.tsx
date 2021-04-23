@@ -28,38 +28,41 @@ export const Grid: React.FC = () => {
     //
 
     return (
-      loginStatus === log.in && (
-        <>
-          {canvasData.map((cell, index) => (
-            <Cell
-              key={cell._id}
-              cell={cell}
-              cellRadiusIncr={(startDeg += radiusIncrement)}
-              valueSum={valueSum}
-              valueDif={
-                (cell.data.data.value - valueArray.slice(1)[index]) / valueSum
-              }
-              circleSize={circleSize}
-            />
-          ))
-          }
+      <>
+        {canvasData.map((cell, index) => (
+          <Cell
+            key={cell._id}
+            cell={cell}
+            cellRadiusIncr={(startDeg += radiusIncrement)}
+            valueSum={valueSum}
+            valueDif={
+              (cell.data.data.value - valueArray.slice(1)[index]) / valueSum
+            }
+            circleSize={circleSize}
+          />
+        ))
+        }
 
-        </>
-      )
+      </>
     );
-  }, [canvasData, loginStatus]);
+  }, [canvasData]);
 
   return (
-    <Canvas>
-      {!generatedCanvas &&
-        <SpinnerBlock>
-          <Spinner color="white" />
-        </SpinnerBlock>
-      }
-
-      <CenterCircle size={circleSize}>
-        {generatedCanvas}
-      </CenterCircle>
+    <Canvas> {
+      loginStatus === log.in && (
+        <>
+          {
+            !generatedCanvas &&
+            <SpinnerBlock>
+              <Spinner color="white" />
+            </SpinnerBlock>
+          }
+          <CenterCircle size={circleSize}>
+            {generatedCanvas}
+          </CenterCircle>
+        </>
+      )
+    }
     </Canvas>
   )
 };
