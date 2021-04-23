@@ -30,8 +30,8 @@ const rotate = keyframes`
 `
 
 const SpinnerBlock = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   position: relative;
   text-align: center;
   -webkit-animation: ${rotate} 1.6s infinite linear;

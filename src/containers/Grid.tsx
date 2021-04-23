@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Cell } from "../components";
+import { Cell, Spinner } from "../components";
 import { log } from "../constants/stateConstants";
 import { BoardDataState } from "../types/types";
 
@@ -51,6 +51,12 @@ export const Grid: React.FC = () => {
 
   return (
     <Canvas>
+      {!generatedCanvas &&
+        <SpinnerBlock>
+          <Spinner color="white" />
+        </SpinnerBlock>
+      }
+
       <CenterCircle size={circleSize}>
         {generatedCanvas}
       </CenterCircle>
@@ -75,3 +81,10 @@ const CenterCircle = styled.div<CenterCircleProps>`
   transform: translate(-50%, -50%);
   background-color: rgba(209, 209, 209, 0.4);
 `;
+
+const SpinnerBlock = styled.div`
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+`
