@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiUrl, urlDir, postHeader, methods } from "../constants/apiConstants";
+import { apiUrl, baseUrl, postHeader, methods } from "../constants/apiConstants";
 
 type deleteDataType = {
     id: string
@@ -14,7 +14,7 @@ export const deleteFromBoard = async ({ id }: deleteDataType): Promise<number> =
         // api requires post fetch to delete url in order to delete selected id
         const post = await axios({
             method: methods.post,
-            url: `${apiUrl}${urlDir.Delete}`,
+            url: `${baseUrl}${apiUrl.Delete}`,
             headers: postHeader,
             data: postData
         }

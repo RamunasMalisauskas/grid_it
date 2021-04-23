@@ -1,12 +1,12 @@
 import axios from "axios";
-import { apiUrl, urlDir, canvasLocation, methods } from "../constants/apiConstants";
+import { apiUrl, baseUrl, canvasLocation, methods } from "../constants/apiConstants";
 import { CellDataType } from '../types/types'
 
 export const fetchCanvaData = async (): Promise<CellDataType[]> => {
   try {
     const getBoard = await axios({
       method: methods.get,
-      url: `${apiUrl}${urlDir.Board}${canvasLocation}`
+      url: `${baseUrl}${apiUrl.Board}${canvasLocation}`
     }
 
     );
@@ -22,7 +22,7 @@ export const fetchBoardStatus = async (): Promise<number> => {
   try {
     const getBoard = await axios({
       method: methods.get,
-      url: `${apiUrl}${urlDir.BoardStatus}`
+      url: `${baseUrl}${apiUrl.BoardStatus}`
     });
     // latest version(update) of board
     return await getBoard.data[0].update;
@@ -35,7 +35,7 @@ export const fetchCellStatus = async () => {
   try {
     const getBoard = await axios({
       method: methods.get,
-      url: `${apiUrl}${urlDir.BoardStatus}`
+      url: `${baseUrl}${apiUrl.BoardStatus}`
     });
     // latest version(update) of board
     return await getBoard.data[0].update;

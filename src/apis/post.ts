@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiUrl, urlDir, postHeader, methods } from "../constants/apiConstants";
+import { baseUrl, apiUrl, postHeader, methods } from "../constants/apiConstants";
 import { postDataType } from '../types/types'
 
 export const addToBoard = async ({ userName, userColor, x, y, cellData }: postDataType): Promise<number> => {
@@ -14,7 +14,7 @@ export const addToBoard = async ({ userName, userColor, x, y, cellData }: postDa
 
     const post = await axios({
       method: methods.post,
-      url: `${apiUrl}${urlDir.Board}`,
+      url: `${baseUrl}${apiUrl.Board}`,
       headers: postHeader,
       data: postData
     }
