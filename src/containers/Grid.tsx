@@ -12,21 +12,24 @@ type CenterCircleProps = {
 export const Grid: React.FC = () => {
   const canvasData = useSelector((state: BoardDataState) => state.appData.canvasData);
   const loginStatus = useSelector((state: BoardDataState) => state.appData.login);
+  const circleSize = 400;
 
   const generatedCanvas = useMemo(() => {
     if (!canvasData) return
+    if (canvasData.length === 0) return
+    if (canvasData[0].data === null) return
+    if (!canvasData[0].data.data.value) return
 
     // web worker ideti
     const radiusIncrement = 360 / canvasData.length;
     const valueArray = canvasData.map((x) => x.data.data.value);
     const valueSum = valueArray.reduce((a, b) => a + b, 0);
-    const circleSize = 400;
     let startDeg = 0;
     //
 
     return (
       loginStatus === log.in && (
-        <CenterCircle size={circleSize}>
+        <>
           {canvasData.map((cell, index) => (
             <Cell
               key={cell._id}
@@ -38,15 +41,19 @@ export const Grid: React.FC = () => {
               }
               circleSize={circleSize}
             />
-          ))}
-        </CenterCircle>
+          ))
+          }
+
+        </>
       )
     );
   }, [canvasData, loginStatus]);
 
   return (
     <Canvas>
-      {generatedCanvas}
+      <CenterCircle size={circleSize}>
+        {generatedCanvas}
+      </CenterCircle>
     </Canvas>
   )
 };
