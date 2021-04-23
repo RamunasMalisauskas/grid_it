@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setSideBar } from "../state/actions";
 import { addToBoard } from "../apis";
 import { BoardDataState } from '../types/types'
-import { Input, PrimaryButton, SupportButton } from '../components'
+import { Input, PrimaryButton, SupportButton, Subtitle } from '../components'
 import { usersDB, auth, timeStamp } from '../firebase/firebase'
 import { sideBarState } from "../constants/stateConstants"
 
@@ -13,6 +13,7 @@ interface SideBarProps {
 }
 
 export const SideBar: React.FC = () => {
+    const [error, setError] = useState("")
     const dispatch = useDispatch()
     const randomColor = require("randomcolor");
     const sideBar = useSelector((state: BoardDataState) => state.appData.sideBarState);
@@ -34,13 +35,26 @@ export const SideBar: React.FC = () => {
             info: { value: info }
         } } = e
 
-        addToBoard({
-            userName: userName,
-            userColor: randomColor(),
-            x: canva.x + parseInt(number),
-            y: canva.y + parseInt(number),
-            cellData: { className: className, value: parseInt(data), info: info, cellPosition: { x: canva.x, y: canva.y } },
-        });
+        if (className.length > 0 && number.length > 0 && data.length > 0) {
+            setError('')
+            addToBoard({
+                userName: userName,
+                userColor: randomColor(),
+                x: canva.x + parseInt(number),
+                y: canva.y + parseInt(number),
+                cellData: {
+                    className: className,
+                    value: parseInt(data),
+                    info: info,
+                    canvaPosition: {
+                        x: canva.x,
+                        y: canva.y
+                    }
+                },
+            });
+        } else {
+            setError("Please enter required info to add a cell")
+        }
 
         if (user) {
             try {
@@ -50,10 +64,17 @@ export const SideBar: React.FC = () => {
 
                 if (userData.exists) {
                     const data = userData.data()
-                    console.log(data)
-                    await userDoc.update({ userName: userName, lastVisit: timeStamp })
+                    await userDoc.update({
+                        userName: userName,
+                        lastVisit: timeStamp
+                    })
                 } else {
-                    await userDoc.set({ userID: uid, userName: userName, firstVisit: timeStamp, lastVisit: timeStamp })
+                    await userDoc.set({
+                        userID: uid,
+                        userName: userName,
+                        firstVisit: timeStamp,
+                        lastVisit: timeStamp
+                    })
                 }
             }
             catch (e) {
@@ -70,13 +91,13 @@ export const SideBar: React.FC = () => {
                     {sideBar === sideBarState.close ? "menu" : "x"}
                 </SupportButton>
 
-                {sideBar === sideBarState.open &&
+                {sideBar === sideBarState.open && <>
                     <form onSubmit={handleSubmit}>
                         <Input
                             type="text"
                             name="class"
-                            placeholder="enter class name"
-                            label="enter class number"
+                            placeholder="...class one"
+                            label="enter class name"
                         />
                         <Input
                             type="number"
@@ -93,13 +114,18 @@ export const SideBar: React.FC = () => {
                         <Input
                             type="text"
                             name="info"
-                            placeholder="extra info"
-                            label="optional"
+                            placeholder="optional"
+                            label="extra info"
                         />
                         <PrimaryButton type="submit">
                             add cell
                          </PrimaryButton>
                     </form>
+                    <Subtitle>
+                        {error}
+                    </Subtitle>
+
+                </>
                 }
             </SideBarContainer>
         </SideBlock >
