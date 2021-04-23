@@ -40,9 +40,11 @@ const H1 = styled.h1`
 color: ${({ color }) => color || "white"};
 font-family: 'Zen Dots', cursive;
 text-transform: uppercase;
+font-weight: normal;
 `
 
 const H2 = styled.h2`
 color: ${({ color }) => color || "white"};
 font-family: 'Zen Dots', cursive;
+font-weight: normal;
 `

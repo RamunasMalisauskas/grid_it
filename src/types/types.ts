@@ -36,7 +36,7 @@ export type postDataType = {
         className: string,
         value: number,
         info?: string,
-        cellPosition: {
+        canvaPosition: {
             x: number,
             y: number,
         }

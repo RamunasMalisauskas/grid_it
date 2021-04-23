@@ -8,7 +8,6 @@ type getProps = {
 }
 
 export const fetchCanvaData = async ({ xposition, yposition }: getProps): Promise<CellDataType[]> => {
-  console.log(xposition + yposition)
   try {
     const getBoard = await axios({
       method: methods.get,
@@ -16,7 +15,6 @@ export const fetchCanvaData = async ({ xposition, yposition }: getProps): Promis
     }
 
     );
-    console.log(getBoard.data)
     return await getBoard.data;
   } catch (err) {
     console.log(err)
