@@ -18,7 +18,7 @@ const App = () => {
     setInterval(async () => {
       const newVersion = await fetchBoardStatus();
       if (!newVersion) return;
-      if (build.version > newVersion) {
+      if (build.version < newVersion) {
         console.log("new build version is avalible");
         build.version = newVersion;
         const canvasData = await fetchCanvaData({

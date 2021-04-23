@@ -19,6 +19,8 @@ export const SideBar: React.FC = () => {
     const userName = useSelector((state: BoardDataState) => state.appData.name);
     const canva = useSelector((state: BoardDataState) => state.appData.canvasPosition);
 
+    const handlleBarState = () => dispatch(setSideBar(sideBar === sideBarState.close ? sideBarState.open : sideBarState.close))
+
     const handleSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
         if (!e) return
         if (!canva) return
@@ -26,6 +28,7 @@ export const SideBar: React.FC = () => {
 
         const user = auth.currentUser
         const { target: {
+            class: { value: className },
             number: { value: number },
             data: { value: data },
             info: { value: info }
@@ -36,7 +39,7 @@ export const SideBar: React.FC = () => {
             userColor: randomColor(),
             x: canva.x + parseInt(number),
             y: canva.y + parseInt(number),
-            cellData: { value: parseInt(data), info: info },
+            cellData: { className: className, value: parseInt(data), info: info, cellPosition: { x: canva.x, y: canva.y } },
         });
 
         if (user) {
@@ -58,21 +61,27 @@ export const SideBar: React.FC = () => {
             }
         }
 
-    }, [userName, randomColor])
+    }, [userName, randomColor, canva])
 
     return (
         <SideBlock open={sideBar}>
             <SideBarContainer>
-                <SupportButton onClick={() => dispatch(setSideBar(sideBar === sideBarState.close ? sideBarState.open : sideBarState.close))}>
+                <SupportButton onClick={handlleBarState}>
                     {sideBar === sideBarState.close ? "menu" : "x"}
                 </SupportButton>
 
-                {sideBar === "open" &&
+                {sideBar === sideBarState.open &&
                     <form onSubmit={handleSubmit}>
+                        <Input
+                            type="text"
+                            name="class"
+                            placeholder="enter class name"
+                            label="enter class number"
+                        />
                         <Input
                             type="number"
                             name="number"
-                            placeholder="X"
+                            placeholder="1... 2... 3..."
                             label="enter cell number"
                         />
                         <Input
@@ -85,7 +94,7 @@ export const SideBar: React.FC = () => {
                             type="text"
                             name="info"
                             placeholder="extra info"
-                            label="enter aditional data"
+                            label="optional"
                         />
                         <PrimaryButton type="submit">
                             add cell
