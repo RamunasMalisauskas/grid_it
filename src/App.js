@@ -15,19 +15,20 @@ const App = () => {
   });
 
   const buildVersion = useCallback(() => {
-    setInterval(() => {
-      fetchBoardStatus().then((newVersion) => {
-        if (build.version < newVersion) {
-          console.log("new build version is avalible");
-          build.version = newVersion;
-          fetchCanvaData({
-            xposition: canvas[0],
-            yposition: canvas[1],
-          }).then((result) => {
-            dispatch(setCanvasData(result));
-          });
+    setInterval(async () => {
+      const newVersion = await fetchBoardStatus();
+      if (!newVersion) return;
+      if (build.version > newVersion) {
+        console.log("new build version is avalible");
+        build.version = newVersion;
+        const canvasData = await fetchCanvaData({
+          xposition: canvas[0],
+          yposition: canvas[1],
+        });
+        if (canvasData) {
+          dispatch(setCanvasData(canvasData));
         }
-      });
+      }
     }, 1000);
   }, [build, dispatch, canvas]);
 
