@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName } from "../state/actions";
 import { PrimaryButton, SupportButton, Input, Paragraph, HeaderLarge } from "../components";
-import { log } from '../constants/constants'
+import { log, localStorageItems } from '../constants/constants'
 import { BoardDataState } from '../types/types'
 import { auth } from '../firebase'
 
@@ -16,11 +16,11 @@ export const LoginHeader = () => {
     const dispatch = useDispatch()
     const loginStatus = useSelector((state: BoardDataState) => state.appData.login)
     const userName = useSelector((state: BoardDataState) => state.appData.name)
-    const [error, setError] = useState("")
+    const [error, setError] = useState('')
 
-    const handleReg = useCallback<React.FormEventHandler<HTMLFormElement>>((e) => {
+    const handleReg = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
+        if (!e) return
         e.preventDefault()
-
         const { target: {
             userName: { value: userName },
             email: { value: email },
@@ -28,46 +28,61 @@ export const LoginHeader = () => {
             repPassword: { value: repPass }
         } } = e
         if (pass !== repPass) {
+            setError("passwords are mistmatched")
             return
         } else {
-            auth.createUserWithEmailAndPassword(email, pass)
-                .then(() => {
-                    dispatch(setLogin(log.in));
-                    dispatch(setUserName(userName))
-                })
-                .catch(e => console.log(e.message))
+            try {
+                await auth.createUserWithEmailAndPassword(email, pass);
+                dispatch(setLogin(log.in));
+                dispatch(setUserName(userName));
+                localStorage.setItem(localStorageItems.name, userName);
+                localStorage.setItem(localStorageItems.status, log.in);
+                setError('');
+            } catch (e) {
+                setError(e.message)
+            }
+
         }
     }, [dispatch]);
 
-    const handleLogin = useCallback<React.FormEventHandler<HTMLFormElement>>((e) => {
+    const handleLogin = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
+        if (!e) return
         e.preventDefault()
         const { target: {
             email: { value: email },
             password: { value: pass }
         } } = e
-        auth.signInWithEmailAndPassword(email, pass)
-            .then(() => dispatch(setLogin(log.in)))
-            .catch(e => setError(e.message))
-    }, [dispatch]);
+        try {
+            await auth.signInWithEmailAndPassword(email, pass);
+            dispatch(setLogin(log.in));
+            localStorage.setItem(localStorageItems.name, userName);
+            localStorage.setItem(localStorageItems.status, log.in);
+            setError('');
+        } catch (e) {
+            setError(e.message)
+        }
 
-    const handleLogout = (() => {
-        auth.signOut()
-            .then(() => dispatch(setLogin(log.out)))
-            .catch(e => console.log(e.message))
+    }, [dispatch, userName]);
+
+    const handleLogout = (async () => {
+        try {
+            await auth.signOut()
+            dispatch(setLogin(log.out))
+            setError('')
+        } catch (e) {
+            setError(e.message)
+        }
+
     });
 
-    const handleRegState = () => {
-        dispatch(setLogin(log.reg))
-        setError("")
-    }
-    const handleLoginState = () => {
-        dispatch(setLogin(log.out))
-        setError("")
+    const handleTableState = () => {
+        dispatch(setLogin(loginStatus === log.reg ? log.out : log.reg))
+        setError('')
     }
 
     return (<>
         <Nav loggedIn={loginStatus === log.in}>
-            {loginStatus === log.reg &&
+            {loginStatus === log.reg && <>
                 <form onSubmit={handleReg}>
                     <Input
                         type="text"
@@ -93,13 +108,17 @@ export const LoginHeader = () => {
                         Register
                     </SupportButton>
 
-                    <PrimaryButton onClick={handleLoginState}>
+                    <PrimaryButton onClick={handleTableState}>
                         Login
                     </PrimaryButton>
                 </form>
+                <Paragraph>
+                    {error && error}
+                </Paragraph>
+            </>
             }
 
-            {loginStatus === log.out &&
+            {loginStatus === log.out && <>
                 <form onSubmit={handleLogin}>
                     <Input
                         type="email"
@@ -115,10 +134,20 @@ export const LoginHeader = () => {
                         Login
                     </SupportButton>
 
-                    <PrimaryButton onClick={handleRegState}>
+                    <PrimaryButton onClick={handleTableState}>
                         Register
                     </PrimaryButton>
                 </form>
+                <Paragraph>
+                    {error && error}
+                </Paragraph>
+                {!error &&
+                    <HeaderLarge>
+                        To use the application you have to login.
+                        Register if you dont have an account.
+                 </HeaderLarge>
+                }
+            </>
             }
 
             {loginStatus === log.in && <>
@@ -132,20 +161,6 @@ export const LoginHeader = () => {
             </>
             }
         </Nav>
-
-        {loginStatus === log.out &&
-            <CenterBlock>
-                <Paragraph>
-                    {error && error}
-                </Paragraph>
-                {!error &&
-                    <HeaderLarge>
-                        To use the application you have to login.
-                        Register if you dont have an account.
-                    </HeaderLarge>
-                }
-            </CenterBlock>
-        }
     </>);
 }
 
@@ -153,18 +168,10 @@ const Nav = styled.div<NavPropsType>`
  text-align: center;
  position: absolute;
  z-index: 1;
+ max-width: 30vw;
  right: ${({ loggedIn }) => loggedIn ? "0%" : "50%"};
  top: ${({ loggedIn }) => loggedIn ? "0" : "10vh"};
  transform: ${({ loggedIn }) => loggedIn ? "translate(0, 0)" : "translate(50%, 0)"}; 
  padding: 15px;
  transition: all ease-in-out 0.3s, top ease-in-out 0.3s 0.3s;
-`
-const CenterBlock = styled.div`
- position:absolute;
- top: 50%;
- left: 50%;
- transform: translate(-50%, -50%);
- text-align: center;
- width: 30vw;
- z-index: 2;
 `
