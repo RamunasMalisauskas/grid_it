@@ -1,5 +1,6 @@
 export type BoardDataState = {
     appData: {
+        errorMsg: string
         name: string
         sideBarState: string
         login: string

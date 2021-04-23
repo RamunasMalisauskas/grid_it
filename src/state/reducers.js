@@ -6,6 +6,7 @@ import {
   SET_SIDEBAR,
   SET_LOGIN,
   SET_CANVAS_POSITION,
+  SET_ERROR_MESSAGE,
 } from "./constant";
 
 //   export type PainterData = {
@@ -22,6 +23,7 @@ import {
 // const painterColor = localStorage.getItem("painterColor");
 
 const defaultState = {
+  errorMsg: "",
   name: "user",
   sideBarState: "close",
   login: "loggedOut",
@@ -41,6 +43,8 @@ const appData = (state = defaultState, action) => {
       return { ...state, sideBarState: action.value };
     case SET_LOGIN:
       return { ...state, login: action.value };
+    case SET_ERROR_MESSAGE:
+      return { ...state, errorMsg: action.value };
     default:
       return state;
   }

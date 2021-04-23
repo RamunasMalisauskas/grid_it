@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { setSideBar } from "../state/actions";
+import { setSideBar, setErrorMsg } from "../state/actions";
 import { addToBoard } from "../apis";
 import { BoardDataState } from '../types/types'
 import { Input, PrimaryButton, SupportButton, Subtitle } from '../components'
@@ -13,12 +13,12 @@ interface SideBarProps {
 }
 
 export const SideBar: React.FC = () => {
-    const [error, setError] = useState("")
     const dispatch = useDispatch()
     const randomColor = require("randomcolor");
     const sideBar = useSelector((state: BoardDataState) => state.appData.sideBarState);
     const userName = useSelector((state: BoardDataState) => state.appData.name);
     const canva = useSelector((state: BoardDataState) => state.appData.canvasPosition);
+    const error = useSelector((state: BoardDataState) => state.appData.errorMsg);
 
     const handlleBarState = () => dispatch(setSideBar(sideBar === sideBarState.close ? sideBarState.open : sideBarState.close))
 
@@ -36,7 +36,7 @@ export const SideBar: React.FC = () => {
         } } = e
 
         if (className.length > 0 && number.length > 0 && data.length > 0) {
-            setError('')
+            dispatch(setErrorMsg(""))
             addToBoard({
                 userName: userName,
                 userColor: randomColor(),
@@ -53,7 +53,7 @@ export const SideBar: React.FC = () => {
                 },
             });
         } else {
-            setError("Please enter required info to add a cell")
+            dispatch(setErrorMsg("Please enter required info to add a cell"))
         }
 
         if (user) {
@@ -63,7 +63,7 @@ export const SideBar: React.FC = () => {
                 const userData = await userDoc.get()
 
                 if (userData.exists) {
-                    const data = userData.data()
+                    // const data = userData.data()
                     await userDoc.update({
                         userName: userName,
                         lastVisit: timeStamp
@@ -82,7 +82,7 @@ export const SideBar: React.FC = () => {
             }
         }
 
-    }, [userName, randomColor, canva])
+    }, [userName, randomColor, canva, dispatch])
 
     return (
         <SideBlock open={sideBar}>

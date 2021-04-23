@@ -3,7 +3,8 @@ import {
   SET_CANVAS_DATA,
   SET_SIDEBAR,
   SET_LOGIN,
-  SET_CANVAS_POSITION
+  SET_CANVAS_POSITION,
+  SET_ERROR_MESSAGE
 } from "./constant";
 
 export const setUserName = (value) => {
@@ -37,6 +38,12 @@ export const setSideBar = (value) => {
 export const setLogin = (value) => {
   return {
     type: SET_LOGIN,
+    value,
+  };
+};
+export const setErrorMsg = (value) => {
+  return {
+    type: SET_ERROR_MESSAGE,
     value,
   };
 };

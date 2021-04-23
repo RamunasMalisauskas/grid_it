@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { setLogin, setUserName } from "../state/actions";
+import { setLogin, setUserName, setErrorMsg } from "../state/actions";
 import { PrimaryButton, SupportButton, Input, Paragraph, Subtitle } from "../components";
 import { log, localStorageItems } from '../constants/stateConstants'
 import { BoardDataState } from '../types/types'
@@ -15,7 +15,8 @@ export const LoginHeader = () => {
     const dispatch = useDispatch()
     const loginStatus = useSelector((state: BoardDataState) => state.appData.login)
     const userName = useSelector((state: BoardDataState) => state.appData.name)
-    const [error, setError] = useState('')
+    const error = useSelector((state: BoardDataState) => state.appData.errorMsg)
+
 
     const handleReg = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
         if (!e) return
@@ -27,7 +28,7 @@ export const LoginHeader = () => {
             repPassword: { value: repPass }
         } } = e
         if (pass !== repPass) {
-            setError("passwords are mistmatched")
+            dispatch(setErrorMsg("passwords are mistmatched"))
             return
         } else {
             try {
@@ -36,9 +37,9 @@ export const LoginHeader = () => {
                 dispatch(setUserName(userName));
                 localStorage.setItem(localStorageItems.name, userName);
                 localStorage.setItem(localStorageItems.status, log.in);
-                setError('');
+                dispatch(setErrorMsg(""))
             } catch (e) {
-                setError(e.message)
+                dispatch(setErrorMsg(e.message))
             }
 
         }
@@ -56,9 +57,9 @@ export const LoginHeader = () => {
             dispatch(setLogin(log.in));
             localStorage.setItem(localStorageItems.name, userName);
             localStorage.setItem(localStorageItems.status, log.in);
-            setError('');
+            dispatch(setErrorMsg(""))
         } catch (e) {
-            setError(e.message)
+            dispatch(setErrorMsg(e.message))
         }
 
     }, [dispatch, userName]);
@@ -69,15 +70,15 @@ export const LoginHeader = () => {
             dispatch(setLogin(log.out))
             localStorage.setItem(localStorageItems.status, log.out)
             localStorage.setItem(localStorageItems.name, '')
-            setError('')
+            dispatch(setErrorMsg(""))
         } catch (e) {
-            setError(e.message)
+            dispatch(setErrorMsg(e.message))
         }
     });
 
     const handleTableState = () => {
         dispatch(setLogin(loginStatus === log.reg ? log.out : log.reg))
-        setError('')
+        dispatch(setErrorMsg(""))
     }
 
     return (<>
