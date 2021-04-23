@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from "styled-components";
 import { CellDataType } from '../../types/types'
 import { deleteFromBoard } from "../../apis/delete";
@@ -20,27 +20,36 @@ type CellBlockProps = {
     circleSize: number;
     offset: number;
 }
+type CellInfoProps = {
+    visible: boolean
+}
 
 export const Cell: React.FC<CellProps> = ({ cell, cellRadiusIncr, valueSum, valueDif, circleSize }) => {
+    const [visible, setVisible] = useState(false)
     const cellProportion = cell.data.data.value / valueSum * 100
     const cellSize = circleSize / 10 + cellProportion
     const cellOffset = isNaN(valueDif) ? 0 : valueDif + (cellProportion * 0.1)
     const cellcircleSize = circleSize + cellProportion
 
+    const handelClick = () => deleteFromBoard({ id: cell._id })
+    const handleMouse = () => setVisible(!visible)
+
     return (
         <CellBlock
             key={cell._id}
-            onClick={() => {
-                deleteFromBoard({
-                    id: cell._id
-                });
-            }}
+            onClick={handelClick}
+            onMouseEnter={handleMouse}
+            onMouseLeave={handleMouse}
             color={cell.data.color}
             radius={cellRadiusIncr}
             circleSize={cellcircleSize}
             size={cellSize}
             offset={cellOffset}
-        />
+        >
+            <CellInfo visible={visible}>
+                {cell.data.data.value}
+            </CellInfo>
+        </CellBlock>
     );
 }
 
@@ -57,6 +66,7 @@ const CellBlock = styled.div<CellBlockProps>`
             rotate(${({ radius }) => radius}deg) 
             translateX(${({ circleSize, size }) => (circleSize + (size / 2)) / 2}px)
             translateY(${({ offset }) => -offset}%)
+            rotate(${({ radius }) => -radius}deg) 
             ;
   transition: all ease-in-out 0.3s;
   &:hover{
@@ -66,3 +76,16 @@ const CellBlock = styled.div<CellBlockProps>`
     cursor: pointer;
   }
 `;
+
+const CellInfo = styled.div<CellInfoProps>`
+ display: ${({ visible }) => visible ? "block" : "none"};
+ position: absolute;
+ top: 50%;
+ left: -50%;
+ transform: translate(-50%, -50%);
+ background-color: rgba(209, 209, 209, 0.4);
+ padding: 20px;
+ font-family: 'Zen Dots', cursive;
+ text-transform: uppercase;
+ border-radius: 10px;
+`
