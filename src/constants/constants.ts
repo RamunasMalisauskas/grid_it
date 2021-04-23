@@ -23,4 +23,8 @@ export enum log {
   reg = 'register'
 }
 
+export enum localStorageItems {
+  name = "userName",
+  status = "status"
+}
 
