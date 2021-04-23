@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiUrl, urlDir, canvasLocation, methods } from "../constants/constants";
+import { apiUrl, urlDir, canvasLocation, methods } from "../constants/apiConstants";
 import { CellDataType } from '../types/types'
 
 export const fetchCanvaData = async (): Promise<CellDataType[]> => {

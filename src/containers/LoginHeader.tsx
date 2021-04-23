@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName } from "../state/actions";
 import { PrimaryButton, SupportButton, Input, Paragraph, Subtitle } from "../components";
-import { log, localStorageItems } from '../constants/constants'
+import { log, localStorageItems } from '../constants/stateConstants'
 import { BoardDataState } from '../types/types'
 import { auth } from '../firebase'
 

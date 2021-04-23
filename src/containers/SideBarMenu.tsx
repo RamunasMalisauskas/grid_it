@@ -6,6 +6,7 @@ import { addToBoard } from "../apis";
 import { BoardDataState } from '../types/types'
 import { Input, PrimaryButton, SupportButton } from '../components'
 import { usersDB, auth, timeStamp } from '../firebase/firebase'
+import { sideBarState } from "../constants/stateConstants"
 
 interface SideBarProps {
     open: string
@@ -58,8 +59,8 @@ export const SideBar: React.FC = () => {
     return (
         <SideBlock open={sideBar}>
             <SideBarContainer>
-                <SupportButton onClick={() => dispatch(setSideBar(sideBar === "close" ? "open" : "close"))}>
-                    {sideBar === "close" ? "menu" : "x"}
+                <SupportButton onClick={() => dispatch(setSideBar(sideBar === sideBarState.close ? sideBarState.open : sideBarState.close))}>
+                    {sideBar === sideBarState.close ? "menu" : "x"}
                 </SupportButton>
 
                 {sideBar === "open" &&
@@ -95,9 +96,9 @@ export const SideBar: React.FC = () => {
 const SideBlock = styled.div<SideBarProps>`
  position: absolute;
  top: 0;
- left:  ${({ open }) => open === "open" ? "0" : "-200px"};
+ left:  ${({ open }) => open === sideBarState.open ? "0" : "-200px"};
  height: 100%; 
- background: ${({ open }) => open === "open" ? "rgba(104, 104, 104, 0.3)" : "rgba(0, 0, 0, 0)"}; 
+ background: ${({ open }) => open === sideBarState.open ? "rgba(104, 104, 104, 0.3)" : "rgba(0, 0, 0, 0)"}; 
  transition: all ease-in-out 0.3s;
 `
 

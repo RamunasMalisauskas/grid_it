@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiUrl, urlDir, postHeader, methods } from "../constants/constants";
+import { apiUrl, urlDir, postHeader, methods } from "../constants/apiConstants";
 
 type deleteDataType = {
     id: string

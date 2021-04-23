@@ -16,15 +16,3 @@ export enum methods {
   get = "GET",
   delete = "DELETE"
 }
-
-export enum log {
-  in = "loggedIn",
-  out = "loggedOut",
-  reg = 'register'
-}
-
-export enum localStorageItems {
-  name = "userName",
-  status = "status"
-}
-
