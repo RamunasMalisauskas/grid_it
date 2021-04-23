@@ -17,9 +17,13 @@ export const SideBar: React.FC = () => {
     const randomColor = require("randomcolor");
     const sideBar = useSelector((state: BoardDataState) => state.appData.sideBarState);
     const userName = useSelector((state: BoardDataState) => state.appData.name);
+    const canva = useSelector((state: BoardDataState) => state.appData.canvasPosition);
 
     const handleSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
+        if (!e) return
+        if (!canva) return
         e.preventDefault()
+
         const user = auth.currentUser
         const { target: {
             number: { value: number },
@@ -30,8 +34,8 @@ export const SideBar: React.FC = () => {
         addToBoard({
             userName: userName,
             userColor: randomColor(),
-            x: parseInt(number),
-            y: parseInt(number),
+            x: canva.x + parseInt(number),
+            y: canva.y + parseInt(number),
             cellData: { value: parseInt(data), info: info },
         });
 

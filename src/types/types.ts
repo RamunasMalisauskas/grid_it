@@ -4,6 +4,10 @@ export type BoardDataState = {
         sideBarState: string
         login: string
         loginMenu: boolean
+        canvasPosition: {
+            x: number
+            y: number
+        }
         canvasData: CellDataType[]
     }
 }

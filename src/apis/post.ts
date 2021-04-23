@@ -1,12 +1,12 @@
 import axios from "axios";
-import { baseUrl, apiUrl, postHeader, methods, canvasPosition } from "../constants/apiConstants";
+import { baseUrl, apiUrl, postHeader, methods } from "../constants/apiConstants";
 import { postDataType } from '../types/types'
 
 export const addToBoard = async ({ userName, userColor, x, y, cellData }: postDataType): Promise<number> => {
   try {
     const postData = {
-      x: canvasPosition[0] + x,
-      y: canvasPosition[1] + y,
+      x: x,
+      y: y,
       name: userName,
       color: userColor,
       data: cellData,

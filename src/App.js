@@ -22,8 +22,8 @@ const App = () => {
         console.log("new build version is avalible");
         build.version = newVersion;
         const canvasData = await fetchCanvaData({
-          xposition: canvas[0],
-          yposition: canvas[1],
+          xposition: canvas.x,
+          yposition: canvas.y,
         });
         if (canvasData) {
           dispatch(setCanvasData(canvasData));

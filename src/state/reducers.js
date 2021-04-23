@@ -26,7 +26,7 @@ const defaultState = {
   sideBarState: "close",
   login: "loggedOut",
   loginMenu: false,
-  canvasPosition: [2000, 2000],
+  canvasPosition: { x: 2000, y: 2000 },
 };
 
 const appData = (state = defaultState, action) => {
