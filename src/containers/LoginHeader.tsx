@@ -11,7 +11,6 @@ type NavPropsType = {
     loggedIn: boolean
 }
 
-
 export const LoginHeader = () => {
     const dispatch = useDispatch()
     const loginStatus = useSelector((state: BoardDataState) => state.appData.login)
@@ -68,11 +67,12 @@ export const LoginHeader = () => {
         try {
             await auth.signOut()
             dispatch(setLogin(log.out))
+            localStorage.setItem(localStorageItems.status, log.out)
+            localStorage.setItem(localStorageItems.name, '')
             setError('')
         } catch (e) {
             setError(e.message)
         }
-
     });
 
     const handleTableState = () => {
