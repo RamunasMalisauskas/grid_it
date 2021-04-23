@@ -5,6 +5,7 @@ import { setSideBar } from "../state/actions";
 import { addToBoard } from "../apis";
 import { BoardDataState } from '../types/types'
 import { Input, PrimaryButton, SupportButton } from '../components'
+import { usersDB, auth, timeStamp } from '../firebase/firebase'
 
 interface SideBarProps {
     open: string
@@ -16,13 +17,15 @@ export const SideBar: React.FC = () => {
     const sideBar = useSelector((state: BoardDataState) => state.appData.sideBarState);
     const userName = useSelector((state: BoardDataState) => state.appData.name);
 
-    const handleSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>((e) => {
+    const handleSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
         e.preventDefault()
+        const user = auth.currentUser
         const { target: {
             number: { value: number },
             data: { value: data },
             info: { value: info }
         } } = e
+
         addToBoard({
             userName: userName,
             userColor: randomColor(),
@@ -30,6 +33,26 @@ export const SideBar: React.FC = () => {
             y: parseInt(number),
             cellData: { value: parseInt(data), info: info },
         });
+
+        if (user) {
+            try {
+                const { uid } = user
+                const userDoc = usersDB.doc(uid)
+                const userData = await userDoc.get()
+
+                if (userData.exists) {
+                    const data = userData.data()
+                    console.log(data)
+                    await userDoc.update({ userName: userName, lastVisit: timeStamp })
+                } else {
+                    await userDoc.set({ userID: uid, userName: userName, firstVisit: timeStamp, lastVisit: timeStamp })
+                }
+            }
+            catch (e) {
+                console.log(e)
+            }
+        }
+
     }, [userName, randomColor])
 
     return (
