@@ -3,6 +3,7 @@ import {
   SET_CANVAS_DATA,
   SET_SIDEBAR,
   SET_LOGIN,
+  SET_CANVAS_POSITION
 } from "./constant";
 
 export const setUserName = (value) => {
@@ -15,6 +16,13 @@ export const setUserName = (value) => {
 export const setCanvasData = (value) => {
   return {
     type: SET_CANVAS_DATA,
+    value,
+  };
+};
+
+export const setCanvasPosition = (value) => {
+  return {
+    type: SET_CANVAS_POSITION,
     value,
   };
 };

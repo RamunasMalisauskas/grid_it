@@ -5,8 +5,8 @@ import {
   SET_CANVAS_DATA,
   SET_SIDEBAR,
   SET_LOGIN,
+  SET_CANVAS_POSITION,
 } from "./constant";
-
 
 //   export type PainterData = {
 //     name: string;
@@ -26,6 +26,7 @@ const defaultState = {
   sideBarState: "close",
   login: "loggedOut",
   loginMenu: false,
+  canvasPosition: [2000, 2000],
 };
 
 const appData = (state = defaultState, action) => {
@@ -34,6 +35,8 @@ const appData = (state = defaultState, action) => {
       return { ...state, name: action.value };
     case SET_CANVAS_DATA:
       return { ...state, canvasData: action.value };
+    case SET_CANVAS_POSITION:
+      return { ...state, canvasPosition: action.value };
     case SET_SIDEBAR:
       return { ...state, sideBarState: action.value };
     case SET_LOGIN:
