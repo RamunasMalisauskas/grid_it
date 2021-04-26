@@ -3,15 +3,18 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Cell, Spinner } from "..";
 import { log } from "../../constants/stateConstants";
+import { sideBarState } from "../../constants/stateConstants"
 import { StateType } from "../../types/types";
 
 type CenterCircleProps = {
   size: number;
+  position: boolean;
 };
 
 export const Grid: React.FC = () => {
   const { canvasData } = useSelector((state: StateType) => state.canvaState);
   const { loginStatus } = useSelector((state: StateType) => state.userState);
+  const { sideBar } = useSelector((state: StateType) => state.appState);
   const circleSize = 400;
 
   const generatedCanvas = useMemo(() => {
@@ -57,7 +60,7 @@ export const Grid: React.FC = () => {
               <Spinner color="white" />
             </SpinnerBlock>
           }
-          <CenterCircle size={circleSize}>
+          <CenterCircle size={circleSize} position={sideBar === sideBarState.open}>
             {generatedCanvas}
           </CenterCircle>
         </>
@@ -80,7 +83,8 @@ const CenterCircle = styled.div<CenterCircleProps>`
   border-radius: 50%;
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: ${({ position }) => position ? `calc(50% + 200px)` : `50%`};
+  transition: all ease-in-out 0.3s 0.3s;
   transform: translate(-50%, -50%);
   background-color: rgba(209, 209, 209, 0.4);
 `;
