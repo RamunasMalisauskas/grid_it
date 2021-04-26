@@ -1,11 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserName, } from "../state/actions";
 import { storageItems } from '../constants/stateConstants';
-import { FormTemplate, SupportButton } from '../components';
+import { FormTemplate, SupportButton, TitleLarge } from '../components';
 import { userPageFormInputs } from '../utils/formData';
+import { StateType } from '../types/types';
 
 interface UserPageProps {
 }
@@ -14,8 +15,9 @@ interface UserPageProps {
 export const UserPage: React.FC<UserPageProps> = () => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const { userName } = useSelector((state: StateType) => state.userState);
 
-    const handelNameChange = (e: any) => {
+    const handelNameChange: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault()
         const { target:
             { userName: {
@@ -28,6 +30,10 @@ export const UserPage: React.FC<UserPageProps> = () => {
     return (
         <Canvas>
             <FomrBlock>
+                <TitleLarge>
+                    {userName}
+                </TitleLarge>
+
                 <FormTemplate
                     inputs={userPageFormInputs}
                     handleSubmit={handelNameChange}
