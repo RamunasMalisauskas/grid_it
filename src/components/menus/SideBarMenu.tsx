@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSideBar, setErrorMsg } from "../../state/actions";
 import { addToBoard } from "../../apis";
 import { StateType } from '../../types/types'
-import { Input, PrimaryButton, SupportButton, Subtitle, FormTemplate } from '../'
+import { SupportButton, Subtitle, FormTemplate } from '../'
 import { sideBarState, log } from "../../constants/stateConstants"
 import { sideBarFormInputs } from '../../utils/formData'
 
