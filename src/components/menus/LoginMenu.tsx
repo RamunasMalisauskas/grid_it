@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react'
 import styled from "styled-components";
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName, setErrorMsg } from "../../state/actions";
-import { PrimaryButton, SupportButton, Input, Paragraph, Subtitle } from "..";
+import { PrimaryButton, SupportButton, Input, Subtitle } from "..";
 import { log, storageItems } from '../../constants/stateConstants'
 import { StateType } from '../../types/types'
 import { auth, timeStamp, usersDB } from '../../firebase'
@@ -13,6 +14,7 @@ type NavPropsType = {
 
 export const LoginMenu = () => {
     const dispatch = useDispatch()
+    const history = useHistory();
     const { errorMsg } = useSelector((state: StateType) => state.appState);
     const { userName, loginStatus } = useSelector((state: StateType) => state.userState);
 
@@ -190,9 +192,11 @@ export const LoginMenu = () => {
                     logout
                 </PrimaryButton>
 
-                <Paragraph>
+                <UserButton
+                    onClick={() => history.push(`/user/${userName}`)}
+                >
                     user: {userName}
-                </Paragraph>
+                </UserButton>
             </>
             }
         </LoginTable>
@@ -204,9 +208,28 @@ const LoginTable = styled.div<NavPropsType>`
  position: absolute;
  z-index: 1;
  max-width: 30vw;
+ min-width: 135px;
  right: ${({ loggedIn }) => loggedIn ? "0%" : "50%"};
  top: ${({ loggedIn }) => loggedIn ? "0" : "10vh"};
- transform: ${({ loggedIn }) => loggedIn ? "translate(0, 0)" : "translate(50%, 0)"}; 
+ transform: ${({ loggedIn }) => loggedIn ? "translate(0, 0)" : "translate(50%, 0)"};
  padding: 15px;
  transition: all ease-in-out 0.3s, top ease-in-out 0.3s 0.3s;
+`
+
+const UserButton = styled.div`
+ color:white;
+ padding: 10px 5px;
+ margin: 5px 0;
+ border-radius: 10px;
+ font-family: 'Zen Dots', cursive;
+ text-transform: uppercase;
+ transition: all ease-in-out 0.1s;
+  &:hover{
+    color:white;
+    background: #d15585;
+    border: 2px solid #d15585;
+    box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transform: scale(1.05);
+}
 `

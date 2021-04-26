@@ -1,27 +1,28 @@
 import React from 'react'
 import styled from "styled-components";
 
-type InputProps = {
+export type InputProps = {
     type: string,
     value?: string,
     name: string,
     label?: string,
     onChange?: any,
     placeholder?: string
+    required?: boolean
 }
 
-export const Input: React.FC<InputProps> = ({ type, value, name, label, onChange, placeholder }) => {
+export const Input: React.FC<InputProps> = ({ type, value, name, label, onChange, placeholder, required }) => {
     return (
         <>
             {label &&
                 <LabelBlock>
                     <LabelDiv htmlFor={label} >{label}</LabelDiv>
-                    <InputDiv type={type} value={value} name={name} placeholder={placeholder} onChange={onChange} />
+                    <InputDiv type={type} value={value} name={name} placeholder={placeholder} onChange={onChange} required={required} />
                 </LabelBlock>
             }
 
             {!label &&
-                <InputDiv type={type} value={value} name={name} placeholder={placeholder} onChange={onChange} />}
+                <InputDiv type={type} value={value} name={name} placeholder={placeholder} onChange={onChange} required={required} />}
         </>
     );
 }
