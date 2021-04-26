@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useCallback } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, RouteProps, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCanvaData, fetchBoardStatus } from "./apis";
 import { setCanvasData } from "./state/actions";
-import { HomePage } from "./containers";
+import { HomePage, UserPage } from "./containers";
 import { StateType } from "./types/types";
+import { auth } from "./firebase"
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,11 @@ const App: React.FC = () => {
     }, 1000);
   }, [build, dispatch, canvasPosition]);
 
+  const PrivateRoute = ({ children, ...props }: React.PropsWithChildren<RouteProps>): JSX.Element => {
+    if (!auth.currentUser) return <Redirect to="" />
+    return <Route {...props}>{children}</Route>
+  }
+
   useEffect(() => {
     buildVersion();
   });
@@ -39,6 +45,7 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <PrivateRoute exact path="/user/:id" component={UserPage} />
       </Switch>
     </BrowserRouter>
   );
