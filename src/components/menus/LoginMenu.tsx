@@ -120,7 +120,7 @@ export const LoginMenu = () => {
         <LoginTable loggedIn={loginStatus === log.in}>
             {loginStatus === log.reg && <>
                 <FormTemplate
-                    handleSubmit={handleLogin}
+                    handleSubmit={handleReg}
                     inputs={regFormInputs}
                     buttonText="Register"
                     supportBtn={true}
@@ -163,7 +163,7 @@ export const LoginMenu = () => {
                 <UserButton
                     onClick={() => history.push(`/user/${userName}`)}
                 >
-                    user: {userName}
+                    user: {userName.charAt(0)}
                 </UserButton>
             </>
             }
@@ -192,7 +192,6 @@ const UserButton = styled.div`
  font-family: 'Zen Dots', cursive;
  text-transform: uppercase;
  transition: all ease-in-out 0.1s;
- max-width: 80%;
  overflow: hidden;
   &:hover{
     color:white;
