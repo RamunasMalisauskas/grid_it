@@ -1,20 +1,20 @@
-import React, { useCallback } from 'react'
+import React, { useCallback } from 'react';
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName, setErrorMsg } from "../../state/actions";
 import { PrimaryButton, Subtitle, FormTemplate } from "..";
-import { log, storageItems } from '../../constants/stateConstants'
-import { StateType } from '../../types/types'
-import { auth, timeStamp, usersDB } from '../../firebase'
-import { loginFormInputs, regFormInputs } from '../../utils/formData'
+import { log, storageItems } from '../../constants/stateConstants';
+import { StateType } from '../../types/types';
+import { auth, timeStamp, usersDB } from '../../firebase';
+import { loginFormInputs, regFormInputs } from '../../utils/formData';
 
 type NavPropsType = {
     loggedIn: boolean
 }
 
 export const LoginMenu = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const history = useHistory();
     const { errorMsg } = useSelector((state: StateType) => state.appState);
     const { userName, loginStatus } = useSelector((state: StateType) => state.userState);
