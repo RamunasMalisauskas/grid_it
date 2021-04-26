@@ -1,15 +1,18 @@
-export type BoardDataState = {
-    appData: {
+export type StateType = {
+    appState: {
         errorMsg: string
-        name: string
-        sideBarState: string
-        login: string
-        loginMenu: boolean
+        sideBar: string
+    }
+    canvaState: {
+        canvasData: CellDataType[]
         canvasPosition: {
             x: number
             y: number
         }
-        canvasData: CellDataType[]
+    }
+    userState: {
+        userName: string
+        loginStatus: string
     }
 }
 

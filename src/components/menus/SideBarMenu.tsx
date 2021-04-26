@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setSideBar, setErrorMsg } from "../../state/actions";
 import { addToBoard } from "../../apis";
-import { BoardDataState } from '../../types/types'
+import { StateType } from '../../types/types'
 import { Input, PrimaryButton, SupportButton, Subtitle } from '../'
 import { sideBarState, log } from "../../constants/stateConstants"
 
@@ -14,19 +14,16 @@ interface SideBarProps {
 export const SideBarMenu: React.FC = () => {
     const dispatch = useDispatch()
     const randomColor = require("randomcolor");
-    const sideBar = useSelector((state: BoardDataState) => state.appData.sideBarState);
-    const userName = useSelector((state: BoardDataState) => state.appData.name);
-    const canva = useSelector((state: BoardDataState) => state.appData.canvasPosition);
-    const error = useSelector((state: BoardDataState) => state.appData.errorMsg);
-    const login = useSelector((state: BoardDataState) => state.appData.login);
+    const { canvasPosition } = useSelector((state: StateType) => state.canvaState);
+    const { errorMsg, sideBar } = useSelector((state: StateType) => state.appState);
+    const { userName, loginStatus } = useSelector((state: StateType) => state.userState);
 
-    const handlleBarState = () => dispatch(setSideBar(sideBar === sideBarState.close ? sideBarState.open : sideBarState.close))
+    const handleBarState = () => dispatch(setSideBar(sideBar === sideBarState.close ? sideBarState.open : sideBarState.close))
 
     const handleSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
         if (!e) return
-        if (!canva) return
+        if (!canvasPosition) return
         e.preventDefault()
-
 
         const { target: {
             class: { value: className },
@@ -40,8 +37,8 @@ export const SideBarMenu: React.FC = () => {
             addToBoard({
                 userName: userName,
                 userColor: randomColor(),
-                x: canva.x + parseInt(number),
-                y: canva.y + parseInt(number),
+                x: canvasPosition.x + parseInt(number),
+                y: canvasPosition.y + parseInt(number),
                 cellData: {
                     className: className,
                     value: parseInt(data),
@@ -52,13 +49,13 @@ export const SideBarMenu: React.FC = () => {
             dispatch(setErrorMsg("Please enter required info to add a cell"))
         }
 
-    }, [userName, randomColor, canva, dispatch])
+    }, [userName, randomColor, canvasPosition, dispatch])
 
     return (
         <SideBlock open={sideBar}>
-            {login === log.in && <>
+            {loginStatus === log.in && <>
                 <SideBarContainer>
-                    <SupportButton onClick={handlleBarState}>
+                    <SupportButton onClick={handleBarState}>
                         {sideBar === sideBarState.close ? "menu" : "x"}
                     </SupportButton>
 
@@ -94,7 +91,7 @@ export const SideBarMenu: React.FC = () => {
                         </form>
 
                         <Subtitle>
-                            {error}
+                            {errorMsg}
                         </Subtitle>
                     </>
                     }

@@ -3,15 +3,15 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Cell, Spinner } from "..";
 import { log } from "../../constants/stateConstants";
-import { BoardDataState } from "../../types/types";
+import { StateType } from "../../types/types";
 
 type CenterCircleProps = {
   size: number;
 };
 
 export const Grid: React.FC = () => {
-  const canvasData = useSelector((state: BoardDataState) => state.appData.canvasData);
-  const loginStatus = useSelector((state: BoardDataState) => state.appData.login);
+  const { canvasData } = useSelector((state: StateType) => state.canvaState);
+  const { loginStatus } = useSelector((state: StateType) => state.userState);
   const circleSize = 400;
 
   const generatedCanvas = useMemo(() => {

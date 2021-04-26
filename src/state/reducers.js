@@ -28,24 +28,15 @@ const userName = localStorage.getItem(storageItems.name);
 const defaultState = {
   errorMsg: "",
   name: userName || "user",
-  sideBarState: "close",
+  sideBar: "close",
   login: "loggedOut",
-  loginMenu: false,
   canvasPosition: { x: 2000, y: 2000 },
 };
 
-const appData = (state = defaultState, action) => {
+const appState = (state = defaultState, action) => {
   switch (action.type) {
-    case SET_USER_NAME:
-      return { ...state, name: action.value };
-    case SET_CANVAS_DATA:
-      return { ...state, canvasData: action.value };
-    case SET_CANVAS_POSITION:
-      return { ...state, canvasPosition: action.value };
     case SET_SIDEBAR:
-      return { ...state, sideBarState: action.value };
-    case SET_LOGIN:
-      return { ...state, login: action.value };
+      return { ...state, sideBar: action.value };
     case SET_ERROR_MESSAGE:
       return { ...state, errorMsg: action.value };
     default:
@@ -53,6 +44,29 @@ const appData = (state = defaultState, action) => {
   }
 };
 
+const canvaState = (state = defaultState, action) => {
+  switch (action.type) {
+    case SET_CANVAS_DATA:
+      return { ...state, canvasData: action.value };
+    case SET_CANVAS_POSITION:
+      return { ...state, canvasPosition: action.value };
+    default:
+      return state;
+  }
+};
+
+const userState = (state = defaultState, action) => {
+  switch (action.type) {
+    case SET_USER_NAME:
+      return { ...state, userName: action.value };
+    case SET_LOGIN:
+      return { ...state, login: action.value };
+    default:
+      return state;
+  }
+};
 export const combinedReducer = combineReducers({
-  appData: appData,
+  appState,
+  userState,
+  canvaState,
 });

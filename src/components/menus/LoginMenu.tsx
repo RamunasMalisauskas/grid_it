@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName, setErrorMsg } from "../../state/actions";
 import { PrimaryButton, SupportButton, Input, Paragraph, Subtitle } from "..";
 import { log, storageItems } from '../../constants/stateConstants'
-import { BoardDataState } from '../../types/types'
+import { StateType } from '../../types/types'
 import { auth, timeStamp, usersDB } from '../../firebase'
 
 type NavPropsType = {
@@ -13,9 +13,8 @@ type NavPropsType = {
 
 export const LoginMenu = () => {
     const dispatch = useDispatch()
-    const loginStatus = useSelector((state: BoardDataState) => state.appData.login)
-    const userName = useSelector((state: BoardDataState) => state.appData.name)
-    const error = useSelector((state: BoardDataState) => state.appData.errorMsg)
+    const { errorMsg } = useSelector((state: StateType) => state.appState);
+    const { userName, loginStatus } = useSelector((state: StateType) => state.userState);
 
     const handleReg = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
         if (!e) return
@@ -147,7 +146,7 @@ export const LoginMenu = () => {
                     </PrimaryButton>
                 </form>
                 <Subtitle>
-                    {error}
+                    {errorMsg}
                 </Subtitle>
             </>
             }
@@ -174,10 +173,10 @@ export const LoginMenu = () => {
                 </form>
 
                 <Subtitle>
-                    {error}
+                    {errorMsg}
                 </Subtitle>
 
-                {!error &&
+                {!errorMsg &&
                     <Subtitle>
                         To use the application you have to login.
                         Register if you dont have an account.
