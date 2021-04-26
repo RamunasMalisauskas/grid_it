@@ -1,20 +1,23 @@
 import React from 'react'
-import { Input, PrimaryButton } from '../'
+import { Input, PrimaryButton, SupportButton } from '../'
 import { InputProps } from '../../components/inputs/Input'
 
 interface FormTemplateProps {
-    inputs: [],
-    handleSubmit: () => void,
-    buttonText: string
+    inputs: InputProps[],
+    handleSubmit: any,
+    handleSupport?: any,
+    buttonText: string,
+    supportText?: string,
+    supportBtn?: boolean
 }
 
-export const FormTemplate: React.FC<FormTemplateProps> = ({ inputs, buttonText, handleSubmit }) => {
+export const FormTemplate: React.FC<FormTemplateProps> = ({ inputs, buttonText, handleSubmit, supportBtn, handleSupport, supportText }) => {
 
     return (
         <form
             onSubmit={handleSubmit}
         >
-            {inputs.map((input: InputProps, index) => (
+            {inputs.map((input, index) => (
                 <Input
                     type={input.type}
                     key={input.name + index}
@@ -24,11 +27,16 @@ export const FormTemplate: React.FC<FormTemplateProps> = ({ inputs, buttonText, 
                     onChange={input.onChange}
                     placeholder={input.placeholder}
                     required={input.required}
-
                 />
             ))}
 
             <PrimaryButton>{buttonText}</PrimaryButton>
+
+            {supportBtn && <>
+                <SupportButton onClick={handleSupport}>
+                    {supportText}
+                </SupportButton>
+            </>}
         </form>
     );
 }
