@@ -42,3 +42,8 @@ export type postDataType = {
         info?: string,
     },
 };
+
+export type ActionType = {
+    type: string,
+    value: any
+}

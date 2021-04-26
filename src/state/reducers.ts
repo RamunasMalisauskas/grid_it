@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
-import { storageItems } from "../constants/stateConstants";
+import { storageItems, log, sideBarState } from "../constants/stateConstants";
+import { StateType, ActionType } from '../types/types'
 
 import {
   SET_USER_NAME,
@@ -10,30 +11,24 @@ import {
   SET_ERROR_MESSAGE,
 } from "./constant";
 
-//   export type PainterData = {
-//     name: string;
-//     color: string;
-//     radius: string;
-//   };
-
-//   export type AppState = {
-//     painterData: PainterData;
-//   };
-
-// const painterName = localStorage.getItem("painterName");
-// const painterColor = localStorage.getItem("painterColor");
-
 const userName = localStorage.getItem(storageItems.name);
 
-const defaultState = {
-  errorMsg: "",
-  name: userName || "user",
-  sideBar: "close",
-  login: "loggedOut",
-  canvasPosition: { x: 2000, y: 2000 },
-};
+const defaultState: StateType = {
+  appState: {
+    errorMsg: "",
+    sideBar: sideBarState.close,
+  },
+  canvaState: {
+    canvasData: [],
+    canvasPosition: { x: 2000, y: 2000 },
+  },
+  userState: {
+    userName: userName || "user",
+    loginStatus: log.out
+  }
+}
 
-const appState = (state = defaultState, action) => {
+const appState = (state = defaultState.appState, action: ActionType) => {
   switch (action.type) {
     case SET_SIDEBAR:
       return { ...state, sideBar: action.value };
@@ -44,7 +39,7 @@ const appState = (state = defaultState, action) => {
   }
 };
 
-const canvaState = (state = defaultState, action) => {
+const canvaState = (state = defaultState.canvaState, action: ActionType) => {
   switch (action.type) {
     case SET_CANVAS_DATA:
       return { ...state, canvasData: action.value };
@@ -55,7 +50,7 @@ const canvaState = (state = defaultState, action) => {
   }
 };
 
-const userState = (state = defaultState, action) => {
+const userState = (state = defaultState.userState, action: ActionType) => {
   switch (action.type) {
     case SET_USER_NAME:
       return { ...state, userName: action.value };
