@@ -47,10 +47,6 @@ export const SideBar: React.FC = () => {
                     className: className,
                     value: parseInt(data),
                     info: info,
-                    canvaPosition: {
-                        x: canva.x,
-                        y: canva.y
-                    }
                 },
             });
         } else {
@@ -64,7 +60,6 @@ export const SideBar: React.FC = () => {
                 const userData = await userDoc.get()
 
                 if (userData.exists) {
-                    // const data = userData.data()
                     await userDoc.update({
                         userName: userName,
                         lastVisit: timeStamp

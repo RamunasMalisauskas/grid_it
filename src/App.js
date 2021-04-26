@@ -10,13 +10,10 @@ const App = () => {
   const canvas = useSelector((state) => state.appData.canvasPosition);
   const build = useMemo(() => ({ version: 0 }), []);
 
-  useEffect(() => {
-    buildVersion();
-  });
-
   const buildVersion = useCallback(() => {
     setInterval(async () => {
       const newVersion = await fetchBoardStatus();
+      // Ar reikia validaciojos cia ar ne nes yra await?
       if (!newVersion) return;
       if (build.version < newVersion) {
         console.log("new build version is avalible");
@@ -31,6 +28,10 @@ const App = () => {
       }
     }, 1000);
   }, [build, dispatch, canvas]);
+
+  useEffect(() => {
+    buildVersion();
+  });
 
   return (
     <BrowserRouter>

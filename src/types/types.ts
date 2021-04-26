@@ -37,9 +37,5 @@ export type postDataType = {
         className: string,
         value: number,
         info?: string,
-        canvaPosition: {
-            x: number,
-            y: number,
-        }
     },
 };
