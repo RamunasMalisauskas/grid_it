@@ -1,19 +1,17 @@
 import React, { useEffect } from "react";
-import { SideBar, LoginHeader, Grid } from '../containers'
+import { LoginMenu, SideBarMenu, Grid } from "../components";
 import { useDispatch } from "react-redux";
-import { setLogin, setUserName } from "../state/actions";
-import { log, localStorageItems } from '../constants/stateConstants'
+import { setLogin } from "../state/actions";
+import { log, storageItems } from '../constants/stateConstants';
 
 export const HomePage: React.FC = () => {
   const dispatch = useDispatch()
-  const localName = localStorage.getItem(localStorageItems.name)
-  const localStatus = localStorage.getItem(localStorageItems.status)
+  const localStatus = sessionStorage.getItem(storageItems.status)
 
   const userLoginStatus = () => {
     if (!localStatus) return
     if (localStatus === log.in) {
       dispatch(setLogin(localStatus))
-      dispatch(setUserName(localName))
     }
   }
 
@@ -21,11 +19,11 @@ export const HomePage: React.FC = () => {
 
   return (
     <>
-      <LoginHeader />
+      <LoginMenu />
 
       <Grid />
 
-      <SideBar />
+      <SideBarMenu />
     </>
   );
 };

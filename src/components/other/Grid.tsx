@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Cell, Spinner } from "../components";
-import { log } from "../constants/stateConstants";
-import { BoardDataState } from "../types/types";
+import { Cell, Spinner } from "..";
+import { log } from "../../constants/stateConstants";
+import { BoardDataState } from "../../types/types";
 
 type CenterCircleProps = {
   size: number;

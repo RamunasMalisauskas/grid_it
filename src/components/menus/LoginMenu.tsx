@@ -1,25 +1,26 @@
 import React, { useCallback } from 'react'
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { setLogin, setUserName, setErrorMsg } from "../state/actions";
-import { PrimaryButton, SupportButton, Input, Paragraph, Subtitle } from "../components";
-import { log, localStorageItems } from '../constants/stateConstants'
-import { BoardDataState } from '../types/types'
-import { auth } from '../firebase'
+import { setLogin, setUserName, setErrorMsg } from "../../state/actions";
+import { PrimaryButton, SupportButton, Input, Paragraph, Subtitle } from "..";
+import { log, storageItems } from '../../constants/stateConstants'
+import { BoardDataState } from '../../types/types'
+import { auth, timeStamp, usersDB } from '../../firebase'
 
 type NavPropsType = {
     loggedIn: boolean
 }
 
-export const LoginHeader = () => {
+export const LoginMenu = () => {
     const dispatch = useDispatch()
     const loginStatus = useSelector((state: BoardDataState) => state.appData.login)
     const userName = useSelector((state: BoardDataState) => state.appData.name)
     const error = useSelector((state: BoardDataState) => state.appData.errorMsg)
-  
+
     const handleReg = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
         if (!e) return
         e.preventDefault()
+        const user = auth.currentUser
         const { target: {
             userName: { value: userName },
             email: { value: email },
@@ -34,9 +35,19 @@ export const LoginHeader = () => {
                 await auth.createUserWithEmailAndPassword(email, pass);
                 dispatch(setLogin(log.in));
                 dispatch(setUserName(userName));
-                localStorage.setItem(localStorageItems.name, userName);
-                localStorage.setItem(localStorageItems.status, log.in);
+                localStorage.setItem(storageItems.name, userName);
+                sessionStorage.setItem(storageItems.status, log.in);
                 dispatch(setErrorMsg(""))
+                if (user) {
+                    const { uid } = user
+                    const userDoc = usersDB.doc(uid)
+                    await userDoc.set({
+                        userID: uid,
+                        userName: userName,
+                        firstVisit: timeStamp,
+                        lastVisit: timeStamp
+                    })
+                }
             } catch (e) {
                 dispatch(setErrorMsg(e.message))
             }
@@ -47,15 +58,39 @@ export const LoginHeader = () => {
     const handleLogin = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
         if (!e) return
         e.preventDefault()
+        const user = auth.currentUser
         const { target: {
             email: { value: email },
             password: { value: pass }
         } } = e
         try {
+
+            if (user) {
+
+                const { uid } = user
+                const userDoc = usersDB.doc(uid)
+                const userData = await userDoc.get()
+
+                if (userData.exists) {
+                    await userDoc.update({
+                        userName: userName,
+                        lastVisit: timeStamp
+                    })
+                } else {
+                    await userDoc.set({
+                        userID: uid,
+                        userName: userName,
+                        firstVisit: timeStamp,
+                        lastVisit: timeStamp
+                    })
+                }
+            }
+
+
             await auth.signInWithEmailAndPassword(email, pass);
             dispatch(setLogin(log.in));
-            localStorage.setItem(localStorageItems.name, userName);
-            localStorage.setItem(localStorageItems.status, log.in);
+            localStorage.setItem(storageItems.name, userName);
+            sessionStorage.setItem(storageItems.status, log.in);
             dispatch(setErrorMsg(""))
         } catch (e) {
             dispatch(setErrorMsg(e.message))
@@ -67,8 +102,7 @@ export const LoginHeader = () => {
         try {
             await auth.signOut()
             dispatch(setLogin(log.out))
-            localStorage.setItem(localStorageItems.status, log.out)
-            localStorage.setItem(localStorageItems.name, '')
+            sessionStorage.setItem(storageItems.status, log.out)
             dispatch(setErrorMsg(""))
         } catch (e) {
             dispatch(setErrorMsg(e.message))

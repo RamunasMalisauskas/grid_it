@@ -4,7 +4,7 @@ export enum log {
   reg = 'register'
 }
 
-export enum localStorageItems {
+export enum storageItems {
   name = "userName",
   status = "status"
 }

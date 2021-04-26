@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { storageItems } from "../constants/stateConstants";
 
 import {
   SET_USER_NAME,
@@ -22,9 +23,11 @@ import {
 // const painterName = localStorage.getItem("painterName");
 // const painterColor = localStorage.getItem("painterColor");
 
+const userName = localStorage.getItem(storageItems.name);
+
 const defaultState = {
   errorMsg: "",
-  name: "user",
+  name: userName || "user",
   sideBarState: "close",
   login: "loggedOut",
   loginMenu: false,

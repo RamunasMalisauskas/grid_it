@@ -1,18 +1,17 @@
 import React, { useCallback } from 'react'
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { setSideBar, setErrorMsg } from "../state/actions";
-import { addToBoard } from "../apis";
-import { BoardDataState } from '../types/types'
-import { Input, PrimaryButton, SupportButton, Subtitle } from '../components'
-import { usersDB, auth, timeStamp } from '../firebase/firebase'
-import { sideBarState, log } from "../constants/stateConstants"
+import { setSideBar, setErrorMsg } from "../../state/actions";
+import { addToBoard } from "../../apis";
+import { BoardDataState } from '../../types/types'
+import { Input, PrimaryButton, SupportButton, Subtitle } from '../'
+import { sideBarState, log } from "../../constants/stateConstants"
 
 interface SideBarProps {
     open: string
 }
 
-export const SideBar: React.FC = () => {
+export const SideBarMenu: React.FC = () => {
     const dispatch = useDispatch()
     const randomColor = require("randomcolor");
     const sideBar = useSelector((state: BoardDataState) => state.appData.sideBarState);
@@ -28,7 +27,7 @@ export const SideBar: React.FC = () => {
         if (!canva) return
         e.preventDefault()
 
-        const user = auth.currentUser
+
         const { target: {
             class: { value: className },
             number: { value: number },
@@ -51,31 +50,6 @@ export const SideBar: React.FC = () => {
             });
         } else {
             dispatch(setErrorMsg("Please enter required info to add a cell"))
-        }
-
-        if (user) {
-            try {
-                const { uid } = user
-                const userDoc = usersDB.doc(uid)
-                const userData = await userDoc.get()
-
-                if (userData.exists) {
-                    await userDoc.update({
-                        userName: userName,
-                        lastVisit: timeStamp
-                    })
-                } else {
-                    await userDoc.set({
-                        userID: uid,
-                        userName: userName,
-                        firstVisit: timeStamp,
-                        lastVisit: timeStamp
-                    })
-                }
-            }
-            catch (e) {
-                console.log(e)
-            }
         }
 
     }, [userName, randomColor, canva, dispatch])
