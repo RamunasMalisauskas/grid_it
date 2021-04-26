@@ -37,7 +37,6 @@ export type postDataType = {
     userName: string,
     userColor: string,
     cellData: {
-        className: string,
         value: number,
         info?: string,
     },

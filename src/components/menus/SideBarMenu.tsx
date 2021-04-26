@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSideBar, setErrorMsg } from "../../state/actions";
 import { addToBoard } from "../../apis";
 import { StateType } from '../../types/types'
-import { Input, PrimaryButton, SupportButton, Subtitle } from '../'
+import { Input, PrimaryButton, SupportButton, Subtitle, FormTemplate } from '../'
 import { sideBarState, log } from "../../constants/stateConstants"
+import { sideBarFormInputs } from '../../utils/formData'
 
 interface SideBarProps {
     open: string
@@ -26,13 +27,12 @@ export const SideBarMenu: React.FC = () => {
         e.preventDefault()
 
         const { target: {
-            class: { value: className },
             number: { value: number },
             data: { value: data },
             info: { value: info }
         } } = e
 
-        if (className.length > 0 && number.length > 0 && data.length > 0) {
+        if (number.length > 0 && data.length > 0) {
             dispatch(setErrorMsg(""))
             addToBoard({
                 userName: userName,
@@ -40,7 +40,6 @@ export const SideBarMenu: React.FC = () => {
                 x: canvasPosition.x + parseInt(number),
                 y: canvasPosition.y + parseInt(number),
                 cellData: {
-                    className: className,
                     value: parseInt(data),
                     info: info,
                 },
@@ -60,41 +59,16 @@ export const SideBarMenu: React.FC = () => {
                     </SupportButton>
 
                     {sideBar === sideBarState.open && <>
-                        <form onSubmit={handleSubmit}>
-                            <Input
-                                type="text"
-                                name="class"
-                                placeholder="...class one"
-                                label="enter class name"
-                            />
-                            <Input
-                                type="number"
-                                name="number"
-                                placeholder="1... 2... 3..."
-                                label="enter cell number"
-                            />
-                            <Input
-                                type="number"
-                                name="data"
-                                placeholder="...123"
-                                label="enter cell value"
-                            />
-                            <Input
-                                type="text"
-                                name="info"
-                                placeholder="optional"
-                                label="extra info"
-                            />
-                            <PrimaryButton type="submit">
-                                add cell
-                         </PrimaryButton>
-                        </form>
+                        <FormTemplate
+                            buttonText="add cell"
+                            handleSubmit={handleSubmit}
+                            inputs={sideBarFormInputs}
+                        />
 
                         <Subtitle>
                             {errorMsg}
                         </Subtitle>
-                    </>
-                    }
+                    </>}
                 </SideBarContainer>
             </>
             }

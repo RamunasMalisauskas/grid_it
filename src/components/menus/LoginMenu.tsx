@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName, setErrorMsg } from "../../state/actions";
-import { PrimaryButton, SupportButton, Input, Subtitle } from "..";
+import { PrimaryButton, SupportButton, Input, Subtitle, FormTemplate } from "..";
 import { log, storageItems } from '../../constants/stateConstants'
 import { StateType } from '../../types/types'
 import { auth, timeStamp, usersDB } from '../../firebase'
+import { loginFormInputs, regFormInputs } from '../../utils/formData'
 
 type NavPropsType = {
     loggedIn: boolean
@@ -118,35 +119,14 @@ export const LoginMenu = () => {
     return (<>
         <LoginTable loggedIn={loginStatus === log.in}>
             {loginStatus === log.reg && <>
-                <form onSubmit={handleReg}>
-                    <Input
-                        type="text"
-                        name="userName"
-                        label="enter user name"
-                    />
-                    <Input
-                        type="email"
-                        name="email"
-                        label="enter your email"
-                    />
-                    <Input
-                        type="password"
-                        name="password"
-                        label="enter password"
-                    />
-                    <Input
-                        type="password"
-                        name="repPassword"
-                        label="repeat password"
-                    />
-                    <SupportButton type="submit">
-                        Register
-                    </SupportButton>
+                <FormTemplate
+                    handleSubmit={handleLogin}
+                    inputs={regFormInputs}
+                    buttonText="Register"
+                    supportBtn={true}
+                    handleSupport={handleTableState}
+                    supportText="Login" />
 
-                    <PrimaryButton onClick={handleTableState}>
-                        Login
-                    </PrimaryButton>
-                </form>
                 <Subtitle>
                     {errorMsg}
                 </Subtitle>
@@ -154,25 +134,13 @@ export const LoginMenu = () => {
             }
 
             {loginStatus === log.out && <>
-                <form onSubmit={handleLogin}>
-                    <Input
-                        type="email"
-                        name="email"
-                        label="enter your email"
-                    />
-                    <Input
-                        type="password"
-                        name="password"
-                        label="enter password"
-                    />
-                    <SupportButton type="submit">
-                        Login
-                    </SupportButton>
-
-                    <PrimaryButton onClick={handleTableState}>
-                        Register
-                    </PrimaryButton>
-                </form>
+                <FormTemplate
+                    handleSubmit={handleLogin}
+                    inputs={loginFormInputs}
+                    buttonText="Login"
+                    supportBtn={true}
+                    handleSupport={handleTableState}
+                    supportText="Register" />
 
                 <Subtitle>
                     {errorMsg}
@@ -207,7 +175,7 @@ const LoginTable = styled.div<NavPropsType>`
  text-align: center;
  position: absolute;
  z-index: 1;
- max-width: 30vw;
+ max-width: 285px;
  min-width: 135px;
  right: ${({ loggedIn }) => loggedIn ? "0%" : "50%"};
  top: ${({ loggedIn }) => loggedIn ? "0" : "10vh"};
@@ -224,6 +192,8 @@ const UserButton = styled.div`
  font-family: 'Zen Dots', cursive;
  text-transform: uppercase;
  transition: all ease-in-out 0.1s;
+ max-width: 80%;
+ overflow: hidden;
   &:hover{
     color:white;
     background: #d15585;
