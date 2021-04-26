@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName, setErrorMsg } from "../../state/actions";
-import { PrimaryButton, SupportButton, Input, Subtitle, FormTemplate } from "..";
+import { PrimaryButton, Subtitle, FormTemplate } from "..";
 import { log, storageItems } from '../../constants/stateConstants'
 import { StateType } from '../../types/types'
 import { auth, timeStamp, usersDB } from '../../firebase'

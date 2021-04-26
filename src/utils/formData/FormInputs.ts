@@ -77,3 +77,14 @@ export const regFormInputs = [
     required: true,
   },
 ];
+
+export const userPageFormInputs = [
+  {
+    id: 1,
+    type: "text",
+    name: "userName",
+    label: "update your user name",
+    placeholder: "updated user name",
+    required: true,
+  }
+]
