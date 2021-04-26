@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCanvaData, fetchBoardStatus } from "./apis";
 import { setCanvasData } from "./state/actions";
 import { HomePage } from "./containers";
+import { StateType } from "./types/types";
 
-const App = () => {
+const App: React.FC = () => {
   const dispatch = useDispatch();
-  const canvas = useSelector((state) => state.appData.canvasPosition);
+  const { canvasPosition } = useSelector((state: StateType) => state.canvaState);
   const build = useMemo(() => ({ version: 0 }), []);
 
   const buildVersion = useCallback(() => {
@@ -19,15 +20,16 @@ const App = () => {
         console.log("new build version is avalible");
         build.version = newVersion;
         const canvasData = await fetchCanvaData({
-          xposition: canvas.x,
-          yposition: canvas.y,
+          xposition: canvasPosition.x,
+          yposition: canvasPosition.y,
         });
         if (canvasData) {
+          // console.log(canvasData)
           dispatch(setCanvasData(canvasData));
         }
       }
     }, 1000);
-  }, [build, dispatch, canvas]);
+  }, [build, dispatch, canvasPosition]);
 
   useEffect(() => {
     buildVersion();
