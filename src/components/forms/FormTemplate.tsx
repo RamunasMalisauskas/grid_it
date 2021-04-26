@@ -4,8 +4,8 @@ import { InputProps } from '../../components/inputs/Input'
 
 interface FormTemplateProps {
     inputs: InputProps[],
-    handleSubmit: any,
-    handleSupport?: any,
+    handleSubmit: () => void | React.FormEventHandler<HTMLFormElement>,
+    handleSupport?: () => void | React.FormEventHandler<HTMLFormElement>,
     buttonText: string,
     supportText?: string,
     supportBtn?: boolean
