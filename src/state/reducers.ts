@@ -55,7 +55,7 @@ const userState = (state = defaultState.userState, action: ActionType) => {
     case SET_USER_NAME:
       return { ...state, userName: action.value };
     case SET_LOGIN:
-      return { ...state, login: action.value };
+      return { ...state, loginStatus: action.value };
     default:
       return state;
   }

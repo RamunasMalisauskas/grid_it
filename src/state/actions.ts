@@ -16,7 +16,7 @@ export const setUserName = (value: string): ActionType => {
   };
 };
 
-export const setCanvasData = (value: []): ActionType => {
+export const setCanvasData = (value: {}): ActionType => {
   return {
     type: SET_CANVAS_DATA,
     value,
