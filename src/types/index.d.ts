@@ -20,7 +20,13 @@ declare interface EventTarget {
   data: {
     value: string;
   };
-  info: {
+  cellName: {
+    value: string;
+  };
+  className: {
+    value: string;
+  };
+  position: {
     value: string;
   };
 }

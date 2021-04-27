@@ -3,6 +3,7 @@ export type StateType = {
     errorMsg: string;
     loading: boolean;
     sideBar: string;
+    sideBarContent: string;
   };
   canvaState: {
     canvasData: CellDataType[];
@@ -16,6 +17,11 @@ export type StateType = {
     userName: string;
     loginStatus: string;
   };
+};
+
+export type CanvasPosition = {
+  x: number;
+  y: number;
 };
 
 export type CellDataType = {
@@ -39,8 +45,9 @@ export type postDataType = {
   userName: string;
   userColor: string;
   cellData: {
+    className?: string;
     value: number;
-    info?: string;
+    cellName?: string;
   };
 };
 
@@ -78,6 +85,11 @@ export enum sideBarState {
   close = "close",
 }
 
+export enum sideBarContentState {
+  addCell = "addCell",
+  addClass = "addClass",
+}
+
 export enum error {
   empty = "",
   allmostMax = "You're about to reach maximum capacity of cells",
@@ -85,4 +97,5 @@ export enum error {
   missedPass = "Passwords are mistmatched",
   fillInputs = "Please enter required info to add a cell",
   noData = "There is no cell data found",
+  classExist = "The name of the class is alrady taken",
 }

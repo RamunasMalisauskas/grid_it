@@ -5,7 +5,10 @@ import {
   storageItems,
   log,
   sideBarState,
+  sideBarContentState,
+  error,
 } from "../types/types";
+
 import {
   SET_USER_NAME,
   SET_CANVAS_DATA,
@@ -15,15 +18,17 @@ import {
   SET_ERROR_MESSAGE,
   SET_LOADING,
   SET_DATA_LIMIT,
+  SET_SIDEBAR_CONTENT,
 } from "./constant";
 
 const userName = localStorage.getItem(storageItems.name);
 
 const initialState: StateType = {
   appState: {
-    errorMsg: "",
+    errorMsg: error.empty,
     loading: false,
     sideBar: sideBarState.close,
+    sideBarContent: sideBarContentState.addCell,
   },
   canvaState: {
     dataLimit: false,
@@ -40,6 +45,8 @@ const appState = (state = initialState.appState, action: ActionType) => {
   switch (action.type) {
     case SET_SIDEBAR:
       return { ...state, sideBar: action.value };
+    case SET_SIDEBAR_CONTENT:
+      return { ...state, sideBarContent: action.value };
     case SET_ERROR_MESSAGE:
       return { ...state, errorMsg: action.value };
     case SET_LOADING:

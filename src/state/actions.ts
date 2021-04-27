@@ -6,9 +6,11 @@ import {
   SET_ERROR_MESSAGE,
   SET_LOADING,
   SET_DATA_LIMIT,
+  SET_CANVAS_POSITION,
+  SET_SIDEBAR_CONTENT,
 } from "./constant";
 
-import { ActionType, CellDataType } from "../types/types";
+import { ActionType, CellDataType, CanvasPosition } from "../types/types";
 
 export const setUserName = (value: string): ActionType => {
   return {
@@ -24,9 +26,23 @@ export const setCanvasData = (value: CellDataType[]): ActionType => {
   };
 };
 
+export const setCanvasPosition = (value: CanvasPosition): ActionType => {
+  return {
+    type: SET_CANVAS_POSITION,
+    value,
+  };
+};
+
 export const setSideBar = (value: string): ActionType => {
   return {
     type: SET_SIDEBAR,
+    value,
+  };
+};
+
+export const setSideBarContent = (value: string): ActionType => {
+  return {
+    type: SET_SIDEBAR_CONTENT,
     value,
   };
 };
