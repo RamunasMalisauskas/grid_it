@@ -1,6 +1,11 @@
 import { combineReducers } from "redux";
-import { storageItems, log, sideBarState } from "../constants/stateConstants";
-import { StateType, ActionType } from "../types/types";
+import {
+  StateType,
+  ActionType,
+  storageItems,
+  log,
+  sideBarState,
+} from "../types/types";
 import {
   SET_USER_NAME,
   SET_CANVAS_DATA,

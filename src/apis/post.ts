@@ -1,11 +1,6 @@
 import axios from "axios";
-import {
-  baseUrl,
-  apiUrl,
-  postHeader,
-  methods,
-} from "../constants/apiConstants";
-import { postDataType } from "../types/types";
+import { baseUrl, postHeader } from "../constants/apiConstants";
+import { postDataType, apiUrl, methods } from "../types/types";
 
 export const addToBoard = async ({
   userName,

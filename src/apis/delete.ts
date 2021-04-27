@@ -1,10 +1,6 @@
 import axios from "axios";
-import {
-  apiUrl,
-  baseUrl,
-  postHeader,
-  methods,
-} from "../constants/apiConstants";
+import { baseUrl, postHeader } from "../constants/apiConstants";
+import { apiUrl, methods } from "../types/types";
 
 type deleteDataType = {
   cellId: string;

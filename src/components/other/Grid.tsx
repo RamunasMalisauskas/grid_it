@@ -2,9 +2,7 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Cell, Spinner } from "..";
-import { log } from "../../constants/stateConstants";
-import { sideBarState } from "../../constants/stateConstants";
-import { StateType } from "../../types/types";
+import { StateType, sideBarState, log } from "../../types/types";
 
 type CenterCircleProps = {
   size: number;

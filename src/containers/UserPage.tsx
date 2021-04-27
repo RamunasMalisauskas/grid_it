@@ -3,10 +3,9 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserName } from "../state/actions";
-import { storageItems } from "../constants/stateConstants";
 import { FormTemplate, SupportButton, TitleLarge } from "../components";
 import { userPageFormInputs } from "../utils/formData";
-import { StateType } from "../types/types";
+import { StateType, storageItems } from "../types/types";
 
 export const UserPage: React.FC = () => {
   const history = useHistory();

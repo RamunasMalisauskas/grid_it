@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { LoginMenu, SideBarMenu, Grid } from "../components";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../state/actions";
-import { log, storageItems } from "../constants/stateConstants";
+import { storageItems, log } from "../types/types";
 
 export const HomePage: React.FC = () => {
   const dispatch = useDispatch();

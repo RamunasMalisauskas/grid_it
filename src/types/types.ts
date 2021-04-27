@@ -46,3 +46,32 @@ export type ActionType = {
   type: string;
   value: any;
 };
+
+export enum methods {
+  post = "POST",
+  get = "GET",
+  delete = "DELETE",
+}
+
+export enum apiUrl {
+  Board = "/board",
+  BoardStatus = "/board/status",
+  CellStatus = "/board/cell",
+  Delete = "/board/cell/delete",
+}
+
+export enum log {
+  in = "loggedIn",
+  out = "loggedOut",
+  reg = "register",
+}
+
+export enum storageItems {
+  name = "userName",
+  status = "status",
+}
+
+export enum sideBarState {
+  open = "open",
+  close = "close",
+}

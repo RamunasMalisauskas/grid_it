@@ -4,9 +4,8 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setSideBar, setErrorMsg } from "../../state/actions";
 import { addToBoard } from "../../apis";
-import { StateType } from "../../types/types";
+import { StateType, sideBarState, log } from "../../types/types";
 import { SupportButton, Subtitle, FormTemplate } from "../";
-import { sideBarState, log } from "../../constants/stateConstants";
 import { sideBarFormInputs } from "../../utils/formData";
 
 interface SideBarProps {

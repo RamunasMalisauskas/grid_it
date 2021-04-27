@@ -1,11 +1,6 @@
 import axios from "axios";
-import {
-  apiUrl,
-  baseUrl,
-  canvasSize,
-  methods,
-} from "../constants/apiConstants";
-import { CellDataType } from "../types/types";
+import { baseUrl, canvasSize } from "../constants/apiConstants";
+import { CellDataType, apiUrl, methods } from "../types/types";
 
 type getProps = {
   xposition: number;
