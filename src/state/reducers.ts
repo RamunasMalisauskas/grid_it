@@ -21,6 +21,7 @@ const userName = localStorage.getItem(storageItems.name);
 const defaultState: StateType = {
   appState: {
     errorMsg: "",
+    infoMsg: "",
     sideBar: sideBarState.close,
   },
   canvaState: {

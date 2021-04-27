@@ -1,6 +1,7 @@
 export type StateType = {
   appState: {
     errorMsg: string;
+    infoMsg: string;
     sideBar: string;
   };
   canvaState: {
