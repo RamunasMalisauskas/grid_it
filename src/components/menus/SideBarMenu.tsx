@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -42,6 +42,16 @@ export const SideBarMenu: React.FC = () => {
         sideBar === sideBarState.close ? sideBarState.open : sideBarState.close
       )
     );
+
+  const handleBarFormState = () => {
+    dispatch(
+      setSideBarContent(
+        sideBarContent === sideBarContentState.addCell
+          ? sideBarContentState.addClass
+          : sideBarContentState.addCell
+      )
+    );
+  };
 
   const handleAddCell = useCallback<React.FormEventHandler<HTMLFormElement>>(
     async (e) => {
@@ -157,15 +167,27 @@ export const SideBarMenu: React.FC = () => {
     [userName, randomColor, canvasPosition, dispatch]
   );
 
-  const handleClassFormState = () => {
-    dispatch(
-      setSideBarContent(
-        sideBarContent === sideBarContentState.addCell
-          ? sideBarContentState.addClass
-          : sideBarContentState.addCell
-      )
-    );
-  };
+  const handleClassClick = () => console.log("click");
+
+  const FilteredClass = useMemo(() => {
+    const user = auth.currentUser;
+    if (user) {
+      const { uid } = user;
+      const array: any[] | undefined = [];
+
+      usersDB
+        .doc(uid)
+        .collection("classInfo")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            array.push(doc.data().class.name);
+          });
+        });
+
+      return array;
+    }
+  }, []);
 
   return (
     <SideBlock open={sideBar}>
@@ -178,13 +200,20 @@ export const SideBarMenu: React.FC = () => {
               </PrimaryButton>
             </ControlBLock>
 
+            {FilteredClass &&
+              FilteredClass.map((className: string) => (
+                <SupportButton key={className} onClick={handleClassClick}>
+                  {className}
+                </SupportButton>
+              ))}
+
             {sideBar === sideBarState.open && (
               <>
                 {!dataLimit && (
                   <>
                     {sideBarContent === sideBarContentState.addCell && (
                       <>
-                        <SupportButton onClick={handleClassFormState}>
+                        <SupportButton onClick={handleBarFormState}>
                           go to class
                         </SupportButton>
 
@@ -198,7 +227,7 @@ export const SideBarMenu: React.FC = () => {
 
                     {sideBarContent === sideBarContentState.addClass && (
                       <>
-                        <SupportButton onClick={handleClassFormState}>
+                        <SupportButton onClick={handleBarFormState}>
                           go to cell
                         </SupportButton>
 
