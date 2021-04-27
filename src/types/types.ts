@@ -81,7 +81,8 @@ export enum sideBarState {
 export enum error {
   empty = "",
   allmostMax = "You're about to reach maximum capacity of cells",
-  maxCells = "maximum capacity of cells has been reached. Remove some of if",
-  missedPass = "passwords are mistmatched",
+  maxCells = "Maximum capacity of cells has been reached. Remove some of if",
+  missedPass = "Passwords are mistmatched",
   fillInputs = "Please enter required info to add a cell",
+  noData = "There is no cell data found",
 }

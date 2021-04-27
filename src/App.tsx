@@ -37,9 +37,9 @@ const App: React.FC = () => {
             canvasData[0].data === null ||
             !canvasData[0].data.data.value
           ) {
-            return;
+            dispatch(setErrorMsg(error.noData));
           }
-          if (canvasData.length <= 8) {
+          if (canvasData.length <= 8 && canvasData.length > 0) {
             dispatch(setErrorMsg(error.empty));
           }
           if (canvasData.length > 8) {
