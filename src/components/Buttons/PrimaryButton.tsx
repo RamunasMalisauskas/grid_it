@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const PrimaryButton = styled.button`
   color: white;
-  background: #707070;
+  background: #d15585;
   padding: 10px;
   margin: 5px 0;
   border-radius: 10px;
-  border: 2px solid #707070;
+  border: 2px solid #d15585;
   font-family: "Zen Dots", cursive;
   text-transform: uppercase;
   transition: all ease-in-out 0.1s;

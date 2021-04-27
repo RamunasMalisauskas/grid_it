@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName, setErrorMsg } from "../../state/actions";
-import { PrimaryButton, Subtitle, FormTemplate } from "..";
+import { Subtitle, FormTemplate } from "..";
 import { StateType, log, storageItems, error } from "../../types/types";
 import { auth, timeStamp, usersDB } from "../../firebase";
 import { loginFormInputs, regFormInputs } from "../../utils/formData";
+import { SupportButton } from "../buttons/SupportButton";
 
 type NavPropsType = {
   loggedIn: boolean;
@@ -164,7 +165,7 @@ export const LoginMenu = () => {
 
         {loginStatus === log.in && (
           <>
-            <PrimaryButton onClick={handleLogout}>logout</PrimaryButton>
+            <SupportButton onClick={handleLogout}>logout</SupportButton>
 
             <UserButton onClick={() => history.push(`/user/${userName}`)}>
               user: {userName.charAt(0)}
