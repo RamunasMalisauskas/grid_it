@@ -36,14 +36,14 @@ export const fetchBoardStatus = async (): Promise<number> => {
   }
 };
 
-export const fetchCellStatus = async () => {
+export const fetchCellStatus = async (id: string) => {
   try {
-    const getBoard = await axios({
+    const getCell = await axios({
       method: methods.get,
-      url: `${baseUrl}${apiUrl.BoardStatus}`,
+      url: `${baseUrl}${apiUrl.CellStatus}?id=${id}`,
     });
     // latest version(update) of board
-    return await getBoard.data[0].update;
+    return await getCell.data[0];
   } catch (err) {
     return err;
   }
