@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName, setErrorMsg } from "../../state/actions";
 import { PrimaryButton, Subtitle, FormTemplate } from "..";
-import { StateType, log, storageItems } from "../../types/types";
+import { StateType, log, storageItems, error } from "../../types/types";
 import { auth, timeStamp, usersDB } from "../../firebase";
 import { loginFormInputs, regFormInputs } from "../../utils/formData";
 
@@ -34,7 +34,7 @@ export const LoginMenu = () => {
         },
       } = e;
       if (pass !== repPass) {
-        dispatch(setErrorMsg("passwords are mistmatched"));
+        dispatch(setErrorMsg(error.missedPass));
         return;
       } else {
         try {
@@ -43,7 +43,7 @@ export const LoginMenu = () => {
           dispatch(setUserName(userName));
           localStorage.setItem(storageItems.name, userName);
           sessionStorage.setItem(storageItems.status, log.in);
-          dispatch(setErrorMsg(""));
+          dispatch(setErrorMsg(error.empty));
           if (user) {
             const { uid } = user;
             const userDoc = usersDB.doc(uid);
@@ -98,7 +98,7 @@ export const LoginMenu = () => {
         dispatch(setLogin(log.in));
         localStorage.setItem(storageItems.name, userName);
         sessionStorage.setItem(storageItems.status, log.in);
-        dispatch(setErrorMsg(""));
+        dispatch(setErrorMsg(error.empty));
       } catch (e) {
         dispatch(setErrorMsg(e.message));
       }
@@ -111,7 +111,7 @@ export const LoginMenu = () => {
       await auth.signOut();
       dispatch(setLogin(log.out));
       sessionStorage.setItem(storageItems.status, log.out);
-      dispatch(setErrorMsg(""));
+      dispatch(setErrorMsg(error.empty));
     } catch (e) {
       dispatch(setErrorMsg(e.message));
     }
@@ -119,7 +119,7 @@ export const LoginMenu = () => {
 
   const handleTableState = () => {
     dispatch(setLogin(loginStatus === log.reg ? log.out : log.reg));
-    dispatch(setErrorMsg(""));
+    dispatch(setErrorMsg(error.empty));
   };
 
   return (

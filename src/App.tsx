@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCanvaData, fetchBoardStatus } from "./apis";
 import { setCanvasData, setErrorMsg, setDataLimit } from "./state/actions";
 import { HomePage, UserPage } from "./containers";
-import { StateType } from "./types/types";
+import { StateType, error } from "./types/types";
 import { auth } from "./firebase";
 
 const App: React.FC = () => {
@@ -40,20 +40,14 @@ const App: React.FC = () => {
             return;
           }
           if (canvasData.length <= 8) {
-            dispatch(setErrorMsg(""));
+            dispatch(setErrorMsg(error.empty));
           }
           if (canvasData.length > 8) {
-            dispatch(
-              setErrorMsg("You're about to reach maximum capacity of cells")
-            );
+            dispatch(setErrorMsg(error.allmostMax));
             dispatch(setDataLimit(false));
           }
           if (canvasData.length > 10) {
-            dispatch(
-              setErrorMsg(
-                "maximum capacity of cells has been reached. Remove some of if"
-              )
-            );
+            dispatch(setErrorMsg(error.maxCells));
             dispatch(setDataLimit(true));
           }
           dispatch(setCanvasData(canvasData));

@@ -1,7 +1,7 @@
 export type StateType = {
   appState: {
     errorMsg: string;
-    infoMsg: string;
+    loading: boolean;
     sideBar: string;
   };
   canvaState: {
@@ -76,4 +76,12 @@ export enum storageItems {
 export enum sideBarState {
   open = "open",
   close = "close",
+}
+
+export enum error {
+  empty = "",
+  allmostMax = "You're about to reach maximum capacity of cells",
+  maxCells = "maximum capacity of cells has been reached. Remove some of if",
+  missedPass = "passwords are mistmatched",
+  fillInputs = "Please enter required info to add a cell",
 }

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { setSideBar, setErrorMsg } from "../../state/actions";
 import { addToBoard } from "../../apis";
-import { StateType, sideBarState, log } from "../../types/types";
+import { StateType, sideBarState, log, error } from "../../types/types";
 import { SupportButton, Subtitle, FormTemplate } from "../";
 import { sideBarFormInputs } from "../../utils/formData";
 
@@ -47,7 +47,7 @@ export const SideBarMenu: React.FC = () => {
       } = e;
 
       if (number.length > 0 && data.length > 0) {
-        dispatch(setErrorMsg(""));
+        dispatch(setErrorMsg(error.empty));
         addToBoard({
           userName: userName,
           userColor: randomColor(),
@@ -59,7 +59,7 @@ export const SideBarMenu: React.FC = () => {
           },
         });
       } else {
-        dispatch(setErrorMsg("Please enter required info to add a cell"));
+        dispatch(setErrorMsg(error.fillInputs));
       }
     },
     [userName, randomColor, canvasPosition, dispatch]
