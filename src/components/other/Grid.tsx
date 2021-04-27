@@ -15,7 +15,7 @@ export const Grid: React.FC = () => {
   const { canvasData } = useSelector((state: StateType) => state.canvaState);
   const { loginStatus } = useSelector((state: StateType) => state.userState);
   const { sideBar } = useSelector((state: StateType) => state.appState);
-  const circleSize = 400;
+  const circleSize = 300;
 
   const generatedCanvas = useMemo(() => {
     if (!canvasData) return

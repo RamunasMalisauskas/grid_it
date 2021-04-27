@@ -18,6 +18,7 @@ export const UserPage: React.FC<UserPageProps> = () => {
     const { userName } = useSelector((state: StateType) => state.userState);
 
     const handelNameChange: React.FormEventHandler<HTMLFormElement> = (e) => {
+        if (!e) return
         e.preventDefault()
         const { target:
             { userName: {

@@ -4,14 +4,14 @@ import { InputProps } from '../../components/inputs/Input'
 
 interface FormTemplateProps {
     inputs: InputProps[],
-    handleSubmit: () => void | React.FormEventHandler<HTMLFormElement>,
-    handleSupport?: () => void | React.FormEventHandler<HTMLFormElement>,
+    handleSubmit: React.FormEventHandler<HTMLFormElement>,
+    handleClick?: () => void,
     buttonText: string,
     supportText?: string,
     supportBtn?: boolean
 }
 
-export const FormTemplate: React.FC<FormTemplateProps> = ({ inputs, buttonText, handleSubmit, supportBtn, handleSupport, supportText }) => {
+export const FormTemplate: React.FC<FormTemplateProps> = ({ inputs, buttonText, handleSubmit, supportBtn, handleClick, supportText }) => {
 
     return (
         <form
@@ -33,7 +33,7 @@ export const FormTemplate: React.FC<FormTemplateProps> = ({ inputs, buttonText, 
             <PrimaryButton>{buttonText}</PrimaryButton>
 
             {supportBtn && <>
-                <SupportButton onClick={handleSupport}>
+                <SupportButton onClick={handleClick}>
                     {supportText}
                 </SupportButton>
             </>}

@@ -66,9 +66,7 @@ export const LoginMenu = () => {
             password: { value: pass }
         } } = e
         try {
-
             if (user) {
-
                 const { uid } = user
                 const userDoc = usersDB.doc(uid)
                 const userData = await userDoc.get()
@@ -87,7 +85,6 @@ export const LoginMenu = () => {
                     })
                 }
             }
-
 
             await auth.signInWithEmailAndPassword(email, pass);
             dispatch(setLogin(log.in));
@@ -124,7 +121,7 @@ export const LoginMenu = () => {
                     inputs={regFormInputs}
                     buttonText="Register"
                     supportBtn={true}
-                    handleSupport={handleTableState}
+                    handleClick={handleTableState}
                     supportText="Login" />
 
                 <Subtitle>
@@ -139,7 +136,7 @@ export const LoginMenu = () => {
                     inputs={loginFormInputs}
                     buttonText="Login"
                     supportBtn={true}
-                    handleSupport={handleTableState}
+                    handleClick={handleTableState}
                     supportText="Register" />
 
                 <Subtitle>
