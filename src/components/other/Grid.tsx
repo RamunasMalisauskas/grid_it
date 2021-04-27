@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Cell, Spinner, TitleLarge } from "..";
-import { setErrorMsg, setInfoMsg } from "../../state/actions";
+import { setErrorMsg, setInfoMsg, setDataLimit } from "../../state/actions";
 import { StateType, sideBarState, log } from "../../types/types";
 
 type CenterCircleProps = {
@@ -35,14 +35,16 @@ export const Grid: React.FC = () => {
     }
     if (canvasData.length > 8) {
       dispatch(setErrorMsg("You're about to reach maximum capacity of cells"));
+      dispatch(setDataLimit(false));
     }
 
     if (canvasData.length > 10) {
       dispatch(
         setErrorMsg(
-          "maximum capacity of cells has been reached. Please remove some of if"
+          "maximum capacity of cells has been reached. Remove some of if"
         )
       );
+      dispatch(setDataLimit(true));
     }
 
     // web worker ideti

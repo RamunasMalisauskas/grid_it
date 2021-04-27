@@ -15,7 +15,7 @@ interface SideBarProps {
 export const SideBarMenu: React.FC = () => {
   const dispatch = useDispatch();
   const randomColor = require("randomcolor");
-  const { canvasPosition } = useSelector(
+  const { canvasPosition, dataLimit } = useSelector(
     (state: StateType) => state.canvaState
   );
   const { errorMsg, sideBar } = useSelector(
@@ -76,11 +76,15 @@ export const SideBarMenu: React.FC = () => {
 
             {sideBar === sideBarState.open && (
               <>
-                <FormTemplate
-                  buttonText="add cell"
-                  handleSubmit={handleSubmit}
-                  inputs={sideBarFormInputs}
-                />
+                {!dataLimit && (
+                  <>
+                    <FormTemplate
+                      buttonText="add cell"
+                      handleSubmit={handleSubmit}
+                      inputs={sideBarFormInputs}
+                    />
+                  </>
+                )}
 
                 <Subtitle>{errorMsg}</Subtitle>
               </>

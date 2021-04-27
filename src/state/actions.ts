@@ -49,7 +49,7 @@ export const setInfoMsg = (value: string): ActionType => {
     value,
   };
 };
-export const setDataLimit = (value: string): ActionType => {
+export const setDataLimit = (value: boolean): ActionType => {
   return {
     type: SET_DATA_LIMIT,
     value,
