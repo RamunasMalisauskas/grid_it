@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Cell, Spinner } from "..";
 import { log } from "../../constants/stateConstants";
-import { sideBarState } from "../../constants/stateConstants"
+import { sideBarState } from "../../constants/stateConstants";
 import { StateType } from "../../types/types";
 
 type CenterCircleProps = {
@@ -18,10 +18,10 @@ export const Grid: React.FC = () => {
   const circleSize = 300;
 
   const generatedCanvas = useMemo(() => {
-    if (!canvasData) return
-    if (canvasData.length === 0) return
-    if (canvasData[0].data === null) return
-    if (!canvasData[0].data.data.value) return
+    if (!canvasData) return;
+    if (canvasData.length === 0) return;
+    if (canvasData[0].data === null) return;
+    if (!canvasData[0].data.data.value) return;
 
     // web worker ideti
     const radiusIncrement = 360 / canvasData.length;
@@ -43,31 +43,31 @@ export const Grid: React.FC = () => {
             }
             circleSize={circleSize}
           />
-        ))
-        }
-
+        ))}
       </>
     );
   }, [canvasData]);
 
   return (
-    <Canvas> {
-      loginStatus === log.in && (
+    <Canvas>
+      {" "}
+      {loginStatus === log.in && (
         <>
-          {
-            !generatedCanvas &&
+          {!generatedCanvas && (
             <SpinnerBlock>
               <Spinner color="white" />
             </SpinnerBlock>
-          }
-          <CenterCircle size={circleSize} position={sideBar === sideBarState.open}>
+          )}
+          <CenterCircle
+            size={circleSize}
+            position={sideBar === sideBarState.open}
+          >
             {generatedCanvas}
           </CenterCircle>
         </>
-      )
-    }
+      )}
     </Canvas>
-  )
+  );
 };
 
 const Canvas = styled.div`
@@ -83,15 +83,15 @@ const CenterCircle = styled.div<CenterCircleProps>`
   border-radius: 50%;
   position: absolute;
   top: 50%;
-  left: ${({ position }) => position ? `calc(50% + 200px)` : `50%`};
+  left: ${({ position }) => (position ? `calc(50% + 200px)` : `50%`)};
   transition: all ease-in-out 0.3s 0.3s;
   transform: translate(-50%, -50%);
   background-color: rgba(209, 209, 209, 0.4);
 `;
 
 const SpinnerBlock = styled.div`
- position: absolute;
- top: 50%;
- left: 50%;
- transform: translate(-50%, -50%);
-`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;

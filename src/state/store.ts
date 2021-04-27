@@ -1,7 +1,11 @@
 import { createStore, Store } from "redux";
 import { combinedReducer } from "./reducers";
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import { devToolsEnhancer } from "redux-devtools-extension";
 
-const initialState = {}
+const initialState = {};
 
-export const store: Store = createStore(combinedReducer, initialState, devToolsEnhancer({}));
+export const store: Store = createStore(
+  combinedReducer,
+  initialState,
+  devToolsEnhancer({})
+);

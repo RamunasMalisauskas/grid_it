@@ -1,15 +1,15 @@
 export enum log {
   in = "loggedIn",
   out = "loggedOut",
-  reg = 'register'
+  reg = "register",
 }
 
 export enum storageItems {
   name = "userName",
-  status = "status"
+  status = "status",
 }
 
 export enum sideBarState {
   open = "open",
-  close = "close"
+  close = "close",
 }

@@ -86,5 +86,5 @@ export const userPageFormInputs = [
     label: "update your user name",
     placeholder: "updated user name",
     required: true,
-  }
-]
+  },
+];

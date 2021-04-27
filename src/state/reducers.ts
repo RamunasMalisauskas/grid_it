@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
 import { storageItems, log, sideBarState } from "../constants/stateConstants";
-import { StateType, ActionType } from '../types/types'
-
+import { StateType, ActionType } from "../types/types";
 import {
   SET_USER_NAME,
   SET_CANVAS_DATA,
@@ -24,9 +23,9 @@ const defaultState: StateType = {
   },
   userState: {
     userName: userName || "user",
-    loginStatus: log.out
-  }
-}
+    loginStatus: log.out,
+  },
+};
 
 const appState = (state = defaultState.appState, action: ActionType) => {
   switch (action.type) {

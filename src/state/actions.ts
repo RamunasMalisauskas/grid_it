@@ -3,11 +3,10 @@ import {
   SET_CANVAS_DATA,
   SET_SIDEBAR,
   SET_LOGIN,
-  SET_CANVAS_POSITION,
-  SET_ERROR_MESSAGE
+  SET_ERROR_MESSAGE,
 } from "./constant";
 
-import { ActionType } from '../types/types'
+import { ActionType, CellDataType } from "../types/types";
 
 export const setUserName = (value: string): ActionType => {
   return {
@@ -16,16 +15,9 @@ export const setUserName = (value: string): ActionType => {
   };
 };
 
-export const setCanvasData = (value: {}): ActionType => {
+export const setCanvasData = (value: CellDataType[]): ActionType => {
   return {
     type: SET_CANVAS_DATA,
-    value,
-  };
-};
-
-export const setCanvasPosition = (value: {}): ActionType => {
-  return {
-    type: SET_CANVAS_POSITION,
     value,
   };
 };
@@ -49,4 +41,3 @@ export const setErrorMsg = (value: string): ActionType => {
     value,
   };
 };
-

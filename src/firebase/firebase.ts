@@ -2,7 +2,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 
-let firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyCMrr0HrIpG8ev_KVVv3w9n5rGicNqSMZU",
   authDomain: "grid-it-app.firebaseapp.com",
   projectId: "grid-it-app",
@@ -19,6 +19,6 @@ export const db = firebase.firestore();
 
 export const usersDB = db.collection("users");
 
-export const timeStamp = firebase.firestore.FieldValue.serverTimestamp()
+export const timeStamp = firebase.firestore.FieldValue.serverTimestamp();
 
 export default Firebase;

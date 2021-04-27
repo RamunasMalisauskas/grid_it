@@ -1,8 +1,19 @@
 import axios from "axios";
-import { baseUrl, apiUrl, postHeader, methods } from "../constants/apiConstants";
-import { postDataType } from '../types/types'
+import {
+  baseUrl,
+  apiUrl,
+  postHeader,
+  methods,
+} from "../constants/apiConstants";
+import { postDataType } from "../types/types";
 
-export const addToBoard = async ({ userName, userColor, x, y, cellData }: postDataType): Promise<number> => {
+export const addToBoard = async ({
+  userName,
+  userColor,
+  x,
+  y,
+  cellData,
+}: postDataType): Promise<number> => {
   try {
     const postData = {
       x: x,
@@ -16,14 +27,13 @@ export const addToBoard = async ({ userName, userColor, x, y, cellData }: postDa
       method: methods.post,
       url: `${baseUrl}${apiUrl.Board}`,
       headers: postHeader,
-      data: postData
-    }
-    );
+      data: postData,
+    });
 
     console.log(post.status);
-    return await post.status
+    return await post.status;
   } catch (err) {
     console.log(err);
-    throw err
+    throw err;
   }
 };
