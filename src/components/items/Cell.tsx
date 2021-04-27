@@ -77,6 +77,9 @@ const CellBlock = styled.div<CellBlockProps>`
     height: ${({ size }) => size * 1.1}px;
     box-shadow: 2px 5px 3px 2px rgba(0, 0, 0, 0.4);
     cursor: pointer;
+    & :last-child {
+      transform: translateX(-20px) translateY(-25px);
+    }
   }
 `;
 

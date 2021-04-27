@@ -1,7 +1,8 @@
 import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { Cell, Spinner } from "..";
+import { Cell, Spinner, TitleLarge } from "..";
+import { setErrorMsg, setInfoMsg } from "../../state/actions";
 import { StateType, sideBarState, log } from "../../types/types";
 
 type CenterCircleProps = {
@@ -10,18 +11,42 @@ type CenterCircleProps = {
 };
 
 export const Grid: React.FC = () => {
+  const dispatch = useDispatch();
+  const circleSize = 300;
   const { canvasData } = useSelector((state: StateType) => state.canvaState);
   const { loginStatus } = useSelector((state: StateType) => state.userState);
-  const { sideBar } = useSelector((state: StateType) => state.appState);
-  const circleSize = 300;
+  const { sideBar, infoMsg } = useSelector(
+    (state: StateType) => state.appState
+  );
 
   const generatedCanvas = useMemo(() => {
     if (!canvasData) return;
-    if (canvasData.length === 0) return;
-    if (canvasData[0].data === null) return;
-    if (!canvasData[0].data.data.value) return;
+    if (
+      canvasData.length === 0 ||
+      canvasData[0].data === null ||
+      !canvasData[0].data.data.value
+    ) {
+      dispatch(setInfoMsg("Please Enter Data"));
+      return;
+    }
+
+    if (canvasData.length <= 8) {
+      dispatch(setErrorMsg(""));
+    }
+    if (canvasData.length > 8) {
+      dispatch(setErrorMsg("You're about to reach maximum capacity of cells"));
+    }
+
+    if (canvasData.length > 10) {
+      dispatch(
+        setErrorMsg(
+          "maximum capacity of cells has been reached. Please remove some of if"
+        )
+      );
+    }
 
     // web worker ideti
+    dispatch(setInfoMsg(""));
     const radiusIncrement = 360 / canvasData.length;
     const valueArray = canvasData.map((x) => x.data.data.value);
     const valueSum = valueArray.reduce((a, b) => a + b, 0);
@@ -48,13 +73,16 @@ export const Grid: React.FC = () => {
 
   return (
     <Canvas>
-      {" "}
       {loginStatus === log.in && (
         <>
+          <CenterBlock>
+            <TitleLarge>{infoMsg}</TitleLarge>
+          </CenterBlock>
+
           {!generatedCanvas && (
-            <SpinnerBlock>
+            <CenterBlock>
               <Spinner color="white" />
-            </SpinnerBlock>
+            </CenterBlock>
           )}
           <CenterCircle
             size={circleSize}
@@ -85,9 +113,14 @@ const CenterCircle = styled.div<CenterCircleProps>`
   transition: all ease-in-out 0.3s 0.3s;
   transform: translate(-50%, -50%);
   background-color: rgba(209, 209, 209, 0.4);
+  & :last-child {
+    transform: translateX(${({ size }) => size / 2 + 15}px)
+      translateY(${({ size }) => -size / 20}%);
+  }
 `;
 
-const SpinnerBlock = styled.div`
+const CenterBlock = styled.div`
+  text-align: center;
   position: absolute;
   top: 50%;
   left: 50%;
