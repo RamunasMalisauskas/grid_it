@@ -13,7 +13,7 @@ import {
   SET_LOGIN,
   SET_CANVAS_POSITION,
   SET_ERROR_MESSAGE,
-  SET_INFO_MESSAGE,
+  SET_LOADING,
   SET_DATA_LIMIT,
 } from "./constant";
 
@@ -22,7 +22,7 @@ const userName = localStorage.getItem(storageItems.name);
 const initialState: StateType = {
   appState: {
     errorMsg: "",
-    infoMsg: "",
+    loading: false,
     sideBar: sideBarState.close,
   },
   canvaState: {
@@ -42,8 +42,8 @@ const appState = (state = initialState.appState, action: ActionType) => {
       return { ...state, sideBar: action.value };
     case SET_ERROR_MESSAGE:
       return { ...state, errorMsg: action.value };
-    case SET_INFO_MESSAGE:
-      return { ...state, infoMsg: action.value };
+    case SET_LOADING:
+      return { ...state, loading: action.value };
     default:
       return state;
   }

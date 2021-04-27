@@ -4,7 +4,7 @@ import {
   SET_SIDEBAR,
   SET_LOGIN,
   SET_ERROR_MESSAGE,
-  SET_INFO_MESSAGE,
+  SET_LOADING,
   SET_DATA_LIMIT,
 } from "./constant";
 
@@ -43,9 +43,9 @@ export const setErrorMsg = (value: string): ActionType => {
     value,
   };
 };
-export const setInfoMsg = (value: string): ActionType => {
+export const setLoading = (value: boolean): ActionType => {
   return {
-    type: SET_INFO_MESSAGE,
+    type: SET_LOADING,
     value,
   };
 };
