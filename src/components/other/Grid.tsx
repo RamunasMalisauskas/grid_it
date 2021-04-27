@@ -1,8 +1,8 @@
+/* eslint-disable prettier/prettier */
 import React, { useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Cell, Spinner, TitleLarge } from "..";
-import { setErrorMsg, setInfoMsg, setDataLimit } from "../../state/actions";
+import { Cell, Spinner } from "..";
 import { StateType, sideBarState, log } from "../../types/types";
 
 type CenterCircleProps = {
@@ -11,44 +11,14 @@ type CenterCircleProps = {
 };
 
 export const Grid: React.FC = () => {
-  const dispatch = useDispatch();
   const circleSize = 300;
   const { canvasData } = useSelector((state: StateType) => state.canvaState);
   const { loginStatus } = useSelector((state: StateType) => state.userState);
-  const { sideBar, infoMsg } = useSelector(
-    (state: StateType) => state.appState
-  );
+  const { sideBar, loading } = useSelector((state: StateType) => state.appState);
 
   const generatedCanvas = useMemo(() => {
     if (!canvasData) return;
-    if (
-      canvasData.length === 0 ||
-      canvasData[0].data === null ||
-      !canvasData[0].data.data.value
-    ) {
-      dispatch(setInfoMsg("Please Enter Data"));
-      return;
-    }
-
-    if (canvasData.length <= 8) {
-      dispatch(setErrorMsg(""));
-    }
-    if (canvasData.length > 8) {
-      dispatch(setErrorMsg("You're about to reach maximum capacity of cells"));
-      dispatch(setDataLimit(false));
-    }
-
-    if (canvasData.length > 10) {
-      dispatch(
-        setErrorMsg(
-          "maximum capacity of cells has been reached. Remove some of if"
-        )
-      );
-      dispatch(setDataLimit(true));
-    }
-
-    // web worker ideti
-    dispatch(setInfoMsg(""));
+    // add it to web worker
     const radiusIncrement = 360 / canvasData.length;
     const valueArray = canvasData.map((x) => x.data.data.value);
     const valueSum = valueArray.reduce((a, b) => a + b, 0);
@@ -77,15 +47,12 @@ export const Grid: React.FC = () => {
     <Canvas>
       {loginStatus === log.in && (
         <>
-          <CenterBlock>
-            <TitleLarge>{infoMsg}</TitleLarge>
-          </CenterBlock>
-
-          {!generatedCanvas && (
+          {loading && (
             <CenterBlock>
               <Spinner color="white" />
             </CenterBlock>
           )}
+          
           <CenterCircle
             size={circleSize}
             position={sideBar === sideBarState.open}

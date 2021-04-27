@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCanvaData, fetchBoardStatus } from "./apis";
-import { setCanvasData } from "./state/actions";
+import { setCanvasData, setErrorMsg, setDataLimit } from "./state/actions";
 import { HomePage, UserPage } from "./containers";
 import { StateType } from "./types/types";
 import { auth } from "./firebase";
@@ -26,14 +26,36 @@ const App: React.FC = () => {
       // Ar reikia validaciojos cia ar ne nes yra await?
       if (!newVersion) return;
       if (build.version < newVersion) {
-        console.log("new build version is avalible");
         build.version = newVersion;
         const canvasData = await fetchCanvaData({
           xposition: canvasPosition.x,
           yposition: canvasPosition.y,
         });
         if (canvasData) {
-          // console.log(canvasData)
+          if (
+            canvasData.length === 0 ||
+            canvasData[0].data === null ||
+            !canvasData[0].data.data.value
+          ) {
+            return;
+          }
+          if (canvasData.length <= 8) {
+            dispatch(setErrorMsg(""));
+          }
+          if (canvasData.length > 8) {
+            dispatch(
+              setErrorMsg("You're about to reach maximum capacity of cells")
+            );
+            dispatch(setDataLimit(false));
+          }
+          if (canvasData.length > 10) {
+            dispatch(
+              setErrorMsg(
+                "maximum capacity of cells has been reached. Remove some of if"
+              )
+            );
+            dispatch(setDataLimit(true));
+          }
           dispatch(setCanvasData(canvasData));
         }
       }
