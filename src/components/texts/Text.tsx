@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 interface TextProps {
   color?: string;
-  children: string;
+  children: string | number | (string | number)[];
 }
 
 export const Paragraph: React.FC<TextProps> = ({

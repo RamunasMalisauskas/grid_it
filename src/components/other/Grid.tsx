@@ -115,9 +115,11 @@ const CenterCircle = styled.div<CenterCircleProps>`
   transition: all ease-in-out 0.3s 0.3s;
   transform: translate(-50%, -50%);
   background-color: rgba(209, 209, 209, 0.4);
-  & :last-child {
-    transform: translateX(${({ size }) => size / 2 + 15}px)
-      translateY(${({ size }) => -size / 20}%);
+  & ::after {
+    & :last-child {
+      transform: translateX(${({ size }) => size / 2 + 15}px)
+        translateY(${({ size }) => -size / 20}%);
+    }
   }
 `;
 

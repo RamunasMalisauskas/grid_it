@@ -23,6 +23,7 @@ type CellBlockProps = {
 
 type CellInfoProps = {
   visible: boolean;
+  size: number;
 };
 
 export const Cell: React.FC<CellProps> = ({
@@ -53,7 +54,14 @@ export const Cell: React.FC<CellProps> = ({
       size={cellSize}
       offset={cellOffset}
     >
-      <CellInfo visible={visible}>{cell.data.data.value}</CellInfo>
+      <CellInfo visible={visible} size={circleSize}>
+        <p>
+          number: <br /> {cell.x % 2000}
+        </p>
+        <p>
+          value: <br /> {cell.data.data.value}
+        </p>
+      </CellInfo>
     </CellBlock>
   );
 };
@@ -77,9 +85,6 @@ const CellBlock = styled.div<CellBlockProps>`
     height: ${({ size }) => size * 1.1}px;
     box-shadow: 2px 5px 3px 2px rgba(0, 0, 0, 0.4);
     cursor: pointer;
-    & :last-child {
-      transform: translateX(-20px) translateY(-25px);
-    }
   }
 `;
 
@@ -88,10 +93,12 @@ const CellInfo = styled.div<CellInfoProps>`
   position: absolute;
   top: 50%;
   left: -50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-25%, -50%);
+  z-index: 200;
   background-color: rgba(209, 209, 209, 0.4);
-  padding: 20px;
+  padding: 10px;
   font-family: "Zen Dots", cursive;
   text-transform: uppercase;
   border-radius: 10px;
+  max-width: 90px;
 `;
