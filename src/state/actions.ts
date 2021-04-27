@@ -5,6 +5,7 @@ import {
   SET_LOGIN,
   SET_ERROR_MESSAGE,
   SET_INFO_MESSAGE,
+  SET_DATA_LIMIT,
 } from "./constant";
 
 import { ActionType, CellDataType } from "../types/types";
@@ -45,6 +46,12 @@ export const setErrorMsg = (value: string): ActionType => {
 export const setInfoMsg = (value: string): ActionType => {
   return {
     type: SET_INFO_MESSAGE,
+    value,
+  };
+};
+export const setDataLimit = (value: string): ActionType => {
+  return {
+    type: SET_DATA_LIMIT,
     value,
   };
 };

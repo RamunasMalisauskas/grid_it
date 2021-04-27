@@ -14,17 +14,19 @@ import {
   SET_CANVAS_POSITION,
   SET_ERROR_MESSAGE,
   SET_INFO_MESSAGE,
+  SET_DATA_LIMIT,
 } from "./constant";
 
 const userName = localStorage.getItem(storageItems.name);
 
-const defaultState: StateType = {
+const initialState: StateType = {
   appState: {
     errorMsg: "",
     infoMsg: "",
     sideBar: sideBarState.close,
   },
   canvaState: {
+    dataLimit: false,
     canvasData: [],
     canvasPosition: { x: 2000, y: 2000 },
   },
@@ -34,7 +36,7 @@ const defaultState: StateType = {
   },
 };
 
-const appState = (state = defaultState.appState, action: ActionType) => {
+const appState = (state = initialState.appState, action: ActionType) => {
   switch (action.type) {
     case SET_SIDEBAR:
       return { ...state, sideBar: action.value };
@@ -47,18 +49,20 @@ const appState = (state = defaultState.appState, action: ActionType) => {
   }
 };
 
-const canvaState = (state = defaultState.canvaState, action: ActionType) => {
+const canvaState = (state = initialState.canvaState, action: ActionType) => {
   switch (action.type) {
     case SET_CANVAS_DATA:
       return { ...state, canvasData: action.value };
     case SET_CANVAS_POSITION:
       return { ...state, canvasPosition: action.value };
+    case SET_DATA_LIMIT:
+      return { ...state, dataLimit: action.value };
     default:
       return state;
   }
 };
 
-const userState = (state = defaultState.userState, action: ActionType) => {
+const userState = (state = initialState.userState, action: ActionType) => {
   switch (action.type) {
     case SET_USER_NAME:
       return { ...state, userName: action.value };

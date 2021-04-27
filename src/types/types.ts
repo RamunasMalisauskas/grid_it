@@ -6,6 +6,7 @@ export type StateType = {
   };
   canvaState: {
     canvasData: CellDataType[];
+    dataLimit: false;
     canvasPosition: {
       x: number;
       y: number;
