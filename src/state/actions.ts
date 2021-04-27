@@ -4,6 +4,7 @@ import {
   SET_SIDEBAR,
   SET_LOGIN,
   SET_ERROR_MESSAGE,
+  SET_INFO_MESSAGE,
 } from "./constant";
 
 import { ActionType, CellDataType } from "../types/types";
@@ -38,6 +39,12 @@ export const setLogin = (value: string): ActionType => {
 export const setErrorMsg = (value: string): ActionType => {
   return {
     type: SET_ERROR_MESSAGE,
+    value,
+  };
+};
+export const setInfoMsg = (value: string): ActionType => {
+  return {
+    type: SET_INFO_MESSAGE,
     value,
   };
 };

@@ -13,6 +13,7 @@ import {
   SET_LOGIN,
   SET_CANVAS_POSITION,
   SET_ERROR_MESSAGE,
+  SET_INFO_MESSAGE,
 } from "./constant";
 
 const userName = localStorage.getItem(storageItems.name);
@@ -38,6 +39,8 @@ const appState = (state = defaultState.appState, action: ActionType) => {
       return { ...state, sideBar: action.value };
     case SET_ERROR_MESSAGE:
       return { ...state, errorMsg: action.value };
+    case SET_INFO_MESSAGE:
+      return { ...state, infoMsg: action.value };
     default:
       return state;
   }
