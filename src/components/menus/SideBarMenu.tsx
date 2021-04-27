@@ -7,6 +7,7 @@ import { addToBoard } from "../../apis";
 import { StateType, sideBarState, log, error } from "../../types/types";
 import { SupportButton, Subtitle, FormTemplate } from "../";
 import { sideBarFormInputs } from "../../utils/formData";
+import { usersDB, auth, timeStamp } from "../../firebase/firebase";
 
 interface SideBarProps {
   open: string;
@@ -37,6 +38,7 @@ export const SideBarMenu: React.FC = () => {
       if (!e) return;
       if (!canvasPosition) return;
       e.preventDefault();
+      const user = auth.currentUser;
 
       const {
         target: {
@@ -60,6 +62,29 @@ export const SideBarMenu: React.FC = () => {
         });
       } else {
         dispatch(setErrorMsg(error.fillInputs));
+      }
+
+      if (user) {
+        try {
+          const { uid } = user;
+          const userDoc = usersDB.doc(uid);
+          const userData = await userDoc.get();
+
+          if (userData.exists) {
+            await userDoc.update({
+              userName: userName,
+              lastVisit: timeStamp,
+            });
+          } else {
+            await userDoc.set({
+              userName: userName,
+              firstVisit: timeStamp,
+              lastVisit: timeStamp,
+            });
+          }
+        } catch (e) {
+          console.log(e);
+        }
       }
     },
     [userName, randomColor, canvasPosition, dispatch]
