@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import styled from "styled-components";
 import { CellDataType } from "../../types/types";
@@ -21,6 +20,7 @@ type CellBlockProps = {
   circleSize: number;
   offset: number;
 };
+
 type CellInfoProps = {
   visible: boolean;
 };
@@ -31,7 +31,7 @@ export const Cell: React.FC<CellProps> = ({
   valueSum,
   valueDif,
   circleSize,
-}) => {
+}: CellProps) => {
   const [visible, setVisible] = useState(false);
   const cellProportion = (cell.data.data.value / valueSum) * 100;
   const cellSize = circleSize / 10 + cellProportion;

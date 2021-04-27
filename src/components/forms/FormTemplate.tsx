@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 import { Input, PrimaryButton, SupportButton } from "../";
 import { InputProps } from "../../components/inputs/Input";
@@ -19,7 +18,7 @@ export const FormTemplate: React.FC<FormTemplateProps> = ({
   supportBtn,
   handleClick,
   supportText,
-}) => {
+}: FormTemplateProps) => {
   return (
     <form onSubmit={handleSubmit}>
       {inputs.map((input, index) => (

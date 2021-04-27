@@ -1,20 +1,29 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 import styled from "styled-components";
 
 interface TextProps {
   color?: string;
+  children: string;
 }
 
-export const Paragraph: React.FC<TextProps> = ({ color, children }) => {
+export const Paragraph: React.FC<TextProps> = ({
+  color,
+  children,
+}: TextProps) => {
   return <P color={color}>{children}</P>;
 };
 
-export const TitleLarge: React.FC<TextProps> = ({ color, children }) => {
+export const TitleLarge: React.FC<TextProps> = ({
+  color,
+  children,
+}: TextProps) => {
   return <H1 color={color}>{children}</H1>;
 };
 
-export const Subtitle: React.FC<TextProps> = ({ color, children }) => {
+export const Subtitle: React.FC<TextProps> = ({
+  color,
+  children,
+}: TextProps) => {
   return <H2 color={color}>{children}</H2>;
 };
 

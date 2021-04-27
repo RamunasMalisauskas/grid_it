@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
@@ -6,7 +5,7 @@ interface SpinnerProps {
   color?: string;
 }
 
-export const Spinner: React.FC<SpinnerProps> = ({ color }) => {
+export const Spinner: React.FC<SpinnerProps> = ({ color }: SpinnerProps) => {
   return (
     <SpinnerBlock>
       <DotOne color={color} />

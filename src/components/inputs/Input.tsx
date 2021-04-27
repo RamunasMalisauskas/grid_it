@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 import styled from "styled-components";
 
@@ -20,7 +19,7 @@ export const Input: React.FC<InputProps> = ({
   onChange,
   placeholder,
   required,
-}) => {
+}: InputProps) => {
   return (
     <>
       {label && (
