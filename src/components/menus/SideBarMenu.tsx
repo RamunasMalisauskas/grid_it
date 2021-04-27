@@ -2,11 +2,21 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { setSideBar, setErrorMsg } from "../../state/actions";
+import {
+  setSideBar,
+  setErrorMsg,
+  setSideBarContent,
+} from "../../state/actions";
 import { addToBoard } from "../../apis";
-import { StateType, sideBarState, log, error } from "../../types/types";
-import { SupportButton, Subtitle, FormTemplate } from "../";
-import { sideBarFormInputs } from "../../utils/formData";
+import {
+  StateType,
+  sideBarState,
+  sideBarContentState,
+  log,
+  error,
+} from "../../types/types";
+import { SupportButton, PrimaryButton, Subtitle, FormTemplate } from "../";
+import { addCellFormInputs, addClassFormInputs } from "../../utils/formData";
 import { usersDB, auth, timeStamp } from "../../firebase/firebase";
 
 interface SideBarProps {
@@ -19,7 +29,7 @@ export const SideBarMenu: React.FC = () => {
   const { canvasPosition, dataLimit } = useSelector(
     (state: StateType) => state.canvaState
   );
-  const { errorMsg, sideBar } = useSelector(
+  const { errorMsg, sideBar, sideBarContent } = useSelector(
     (state: StateType) => state.appState
   );
   const { userName, loginStatus } = useSelector(
@@ -33,7 +43,7 @@ export const SideBarMenu: React.FC = () => {
       )
     );
 
-  const handleSubmit = useCallback<React.FormEventHandler<HTMLFormElement>>(
+  const handleAddCell = useCallback<React.FormEventHandler<HTMLFormElement>>(
     async (e) => {
       if (!e) return;
       if (!canvasPosition) return;
@@ -44,7 +54,7 @@ export const SideBarMenu: React.FC = () => {
         target: {
           number: { value: number },
           data: { value: data },
-          info: { value: info },
+          cellName: { value: cellName },
         },
       } = e;
 
@@ -57,57 +67,148 @@ export const SideBarMenu: React.FC = () => {
           y: canvasPosition.y + parseInt(number),
           cellData: {
             value: parseInt(data),
-            info: info,
+            cellName: cellName,
           },
         });
+
+        if (user) {
+          try {
+            const { uid } = user;
+            const userDoc = usersDB.doc(uid);
+            const userData = await userDoc.get();
+
+            if (userData.exists) {
+              await userDoc.update({
+                userName: userName,
+                lastVisit: timeStamp,
+              });
+            } else {
+              await userDoc.set({
+                userName: userName,
+                firstVisit: timeStamp,
+                lastVisit: timeStamp,
+              });
+            }
+          } catch (e) {
+            console.log(e);
+          }
+        }
       } else {
         dispatch(setErrorMsg(error.fillInputs));
-      }
-
-      if (user) {
-        try {
-          const { uid } = user;
-          const userDoc = usersDB.doc(uid);
-          const userData = await userDoc.get();
-
-          if (userData.exists) {
-            await userDoc.update({
-              userName: userName,
-              lastVisit: timeStamp,
-            });
-          } else {
-            await userDoc.set({
-              userName: userName,
-              firstVisit: timeStamp,
-              lastVisit: timeStamp,
-            });
-          }
-        } catch (e) {
-          console.log(e);
-        }
       }
     },
     [userName, randomColor, canvasPosition, dispatch]
   );
+
+  const handleAddClass = useCallback<React.FormEventHandler<HTMLFormElement>>(
+    async (e) => {
+      if (!e) return;
+      if (!canvasPosition) return;
+      e.preventDefault();
+      const user = auth.currentUser;
+
+      const {
+        target: {
+          className: { value: className },
+          // position: { value: position },
+        },
+      } = e;
+
+      if (className.length > 0) {
+        dispatch(setErrorMsg(error.empty));
+        if (user) {
+          try {
+            const { uid } = user;
+            const classData = await usersDB
+              .doc(uid)
+              .collection("classInfo")
+              .get();
+            const classDoc = await usersDB
+              .doc(uid)
+              .collection("classInfo")
+              .doc();
+            const classAllDocs = classData.docs.map((doc) => doc.data());
+            const nameArray = classAllDocs.map((item) => item.class.name);
+
+            if (!nameArray.includes(className)) {
+              const newCanva = {
+                x: (canvasPosition.x += 50),
+                y: (canvasPosition.y += 50),
+              };
+              // dispatch(setCanvasPosition(newCanva));
+
+              await classDoc.set({
+                class: {
+                  name: className,
+                  position: newCanva,
+                },
+              });
+            } else {
+              dispatch(setErrorMsg(error.classExist));
+            }
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      } else {
+        dispatch(setErrorMsg(error.fillInputs));
+      }
+    },
+    [userName, randomColor, canvasPosition, dispatch]
+  );
+
+  const handleClassFormState = () => {
+    dispatch(
+      setSideBarContent(
+        sideBarContent === sideBarContentState.addCell
+          ? sideBarContentState.addClass
+          : sideBarContentState.addCell
+      )
+    );
+  };
 
   return (
     <SideBlock open={sideBar}>
       {loginStatus === log.in && (
         <>
           <SideBarContainer>
-            <SupportButton onClick={handleBarState}>
-              {sideBar === sideBarState.close ? "menu" : "x"}
-            </SupportButton>
+            <ControlBLock>
+              <PrimaryButton onClick={handleBarState}>
+                {sideBar === sideBarState.close ? "add stuff" : "x"}
+              </PrimaryButton>
+            </ControlBLock>
 
             {sideBar === sideBarState.open && (
               <>
                 {!dataLimit && (
                   <>
-                    <FormTemplate
-                      buttonText="add cell"
-                      handleSubmit={handleSubmit}
-                      inputs={sideBarFormInputs}
-                    />
+                    {sideBarContent === sideBarContentState.addCell && (
+                      <>
+                        <SupportButton onClick={handleClassFormState}>
+                          go to class
+                        </SupportButton>
+
+                        <FormTemplate
+                          buttonText="Add Cell"
+                          handleSubmit={handleAddCell}
+                          inputs={addCellFormInputs}
+                        />
+                      </>
+                    )}
+
+                    {sideBarContent === sideBarContentState.addClass && (
+                      <>
+                        <SupportButton onClick={handleClassFormState}>
+                          go to cell
+                        </SupportButton>
+
+                        <FormTemplate
+                          buttonText="Add Class"
+                          handleSubmit={handleAddClass}
+                          inputs={addClassFormInputs}
+                        />
+                      </>
+                    )}
                   </>
                 )}
 
@@ -124,7 +225,7 @@ export const SideBarMenu: React.FC = () => {
 const SideBlock = styled.div<SideBarProps>`
   position: absolute;
   top: 0;
-  left: ${({ open }) => (open === sideBarState.open ? "0" : "-200px")};
+  left: ${({ open }) => (open === sideBarState.open ? "0" : "-120px")};
   height: 100%;
   background: ${({ open }) =>
     open === sideBarState.open
@@ -138,4 +239,8 @@ const SideBarContainer = styled.div`
   margin: 0 auto;
   width: 285px;
   text-align: right;
+`;
+
+const ControlBLock = styled.div`
+  width: 100%;
 `;
