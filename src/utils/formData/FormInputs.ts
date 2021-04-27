@@ -17,12 +17,20 @@ export const loginFormInputs = [
   },
 ];
 
-export const sideBarFormInputs = [
+export const addCellFormInputs = [
+  {
+    id: 3,
+    type: "text",
+    name: "name",
+    label: "cell name",
+    placeholder: "enter cell name",
+    required: true,
+  },
   {
     id: 1,
     type: "number",
     name: "number",
-    label: "enter cell number",
+    label: "cell number",
     placeholder: "1... 2... 3...",
     required: true,
   },
@@ -30,16 +38,20 @@ export const sideBarFormInputs = [
     id: 2,
     type: "number",
     name: "data",
-    label: "enter cell value",
+    label: "cell value",
     placeholder: "...123",
     required: true,
   },
+];
+
+export const addClassFormInputs = [
   {
-    id: 3,
+    id: 1,
     type: "text",
-    name: "info",
-    label: "extra info",
-    placeholder: "optional",
+    name: "className",
+    label: "class name",
+    placeholder: "enter class name",
+    required: true,
   },
 ];
 
