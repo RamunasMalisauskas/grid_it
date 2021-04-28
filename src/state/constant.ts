@@ -9,3 +9,4 @@ export const SET_LOADING = "SET_LOADING";
 export const SET_SIDEBAR_CONTENT = "SET_SIDEBAR_CONTENT";
 export const SET_CLASS_DATA = "SET_CLASS_DATA";
 export const SET_CLASS_MENU = "SET_CLASS_MENU";
+export const SET_CLASS_NAME = "SET_CLASS_NAME";

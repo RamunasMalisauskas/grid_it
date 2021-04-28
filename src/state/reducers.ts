@@ -21,6 +21,7 @@ import {
   SET_SIDEBAR_CONTENT,
   SET_CLASS_DATA,
   SET_CLASS_MENU,
+  SET_CLASS_NAME,
 } from "./constant";
 
 const userName = localStorage.getItem(storageItems.name);
@@ -38,6 +39,7 @@ const initialState: StateType = {
     canvasData: [],
     canvasPosition: { x: 2000, y: 2000 },
     classData: [],
+    className: "",
   },
   userState: {
     userName: userName || "user",
@@ -72,6 +74,8 @@ const canvaState = (state = initialState.canvaState, action: ActionType) => {
       return { ...state, dataLimit: action.value };
     case SET_CLASS_DATA:
       return { ...state, classData: action.value };
+    case SET_CLASS_NAME:
+      return { ...state, className: action.value };
     default:
       return state;
   }

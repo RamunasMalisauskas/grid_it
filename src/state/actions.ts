@@ -10,6 +10,7 @@ import {
   SET_SIDEBAR_CONTENT,
   SET_CLASS_DATA,
   SET_CLASS_MENU,
+  SET_CLASS_NAME,
 } from "./constant";
 
 import {
@@ -60,30 +61,41 @@ export const setLogin = (value: string): ActionType => {
     value,
   };
 };
+
 export const setErrorMsg = (value: string): ActionType => {
   return {
     type: SET_ERROR_MESSAGE,
     value,
   };
 };
+
 export const setLoading = (value: boolean): ActionType => {
   return {
     type: SET_LOADING,
     value,
   };
 };
+
 export const setDataLimit = (value: boolean): ActionType => {
   return {
     type: SET_DATA_LIMIT,
     value,
   };
 };
+
 export const setClassData = (value: ClassType[]): ActionType => {
   return {
     type: SET_CLASS_DATA,
     value,
   };
 };
+export const setClassName = (value: string): ActionType => {
+  return {
+    type: SET_CLASS_NAME,
+    value,
+  };
+};
+
 export const setClassMenu = (value: string): ActionType => {
   return {
     type: SET_CLASS_MENU,
