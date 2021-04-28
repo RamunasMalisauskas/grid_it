@@ -21,7 +21,7 @@ export const addCellFormInputs = [
   {
     id: 3,
     type: "text",
-    name: "name",
+    name: "cellName",
     label: "cell name",
     placeholder: "enter cell name",
     required: true,

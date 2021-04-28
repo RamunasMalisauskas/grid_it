@@ -32,25 +32,26 @@ export const ClassMenu: React.FC = () => {
 
   return (
     <ClassMenuBlock>
-      <PrimaryButton onClick={handleGetClassNames}>Get Classes</PrimaryButton>
+      <ControlBLock>
+        <PrimaryButton onClick={handleGetClassNames}>Get Classes</PrimaryButton>
+      </ControlBLock>
       {classNames &&
         classNames.map((className: string) => (
-          <SupportButton
-            key={className}
-            onClick={() => handleClassClick(className)}
-          >
-            {className}
-          </SupportButton>
+          <ControlBLock key={`btn_index_${className}`}>
+            <SupportButton onClick={() => handleClassClick(className)}>
+              {className}
+            </SupportButton>
+          </ControlBLock>
         ))}
     </ClassMenuBlock>
   );
 };
 
 const ClassMenuBlock = styled.div`
-  position: absolute;
   z-index: 1;
-  top: 0;
-  right: 10%;
   height: 100%;
   transition: all ease-in-out 0.3s;
+`;
+const ControlBLock = styled.div`
+  width: 100%;
 `;

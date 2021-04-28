@@ -15,7 +15,13 @@ import {
   log,
   error,
 } from "../../types/types";
-import { SupportButton, PrimaryButton, Subtitle, FormTemplate } from "../";
+import {
+  SupportButton,
+  PrimaryButton,
+  Subtitle,
+  FormTemplate,
+  ClassMenu,
+} from "../";
 import { addCellFormInputs, addClassFormInputs } from "../../utils/formData";
 import { usersDB, auth, timeStamp } from "../../firebase/firebase";
 
@@ -51,6 +57,7 @@ export const SideBarMenu: React.FC = () => {
           : sideBarContentState.addCell
       )
     );
+    dispatch(setErrorMsg(error.empty));
   };
 
   const handleAddCell = useCallback<React.FormEventHandler<HTMLFormElement>>(
@@ -207,6 +214,8 @@ export const SideBarMenu: React.FC = () => {
                           handleSubmit={handleAddClass}
                           inputs={addClassFormInputs}
                         />
+
+                        <ClassMenu />
                       </>
                     )}
                   </>
