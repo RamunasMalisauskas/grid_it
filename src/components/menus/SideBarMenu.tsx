@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setSideBar,
   setErrorMsg,
   setSideBarContent,
+  setClassName,
 } from "../../state/actions";
 import { addToBoard } from "../../apis";
 import {
@@ -26,7 +27,7 @@ interface SideBarProps {
 export const SideBarMenu: React.FC = () => {
   const dispatch = useDispatch();
   const randomColor = require("randomcolor");
-  const { canvasPosition, dataLimit } = useSelector(
+  const { canvasPosition, dataLimit, classNames } = useSelector(
     (state: StateType) => state.canvaState
   );
   const { errorMsg, sideBar, sideBarContent } = useSelector(
@@ -167,27 +168,25 @@ export const SideBarMenu: React.FC = () => {
     [userName, randomColor, canvasPosition, dispatch]
   );
 
-  const handleClassClick = () => console.log("click");
+  const handleClassClick = (className: string) => {
+    console.log("className ", className);
+  };
 
-  const FilteredClass = useMemo(() => {
+  const handleGetClassNames = useCallback(async () => {
     const user = auth.currentUser;
     if (user) {
       const { uid } = user;
-      const array: any[] | undefined = [];
-
-      usersDB
-        .doc(uid)
-        .collection("classInfo")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            array.push(doc.data().class.name);
-          });
-        });
-
-      return array;
+      try {
+        const snapshot = await usersDB.doc(uid).collection("classInfo").get();
+        const nameArray = await snapshot.docs.map(
+          (doc) => doc.data().class.name
+        );
+        dispatch(setClassName(nameArray));
+      } catch (err) {
+        console.log(err);
+      }
     }
-  }, []);
+  }, [classNames]);
 
   return (
     <SideBlock open={sideBar}>
@@ -195,17 +194,19 @@ export const SideBarMenu: React.FC = () => {
         <>
           <SideBarContainer>
             <ControlBLock>
-              <PrimaryButton onClick={handleBarState}>
+              <PrimaryButton onClick={handleGetClassNames}>
                 {sideBar === sideBarState.close ? "add stuff" : "x"}
               </PrimaryButton>
             </ControlBLock>
 
-            {FilteredClass &&
-              FilteredClass.map((className: string) => (
-                <SupportButton key={className} onClick={handleClassClick}>
-                  {className}
-                </SupportButton>
-              ))}
+            {classNames.map((className: string) => (
+              <SupportButton
+                key={className}
+                onClick={() => handleClassClick(className)}
+              >
+                {className}
+              </SupportButton>
+            ))}
 
             {sideBar === sideBarState.open && (
               <>

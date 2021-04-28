@@ -19,6 +19,7 @@ import {
   SET_LOADING,
   SET_DATA_LIMIT,
   SET_SIDEBAR_CONTENT,
+  SET_CLASS_NAMES,
 } from "./constant";
 
 const userName = localStorage.getItem(storageItems.name);
@@ -34,6 +35,7 @@ const initialState: StateType = {
     dataLimit: false,
     canvasData: [],
     canvasPosition: { x: 2000, y: 2000 },
+    classNames: [],
   },
   userState: {
     userName: userName || "user",
@@ -64,6 +66,8 @@ const canvaState = (state = initialState.canvaState, action: ActionType) => {
       return { ...state, canvasPosition: action.value };
     case SET_DATA_LIMIT:
       return { ...state, dataLimit: action.value };
+    case SET_CLASS_NAMES:
+      return { ...state, classNames: action.value };
     default:
       return state;
   }
