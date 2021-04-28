@@ -56,7 +56,7 @@ export const Cell: React.FC<CellProps> = ({
   }, [cell]);
 
   const handelClick = () => {
-    // deleteFromBoard({ cellId: cell._id })
+    deleteFromBoard({ cellId: cell._id });
   };
   const handleMouse = () => setVisible(!visible);
 
@@ -73,6 +73,9 @@ export const Cell: React.FC<CellProps> = ({
       offset={cellOffset}
     >
       <CellInfo visible={visible} size={circleSize} radius={cellRadiusIncr}>
+        <p>
+          name: <br /> {cell.data.data.cellName}
+        </p>
         <p>
           number: <br /> {cell.x % 2000}
         </p>
