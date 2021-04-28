@@ -39,7 +39,7 @@ const initialState: StateType = {
     canvasData: [],
     canvasPosition: { x: 2000, y: 2000 },
     classData: [],
-    className: "",
+    className: "grid it",
   },
   userState: {
     userName: userName || "user",

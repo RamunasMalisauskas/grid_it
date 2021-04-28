@@ -2,7 +2,7 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Cell, Spinner } from "..";
+import { Cell, Spinner, TitleMasive } from "..";
 import { StateType, menuState, log } from "../../types/types";
 
 type CenterCircleProps = {
@@ -12,7 +12,7 @@ type CenterCircleProps = {
 
 export const Grid: React.FC = () => {
   const circleSize = 300;
-  const { canvasData } = useSelector((state: StateType) => state.canvaState);
+  const { canvasData, className } = useSelector((state: StateType) => state.canvaState);
   const { loginStatus } = useSelector((state: StateType) => state.userState);
   const { sideBar, loading } = useSelector((state: StateType) => state.appState);
 
@@ -52,13 +52,19 @@ export const Grid: React.FC = () => {
               <Spinner color="white" />
             </CenterBlock>
           )}
-          
+
           <CenterCircle
             size={circleSize}
             position={sideBar === menuState.open}
           >
             {generatedCanvas}
           </CenterCircle>
+          
+          <CenterBlock>
+            <TitleMasive color="black">
+              {className}
+            </TitleMasive>
+          </CenterBlock>
         </>
       )}
     </Canvas>
@@ -77,6 +83,7 @@ const CenterCircle = styled.div<CenterCircleProps>`
   height: ${({ size }) => size}px;
   border-radius: 50%;
   position: absolute;
+  z-index: 2;
   top: 50%;
   left: ${({ position }) => (position ? `calc(50% + 120px)` : `50%`)};
   transition: all ease-in-out 0.3s 0.3s;
@@ -93,6 +100,7 @@ const CenterCircle = styled.div<CenterCircleProps>`
 const CenterBlock = styled.div`
   text-align: center;
   position: absolute;
+  z-index:1;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
