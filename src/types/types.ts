@@ -122,4 +122,5 @@ export enum error {
   fillInputs = "Please enter required info to add a cell",
   noData = "There is no cell data found",
   classExist = "The name of the class is alrady taken",
+  success = "added successfuly",
 }

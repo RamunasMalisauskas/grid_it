@@ -43,38 +43,40 @@ export const ClassMenu: React.FC = () => {
     dispatch(setClassMenu(menuState.open));
   }, [classData]);
 
-  const handleClassSelect = async (
-    position: { x: number; y: number },
-    name: string
-  ) => {
-    const canvasData = await fetchCanvaData({
-      xposition: position.x,
-      yposition: position.y,
-    });
-    if (canvasData) {
-      if (
-        canvasData.length === 0 ||
-        canvasData[0].data === null ||
-        !canvasData[0].data.data.value
-      ) {
-        dispatch(setErrorMsg(error.noData));
+  const handleClassSelect = useCallback(
+    async (position: { x: number; y: number }, name: string) => {
+      const canvasData = await fetchCanvaData({
+        xposition: position.x,
+        yposition: position.y,
+      });
+      if (canvasData) {
+        if (
+          canvasData.length === 0 ||
+          canvasData[0].data === null ||
+          !canvasData[0].data.data.value
+        ) {
+          dispatch(setErrorMsg(error.noData));
+        }
+        if (canvasData.length <= 8 && canvasData.length > 0) {
+          dispatch(setErrorMsg(error.empty));
+        }
+        if (canvasData.length > 8) {
+          dispatch(setErrorMsg(error.allmostMax));
+          dispatch(setDataLimit(false));
+        }
+        if (canvasData.length > 10) {
+          dispatch(setErrorMsg(error.maxCells));
+          dispatch(setDataLimit(true));
+        }
+        dispatch(setCanvasData(canvasData));
       }
-      if (canvasData.length <= 8 && canvasData.length > 0) {
-        dispatch(setErrorMsg(error.empty));
-      }
-      if (canvasData.length > 8) {
-        dispatch(setErrorMsg(error.allmostMax));
-        dispatch(setDataLimit(false));
-      }
-      if (canvasData.length > 10) {
-        dispatch(setErrorMsg(error.maxCells));
-        dispatch(setDataLimit(true));
-      }
-      dispatch(setCanvasData(canvasData));
-    }
-    dispatch(setCanvasPosition(position));
-    dispatch(setClassName(name));
-  };
+      dispatch(setClassName(name));
+      sessionStorage.setItem("x", position.x.toString());
+      console.log("class ", position);
+      dispatch(setCanvasPosition(position));
+    },
+    []
+  );
 
   const handleClassMenu = () => {
     dispatch(setClassMenu(menuState.close));
@@ -95,6 +97,16 @@ export const ClassMenu: React.FC = () => {
           {classMenu === menuState.open && classData && (
             <>
               <PrimaryButton onClick={handleClassMenu}>close</PrimaryButton>
+
+              <ControlBLock>
+                <SupportButton
+                  onClick={() =>
+                    handleClassSelect({ x: 2000, y: 2000 }, "grid it")
+                  }
+                >
+                  grid it
+                </SupportButton>
+              </ControlBLock>
 
               {classData.map((x) => (
                 <ControlBLock key={`btn_index_${x.name}`}>

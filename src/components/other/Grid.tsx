@@ -59,7 +59,7 @@ export const Grid: React.FC = () => {
           >
             {generatedCanvas}
           </CenterCircle>
-          
+
           <CenterBlock>
             <TitleMasive color="black">
               {className}
@@ -100,7 +100,7 @@ const CenterCircle = styled.div<CenterCircleProps>`
 const CenterBlock = styled.div`
   text-align: center;
   position: absolute;
-  z-index:1;
+  width: 800px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
