@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { LoginMenu, SideBarMenu, Grid } from "../components";
+import { LoginMenu, SideBarMenu, Grid, ClassMenu } from "../components";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../state/actions";
 import { storageItems, log } from "../types/types";
@@ -20,6 +20,8 @@ export const HomePage: React.FC = () => {
   return (
     <>
       <LoginMenu />
+
+      <ClassMenu />
 
       <Grid />
 

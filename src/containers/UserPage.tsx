@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserName } from "../state/actions";
-import { FormTemplate, SupportButton, TitleMasive } from "../components";
+import { FormTemplate, PrimaryButton, TitleMasive } from "../components";
 import { userPageFormInputs } from "../utils/formData";
 import { StateType, storageItems } from "../types/types";
 
@@ -37,7 +37,7 @@ export const UserPage: React.FC = () => {
       </FomrBlock>
 
       <NavBlock>
-        <SupportButton onClick={() => history.push(`/`)}>Back</SupportButton>
+        <PrimaryButton onClick={() => history.push(`/`)}>Back</PrimaryButton>
       </NavBlock>
     </Canvas>
   );
@@ -47,7 +47,7 @@ const Canvas = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #cccccc;
+  background-color: #707070;
 `;
 
 const FomrBlock = styled.div`

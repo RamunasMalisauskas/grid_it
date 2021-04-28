@@ -47,7 +47,7 @@ const H1 = styled.h1`
 `;
 
 const H1Dec = styled.h1`
-  color: ${({ color }) => color || "#d15585"};
+  color: ${({ color }) => color || "white"};
   font-family: "Reenie Beanie", cursive;
   text-transform: uppercase;
   font-size: 200px;
