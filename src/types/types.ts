@@ -35,6 +35,7 @@ export type CellDataType = {
       value: number;
       text?: string;
       info?: string;
+      cellName?: string;
     };
   };
   x: number;

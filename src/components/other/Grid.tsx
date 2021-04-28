@@ -78,7 +78,7 @@ const CenterCircle = styled.div<CenterCircleProps>`
   border-radius: 50%;
   position: absolute;
   top: 50%;
-  left: ${({ position }) => (position ? `calc(50% + 200px)` : `50%`)};
+  left: ${({ position }) => (position ? `calc(50% + 120px)` : `50%`)};
   transition: all ease-in-out 0.3s 0.3s;
   transform: translate(-50%, -50%);
   background-color: rgba(209, 209, 209, 0.4);
