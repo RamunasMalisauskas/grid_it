@@ -10,18 +10,12 @@ import {
 import { addToBoard } from "../../apis";
 import {
   StateType,
-  sideBarState,
+  menuState,
   sideBarContentState,
   log,
   error,
 } from "../../types/types";
-import {
-  SupportButton,
-  PrimaryButton,
-  Subtitle,
-  FormTemplate,
-  ClassMenu,
-} from "../";
+import { SupportButton, PrimaryButton, Subtitle, FormTemplate } from "../";
 import { addCellFormInputs, addClassFormInputs } from "../../utils/formData";
 import { usersDB, auth, timeStamp } from "../../firebase/firebase";
 
@@ -44,9 +38,7 @@ export const SideBarMenu: React.FC = () => {
 
   const handleBarState = () =>
     dispatch(
-      setSideBar(
-        sideBar === sideBarState.close ? sideBarState.open : sideBarState.close
-      )
+      setSideBar(sideBar === menuState.close ? menuState.open : menuState.close)
     );
 
   const handleBarFormState = () => {
@@ -181,11 +173,11 @@ export const SideBarMenu: React.FC = () => {
           <SideBarContainer>
             <ControlBLock>
               <PrimaryButton onClick={handleBarState}>
-                {sideBar === sideBarState.close ? "add stuff" : "x"}
+                {sideBar === menuState.close ? "add stuff" : "x"}
               </PrimaryButton>
             </ControlBLock>
 
-            {sideBar === sideBarState.open && (
+            {sideBar === menuState.open && (
               <>
                 {!dataLimit && (
                   <>
@@ -214,8 +206,6 @@ export const SideBarMenu: React.FC = () => {
                           handleSubmit={handleAddClass}
                           inputs={addClassFormInputs}
                         />
-
-                        <ClassMenu />
                       </>
                     )}
                   </>
@@ -234,12 +224,10 @@ export const SideBarMenu: React.FC = () => {
 const SideBlock = styled.div<SideBarProps>`
   position: absolute;
   top: 0;
-  left: ${({ open }) => (open === sideBarState.open ? "0" : "-120px")};
+  left: ${({ open }) => (open === menuState.open ? "0" : "-120px")};
   height: 100%;
   background: ${({ open }) =>
-    open === sideBarState.open
-      ? "rgba(104, 104, 104, 0.3)"
-      : "rgba(0, 0, 0, 0)"};
+    open === menuState.open ? "rgba(104, 104, 104, 0.3)" : "rgba(0, 0, 0, 0)"};
   transition: all ease-in-out 0.3s;
 `;
 
