@@ -1,4 +1,5 @@
 export * from "./other/Grid";
+export * from "./other/PrivateRoute";
 export * from "./items/Cell";
 export * from "./items/Spinner";
 export * from "./buttons/PrimaryButton";
