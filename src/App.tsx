@@ -12,19 +12,19 @@ const App: React.FC = () => {
   const { canvasPosition } = useSelector(
     (state: StateType) => state.canvaState
   );
-  const build = useMemo(() => ({ version: 0, position: canvasPosition }), [
-    canvasPosition,
-  ]);
 
-  const buildVersion = useCallback(async () => {
+  const build = useMemo(() => ({ version: 0 }), []);
+
+  const buildVersion = useCallback(() => {
     setInterval(async () => {
       const newVersion = await fetchBoardStatus();
       if (!newVersion) return;
       if (build.version < newVersion) {
         build.version = newVersion;
+        console.log("APP ", canvasPosition);
         const canvasData = await fetchCanvaData({
-          xposition: build.position.x,
-          yposition: build.position.y,
+          xposition: canvasPosition.x,
+          yposition: canvasPosition.y,
         });
         if (canvasData) {
           if (

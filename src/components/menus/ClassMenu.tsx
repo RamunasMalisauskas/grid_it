@@ -49,6 +49,10 @@ export const ClassMenu: React.FC = () => {
         xposition: position.x,
         yposition: position.y,
       });
+
+      dispatch(setCanvasPosition(position));
+      dispatch(setClassName(name));
+      console.log("class ", position);
       if (canvasData) {
         if (
           canvasData.length === 0 ||
@@ -70,8 +74,6 @@ export const ClassMenu: React.FC = () => {
         }
         dispatch(setCanvasData(canvasData));
       }
-      dispatch(setClassName(name));
-      dispatch(setCanvasPosition(position));
     },
     []
   );

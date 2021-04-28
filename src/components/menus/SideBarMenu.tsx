@@ -55,7 +55,7 @@ export const SideBarMenu: React.FC = () => {
   };
 
   const handleAddCell = useCallback<React.FormEventHandler<HTMLFormElement>>(
-    (e) => {
+    async (e) => {
       if (!e) return;
       if (!canvasPosition) return;
       e.preventDefault();
@@ -80,6 +80,8 @@ export const SideBarMenu: React.FC = () => {
             cellName: cellName,
           },
         });
+        console.log("Cell ", canvasPosition);
+        // dispatch(setCanvasPosition(canvasPosition));
 
         setFirestoreUserData(userName);
         dispatch(setErrorMsg(error.success));
