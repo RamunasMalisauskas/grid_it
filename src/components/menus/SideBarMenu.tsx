@@ -59,7 +59,6 @@ export const SideBarMenu: React.FC = () => {
       if (!e) return;
       if (!canvasPosition) return;
       e.preventDefault();
-
       const {
         target: {
           number: { value: number },
@@ -70,6 +69,7 @@ export const SideBarMenu: React.FC = () => {
 
       if (number.length > 0 && data.length > 0) {
         dispatch(setErrorMsg(error.empty));
+
         addToBoard({
           userName: userName,
           userColor: randomColor(),
@@ -82,11 +82,12 @@ export const SideBarMenu: React.FC = () => {
         });
 
         setFirestoreUserData(userName);
+        dispatch(setErrorMsg(error.success));
       } else {
         dispatch(setErrorMsg(error.fillInputs));
       }
     },
-    [userName, randomColor, canvasPosition, dispatch]
+    []
   );
 
   const handleAddClass = useCallback<React.FormEventHandler<HTMLFormElement>>(
@@ -120,9 +121,12 @@ export const SideBarMenu: React.FC = () => {
             const nameArray = classAllDocs.map((item) => item.class.name);
 
             if (!nameArray.includes(className)) {
+              dispatch(setErrorMsg(error.success));
+              const random = parseInt((Math.random() * 20).toFixed(0)) * 50;
+
               const newCanva = {
-                x: (canvasPosition.x += 50),
-                y: (canvasPosition.y += 50),
+                x: canvasPosition.x + random,
+                y: canvasPosition.y + random,
               };
               dispatch(setCanvasPosition(newCanva));
 
@@ -143,7 +147,7 @@ export const SideBarMenu: React.FC = () => {
         dispatch(setErrorMsg(error.fillInputs));
       }
     },
-    [userName, randomColor, canvasPosition, dispatch]
+    []
   );
 
   return (
@@ -164,7 +168,7 @@ export const SideBarMenu: React.FC = () => {
                     {sideBarContent === sideBarContentState.addCell && (
                       <>
                         <SupportButton onClick={handleBarFormState}>
-                          go to class
+                          go to add class
                         </SupportButton>
 
                         <FormTemplate
@@ -178,7 +182,7 @@ export const SideBarMenu: React.FC = () => {
                     {sideBarContent === sideBarContentState.addClass && (
                       <>
                         <SupportButton onClick={handleBarFormState}>
-                          go to cell
+                          go to add cell
                         </SupportButton>
 
                         <FormTemplate

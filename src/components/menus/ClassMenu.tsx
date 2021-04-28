@@ -71,8 +71,6 @@ export const ClassMenu: React.FC = () => {
         dispatch(setCanvasData(canvasData));
       }
       dispatch(setClassName(name));
-      sessionStorage.setItem("x", position.x.toString());
-      console.log("class ", position);
       dispatch(setCanvasPosition(position));
     },
     []

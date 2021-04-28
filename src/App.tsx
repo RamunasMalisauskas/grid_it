@@ -12,18 +12,19 @@ const App: React.FC = () => {
   const { canvasPosition } = useSelector(
     (state: StateType) => state.canvaState
   );
-  const build = useMemo(() => ({ version: 0 }), []);
+  const build = useMemo(() => ({ version: 0, position: canvasPosition }), [
+    canvasPosition,
+  ]);
 
-  const buildVersion = useCallback(() => {
+  const buildVersion = useCallback(async () => {
     setInterval(async () => {
       const newVersion = await fetchBoardStatus();
-      // Ar reikia validaciojos cia ar ne nes yra await?
       if (!newVersion) return;
       if (build.version < newVersion) {
         build.version = newVersion;
         const canvasData = await fetchCanvaData({
-          xposition: canvasPosition.x,
-          yposition: canvasPosition.y,
+          xposition: build.position.x,
+          yposition: build.position.y,
         });
         if (canvasData) {
           if (
@@ -48,7 +49,7 @@ const App: React.FC = () => {
         }
       }
     }, 1000);
-  }, [build, dispatch, canvasPosition]);
+  }, []);
 
   useEffect(() => {
     buildVersion();
