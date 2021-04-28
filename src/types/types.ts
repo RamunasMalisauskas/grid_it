@@ -8,7 +8,7 @@ export type StateType = {
   };
   canvaState: {
     canvasData: CellDataType[];
-    classNames: [];
+    classData: ClassType[];
     dataLimit: false;
     canvasPosition: {
       x: number;
@@ -63,6 +63,14 @@ export type postDataType = {
     className?: string;
     value: number;
     cellName?: string;
+  };
+};
+
+export type ClassType = {
+  name: string;
+  position: {
+    x: number;
+    y: number;
   };
 };
 

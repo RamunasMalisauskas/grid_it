@@ -8,11 +8,16 @@ import {
   SET_DATA_LIMIT,
   SET_CANVAS_POSITION,
   SET_SIDEBAR_CONTENT,
-  SET_CLASS_NAMES,
+  SET_CLASS_DATA,
   SET_CLASS_MENU,
 } from "./constant";
 
-import { ActionType, CellDataType, CanvasPosition } from "../types/types";
+import {
+  ActionType,
+  CellDataType,
+  CanvasPosition,
+  ClassType,
+} from "../types/types";
 
 export const setUserName = (value: string): ActionType => {
   return {
@@ -73,9 +78,9 @@ export const setDataLimit = (value: boolean): ActionType => {
     value,
   };
 };
-export const setClassName = (value: string[]): ActionType => {
+export const setClassData = (value: ClassType[]): ActionType => {
   return {
-    type: SET_CLASS_NAMES,
+    type: SET_CLASS_DATA,
     value,
   };
 };

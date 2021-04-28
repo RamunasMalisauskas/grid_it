@@ -7,5 +7,5 @@ export const SET_LOGIN = "SET_LOGIN";
 export const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE";
 export const SET_LOADING = "SET_LOADING";
 export const SET_SIDEBAR_CONTENT = "SET_SIDEBAR_CONTENT";
-export const SET_CLASS_NAMES = "SET_CLASS_NAMES";
+export const SET_CLASS_DATA = "SET_CLASS_DATA";
 export const SET_CLASS_MENU = "SET_CLASS_MENU";
