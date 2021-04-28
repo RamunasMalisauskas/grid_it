@@ -18,8 +18,7 @@ import {
 } from "../../types/types";
 import { SupportButton, PrimaryButton, Subtitle, FormTemplate } from "../";
 import { addCellFormInputs, addClassFormInputs } from "../../utils/formData";
-import { auth, usersDB } from "../../firebase/config";
-import { setFirestoreUserData } from "../../firebase/firestore";
+import { auth, usersDB, setFirestoreUserData } from "../../firebase";
 
 interface SideBarProps {
   open: string;

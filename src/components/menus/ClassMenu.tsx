@@ -13,7 +13,7 @@ import {
 } from "../../state/actions";
 import { StateType, menuState, log, ClassType, error } from "../../types/types";
 import { SupportButton, PrimaryButton } from "../";
-import { auth, usersDB } from "../../firebase/config";
+import { auth, usersDB } from "../../firebase";
 import { fetchCanvaData } from "../../apis";
 
 interface MenuProps {

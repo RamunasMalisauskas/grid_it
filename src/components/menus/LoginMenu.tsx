@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setLogin, setUserName, setErrorMsg } from "../../state/actions";
 import { Subtitle, FormTemplate } from "..";
 import { StateType, log, storageItems, error } from "../../types/types";
-import { auth, timeStamp, usersDB } from "../../firebase";
+import { auth, firestoreReg, firestoreLogin } from "../../firebase";
 import { loginFormInputs, regFormInputs } from "../../utils/formData";
 import { SupportButton } from "../buttons/SupportButton";
 
@@ -25,7 +25,6 @@ export const LoginMenu = () => {
     async (e) => {
       if (!e) return;
       e.preventDefault();
-      const user = auth.currentUser;
       const {
         target: {
           userName: { value: userName },
@@ -39,22 +38,12 @@ export const LoginMenu = () => {
         return;
       } else {
         try {
-          await auth.createUserWithEmailAndPassword(email, pass);
           dispatch(setLogin(log.in));
           dispatch(setUserName(userName));
           localStorage.setItem(storageItems.name, userName);
           sessionStorage.setItem(storageItems.status, log.in);
           dispatch(setErrorMsg(error.empty));
-          if (user) {
-            const { uid } = user;
-            const userDoc = usersDB.doc(uid);
-            await userDoc.set({
-              userID: uid,
-              userName: userName,
-              firstVisit: timeStamp,
-              lastVisit: timeStamp,
-            });
-          }
+          firestoreReg(email, pass, userName);
         } catch (e) {
           dispatch(setErrorMsg(e.message));
         }
@@ -67,7 +56,6 @@ export const LoginMenu = () => {
     async (e) => {
       if (!e) return;
       e.preventDefault();
-      const user = auth.currentUser;
       const {
         target: {
           email: { value: email },
@@ -75,27 +63,7 @@ export const LoginMenu = () => {
         },
       } = e;
       try {
-        if (user) {
-          const { uid } = user;
-          const userDoc = usersDB.doc(uid);
-          const userData = await userDoc.get();
-
-          if (userData.exists) {
-            await userDoc.update({
-              userName: userName,
-              lastVisit: timeStamp,
-            });
-          } else {
-            await userDoc.set({
-              userID: uid,
-              userName: userName,
-              firstVisit: timeStamp,
-              lastVisit: timeStamp,
-            });
-          }
-        }
-
-        await auth.signInWithEmailAndPassword(email, pass);
+        firestoreLogin(email, pass, userName);
         dispatch(setLogin(log.in));
         localStorage.setItem(storageItems.name, userName);
         sessionStorage.setItem(storageItems.status, log.in);
@@ -112,6 +80,7 @@ export const LoginMenu = () => {
       await auth.signOut();
       dispatch(setLogin(log.out));
       sessionStorage.setItem(storageItems.status, log.out);
+      sessionStorage.setItem("X", "");
       dispatch(setErrorMsg(error.empty));
     } catch (e) {
       dispatch(setErrorMsg(e.message));
