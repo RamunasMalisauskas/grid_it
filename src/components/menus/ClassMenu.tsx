@@ -7,10 +7,14 @@ import {
   setCanvasPosition,
   setClassName,
   setClassData,
+  setErrorMsg,
+  setDataLimit,
+  setCanvasData,
 } from "../../state/actions";
-import { StateType, menuState, log, ClassType } from "../../types/types";
+import { StateType, menuState, log, ClassType, error } from "../../types/types";
 import { SupportButton, PrimaryButton } from "../";
 import { auth, usersDB } from "../../firebase/config";
+import { fetchCanvaData } from "../../apis";
 
 interface MenuProps {
   close: boolean;
@@ -36,15 +40,38 @@ export const ClassMenu: React.FC = () => {
         console.log(err);
       }
     }
-
     dispatch(setClassMenu(menuState.open));
   }, [classData]);
 
-  const handleClassSelect = (
+  const handleClassSelect = async (
     position: { x: number; y: number },
     name: string
   ) => {
-    console.log("className ", position);
+    const canvasData = await fetchCanvaData({
+      xposition: position.x,
+      yposition: position.y,
+    });
+    if (canvasData) {
+      if (
+        canvasData.length === 0 ||
+        canvasData[0].data === null ||
+        !canvasData[0].data.data.value
+      ) {
+        dispatch(setErrorMsg(error.noData));
+      }
+      if (canvasData.length <= 8 && canvasData.length > 0) {
+        dispatch(setErrorMsg(error.empty));
+      }
+      if (canvasData.length > 8) {
+        dispatch(setErrorMsg(error.allmostMax));
+        dispatch(setDataLimit(false));
+      }
+      if (canvasData.length > 10) {
+        dispatch(setErrorMsg(error.maxCells));
+        dispatch(setDataLimit(true));
+      }
+      dispatch(setCanvasData(canvasData));
+    }
     dispatch(setCanvasPosition(position));
     dispatch(setClassName(name));
   };
@@ -93,10 +120,18 @@ const ClassMenuBlock = styled.div<MenuProps>`
   text-align: right;
   z-index: 1;
   padding: 15px;
+  height: 350px;
+  overflow-x: hidden;
+  overflow-y: scroll;
   transform: ${({ close }) => (close ? "translateY(-40px)" : "translate(0)")};
   transition: right ease-in-out 0.3s 0.3s, transform ease-in-out 0.3s 0.6s;
   -webkit-animation: ${fadein} 1.6s forwards linear;
   animation: ${fadein} 1.6s forwards linear;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ControlBLock = styled.div`
