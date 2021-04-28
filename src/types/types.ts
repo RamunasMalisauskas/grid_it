@@ -33,10 +33,22 @@ export type CellDataType = {
     data: {
       value: number;
       text?: string;
+      info?: string;
     };
   };
   x: number;
   y: number;
+};
+
+export type CellHistory = {
+  name: string;
+  color: string;
+  createdAt: string;
+  data: {
+    value: number;
+    text?: string;
+    info?: string;
+  };
 };
 
 export type postDataType = {
