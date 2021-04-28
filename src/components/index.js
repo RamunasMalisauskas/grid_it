@@ -8,4 +8,5 @@ export * from "./inputs/Input";
 export * from "./texts/Text";
 export * from "./menus/LoginMenu";
 export * from "./menus/SideBarMenu";
+export * from "./menus/ClassMenu";
 export * from "./forms/FormTemplate";

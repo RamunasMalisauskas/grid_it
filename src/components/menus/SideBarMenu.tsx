@@ -6,7 +6,6 @@ import {
   setSideBar,
   setErrorMsg,
   setSideBarContent,
-  setClassName,
 } from "../../state/actions";
 import { addToBoard } from "../../apis";
 import {
@@ -27,7 +26,7 @@ interface SideBarProps {
 export const SideBarMenu: React.FC = () => {
   const dispatch = useDispatch();
   const randomColor = require("randomcolor");
-  const { canvasPosition, dataLimit, classNames } = useSelector(
+  const { canvasPosition, dataLimit } = useSelector(
     (state: StateType) => state.canvaState
   );
   const { errorMsg, sideBar, sideBarContent } = useSelector(
@@ -168,45 +167,16 @@ export const SideBarMenu: React.FC = () => {
     [userName, randomColor, canvasPosition, dispatch]
   );
 
-  const handleClassClick = (className: string) => {
-    console.log("className ", className);
-  };
-
-  const handleGetClassNames = useCallback(async () => {
-    const user = auth.currentUser;
-    if (user) {
-      const { uid } = user;
-      try {
-        const snapshot = await usersDB.doc(uid).collection("classInfo").get();
-        const nameArray = await snapshot.docs.map(
-          (doc) => doc.data().class.name
-        );
-        dispatch(setClassName(nameArray));
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  }, [classNames]);
-
   return (
     <SideBlock open={sideBar}>
       {loginStatus === log.in && (
         <>
           <SideBarContainer>
             <ControlBLock>
-              <PrimaryButton onClick={handleGetClassNames}>
+              <PrimaryButton onClick={handleBarState}>
                 {sideBar === sideBarState.close ? "add stuff" : "x"}
               </PrimaryButton>
             </ControlBLock>
-
-            {classNames.map((className: string) => (
-              <SupportButton
-                key={className}
-                onClick={() => handleClassClick(className)}
-              >
-                {className}
-              </SupportButton>
-            ))}
 
             {sideBar === sideBarState.open && (
               <>
