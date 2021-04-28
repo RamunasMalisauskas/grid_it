@@ -192,11 +192,13 @@ const LoginTable = styled.div<NavPropsType>`
 `;
 
 const UserButton = styled.div`
-  color: white;
-  padding: 10px 5px;
+  color: #d15585;
+  padding: 5px 2px;
   margin: 5px 0;
   border-radius: 10px;
-  font-family: "Zen Dots", cursive;
+  font-family: "Reenie Beanie", cursive;
+  font-size: 40px;
+  font-weight: bold;
   text-transform: uppercase;
   transition: all ease-in-out 0.1s;
   overflow: hidden;

@@ -20,6 +20,13 @@ export const TitleLarge: React.FC<TextProps> = ({
   return <H1 color={color}>{children}</H1>;
 };
 
+export const TitleMasive: React.FC<TextProps> = ({
+  color,
+  children,
+}: TextProps) => {
+  return <H1Dec color={color}>{children}</H1Dec>;
+};
+
 export const Subtitle: React.FC<TextProps> = ({
   color,
   children,
@@ -37,6 +44,15 @@ const H1 = styled.h1`
   font-family: "Zen Dots", cursive;
   text-transform: uppercase;
   font-weight: normal;
+`;
+
+const H1Dec = styled.h1`
+  color: ${({ color }) => color || "#d15585"};
+  font-family: "Reenie Beanie", cursive;
+  text-transform: uppercase;
+  font-size: 200px;
+  line-height: 0;
+  font-weight: bold;
 `;
 
 const H2 = styled.h2`

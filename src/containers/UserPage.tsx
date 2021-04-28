@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserName } from "../state/actions";
-import { FormTemplate, SupportButton, TitleLarge } from "../components";
+import { FormTemplate, SupportButton, TitleMasive } from "../components";
 import { userPageFormInputs } from "../utils/formData";
 import { StateType, storageItems } from "../types/types";
 
@@ -27,7 +27,7 @@ export const UserPage: React.FC = () => {
   return (
     <Canvas>
       <FomrBlock>
-        <TitleLarge>{userName}</TitleLarge>
+        <TitleMasive>{userName}</TitleMasive>
 
         <FormTemplate
           inputs={userPageFormInputs}
