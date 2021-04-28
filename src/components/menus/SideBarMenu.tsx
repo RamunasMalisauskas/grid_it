@@ -69,18 +69,21 @@ export const SideBarMenu: React.FC = () => {
 
       if (number.length > 0 && data.length > 0) {
         dispatch(setErrorMsg(error.empty));
-
-        addToBoard({
-          userName: userName,
-          userColor: randomColor(),
-          x: canvasPosition.x + parseInt(number),
-          y: canvasPosition.y + parseInt(number),
-          cellData: {
-            value: parseInt(data),
-            cellName: cellName,
-          },
-        });
-        console.log("Cell ", canvasPosition);
+        const X = sessionStorage.getItem("X");
+        if (X) {
+          const intX = parseInt(X);
+          addToBoard({
+            userName: userName,
+            userColor: randomColor(),
+            x: intX + parseInt(number),
+            y: intX + parseInt(number),
+            cellData: {
+              value: parseInt(data),
+              cellName: cellName,
+            },
+          });
+          console.log("Cell ", canvasPosition);
+        }
         // dispatch(setCanvasPosition(canvasPosition));
 
         setFirestoreUserData(userName);

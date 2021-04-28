@@ -49,7 +49,7 @@ export const ClassMenu: React.FC = () => {
         xposition: position.x,
         yposition: position.y,
       });
-
+      sessionStorage.setItem("X", position.x.toString());
       dispatch(setCanvasPosition(position));
       dispatch(setClassName(name));
       console.log("class ", position);
