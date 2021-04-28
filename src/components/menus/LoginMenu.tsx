@@ -2,11 +2,26 @@ import React, { useCallback } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setLogin, setUserName, setErrorMsg } from "../../state/actions";
-import { Subtitle, FormTemplate } from "..";
-import { StateType, log, storageItems, error } from "../../types/types";
+import {
+  setLogin,
+  setUserName,
+  setErrorMsg,
+  setResetMenu,
+} from "../../state/actions";
+import { Subtitle, FormTemplate, EmptyButton } from "..";
+import {
+  StateType,
+  log,
+  storageItems,
+  error,
+  menuState,
+} from "../../types/types";
 import { auth, firestoreReg, firestoreLogin } from "../../firebase";
-import { loginFormInputs, regFormInputs } from "../../utils/formData";
+import {
+  loginFormInputs,
+  regFormInputs,
+  passResetFomrInputs,
+} from "../../utils/formData";
 import { SupportButton } from "../buttons/SupportButton";
 
 type NavPropsType = {
@@ -16,7 +31,9 @@ type NavPropsType = {
 export const LoginMenu = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { errorMsg } = useSelector((state: StateType) => state.appState);
+  const { errorMsg, resetMenu } = useSelector(
+    (state: StateType) => state.appState
+  );
   const { userName, loginStatus } = useSelector(
     (state: StateType) => state.userState
   );
@@ -49,7 +66,7 @@ export const LoginMenu = () => {
         }
       }
     },
-    [dispatch]
+    []
   );
 
   const handleLogin = useCallback<React.FormEventHandler<HTMLFormElement>>(
@@ -72,7 +89,34 @@ export const LoginMenu = () => {
         dispatch(setErrorMsg(e.message));
       }
     },
-    [dispatch, userName]
+    []
+  );
+
+  const handleReset = useCallback<React.FormEventHandler<HTMLFormElement>>(
+    async (e) => {
+      if (!e) return;
+      e.preventDefault();
+      const {
+        target: {
+          email: { value: email },
+          repEmail: { value: repEmail },
+        },
+      } = e;
+
+      if (email !== repEmail) {
+        dispatch(setErrorMsg(error.missedEmail));
+        return;
+      }
+      try {
+        if (email === repEmail) {
+          auth.sendPasswordResetEmail(email);
+          dispatch(setErrorMsg(error.passReset));
+        }
+      } catch (e) {
+        dispatch(setErrorMsg(e.message));
+      }
+    },
+    []
   );
 
   const handleLogout = async () => {
@@ -90,6 +134,14 @@ export const LoginMenu = () => {
   const handleTableState = () => {
     dispatch(setLogin(loginStatus === log.reg ? log.out : log.reg));
     dispatch(setErrorMsg(error.empty));
+  };
+
+  const handeRessetMenu = () => {
+    dispatch(
+      setResetMenu(
+        resetMenu === menuState.close ? menuState.open : menuState.close
+      )
+    );
   };
 
   return (
@@ -110,7 +162,7 @@ export const LoginMenu = () => {
           </>
         )}
 
-        {loginStatus === log.out && (
+        {loginStatus === log.out && resetMenu === menuState.close && (
           <>
             <FormTemplate
               handleSubmit={handleLogin}
@@ -121,6 +173,10 @@ export const LoginMenu = () => {
               supportText="Register"
             />
 
+            <EmptyButton onClick={handeRessetMenu}>
+              forgot password?
+            </EmptyButton>
+
             <Subtitle>{errorMsg}</Subtitle>
 
             {!errorMsg && (
@@ -129,6 +185,20 @@ export const LoginMenu = () => {
                 have an account.
               </Subtitle>
             )}
+          </>
+        )}
+
+        {resetMenu === menuState.open && (
+          <>
+            <FormTemplate
+              handleSubmit={handleReset}
+              inputs={passResetFomrInputs}
+              buttonText="Reset"
+            />
+
+            <EmptyButton onClick={handeRessetMenu}>go to login</EmptyButton>
+
+            <Subtitle>{errorMsg}</Subtitle>
           </>
         )}
 

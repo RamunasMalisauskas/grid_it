@@ -22,6 +22,7 @@ import {
   SET_CLASS_DATA,
   SET_CLASS_MENU,
   SET_CLASS_NAME,
+  SET_RESSET_MENU,
 } from "./constant";
 
 const userName = localStorage.getItem(storageItems.name);
@@ -33,6 +34,7 @@ const initialState: StateType = {
     sideBar: menuState.close,
     sideBarContent: sideBarContentState.addCell,
     classMenu: menuState.close,
+    resetMenu: menuState.close,
   },
   canvaState: {
     dataLimit: false,
@@ -59,6 +61,8 @@ const appState = (state = initialState.appState, action: ActionType) => {
       return { ...state, loading: action.value };
     case SET_CLASS_MENU:
       return { ...state, classMenu: action.value };
+    case SET_RESSET_MENU:
+      return { ...state, resetMenu: action.value };
     default:
       return state;
   }

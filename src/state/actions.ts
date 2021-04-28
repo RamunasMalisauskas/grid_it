@@ -11,6 +11,7 @@ import {
   SET_CLASS_DATA,
   SET_CLASS_MENU,
   SET_CLASS_NAME,
+  SET_RESSET_MENU,
 } from "./constant";
 
 import {
@@ -99,6 +100,13 @@ export const setClassName = (value: string): ActionType => {
 export const setClassMenu = (value: string): ActionType => {
   return {
     type: SET_CLASS_MENU,
+    value,
+  };
+};
+
+export const setResetMenu = (value: string): ActionType => {
+  return {
+    type: SET_RESSET_MENU,
     value,
   };
 };

@@ -8,6 +8,9 @@ declare interface EventTarget {
   email: {
     value: string;
   };
+  repEmail: {
+    value: string;
+  };
   password: {
     value: string;
   };

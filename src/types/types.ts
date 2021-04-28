@@ -5,6 +5,7 @@ export type StateType = {
     sideBar: string;
     sideBarContent: string;
     classMenu: string;
+    resetMenu: string;
   };
   canvaState: {
     canvasData: CellDataType[];
@@ -119,8 +120,10 @@ export enum error {
   allmostMax = "You're about to reach maximum capacity of cells",
   maxCells = "Maximum capacity of cells has been reached. Remove some of if",
   missedPass = "Passwords are mistmatched",
+  missedEmail = "Emails are mistmatched",
   fillInputs = "Please enter required info to add a cell",
   noData = "There is no cell data found",
   classExist = "The name of the class is alrady taken",
-  success = "added successfuly",
+  success = "Added successfuly",
+  passReset = "Instructions how to reset your password has been send to your email",
 }

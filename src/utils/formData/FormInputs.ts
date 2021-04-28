@@ -100,3 +100,22 @@ export const userPageFormInputs = [
     required: true,
   },
 ];
+
+export const passResetFomrInputs = [
+  {
+    id: 1,
+    type: "email",
+    name: "email",
+    label: "enter your email",
+    placeholder: "name@email.com",
+    required: true,
+  },
+  {
+    id: 1,
+    type: "email",
+    name: "repEmail",
+    label: "repeat your email",
+    placeholder: "name@email.com",
+    required: true,
+  },
+];
