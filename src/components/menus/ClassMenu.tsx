@@ -3,13 +3,14 @@ import styled from "styled-components";
 import { fadein } from "../../styles";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  setClassData,
   setClassMenu,
   setCanvasPosition,
+  setClassName,
+  setClassData,
 } from "../../state/actions";
-import { StateType, menuState, log } from "../../types/types";
+import { StateType, menuState, log, ClassType } from "../../types/types";
 import { SupportButton, PrimaryButton } from "../";
-import { usersDB, auth } from "../../firebase/firebase";
+import { auth, usersDB } from "../../firebase/config";
 
 interface MenuProps {
   close: boolean;
@@ -27,20 +28,25 @@ export const ClassMenu: React.FC = () => {
       const { uid } = user;
       try {
         const snapshot = await usersDB.doc(uid).collection("classInfo").get();
-        const classArray = await snapshot.docs.map((doc) => doc.data().class);
+        const classArray: ClassType[] = await snapshot.docs.map(
+          (doc) => doc.data().class
+        );
         dispatch(setClassData(classArray));
-        dispatch(setClassMenu(menuState.open));
       } catch (err) {
         console.log(err);
       }
     }
+
+    dispatch(setClassMenu(menuState.open));
   }, [classData]);
 
-  console.log();
-
-  const handleClassClick = (position: { x: number; y: number }) => {
+  const handleClassSelect = (
+    position: { x: number; y: number },
+    name: string
+  ) => {
     console.log("className ", position);
     dispatch(setCanvasPosition(position));
+    dispatch(setClassName(name));
   };
 
   const handleClassMenu = () => {
@@ -65,7 +71,9 @@ export const ClassMenu: React.FC = () => {
 
               {classData.map((x) => (
                 <ControlBLock key={`btn_index_${x.name}`}>
-                  <SupportButton onClick={() => handleClassClick(x.position)}>
+                  <SupportButton
+                    onClick={() => handleClassSelect(x.position, x.name)}
+                  >
                     {x.name}
                   </SupportButton>
                 </ControlBLock>

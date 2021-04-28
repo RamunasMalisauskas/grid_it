@@ -6,6 +6,7 @@ import {
   setSideBar,
   setErrorMsg,
   setSideBarContent,
+  setCanvasPosition,
 } from "../../state/actions";
 import { addToBoard } from "../../apis";
 import {
@@ -17,7 +18,8 @@ import {
 } from "../../types/types";
 import { SupportButton, PrimaryButton, Subtitle, FormTemplate } from "../";
 import { addCellFormInputs, addClassFormInputs } from "../../utils/formData";
-import { usersDB, auth, timeStamp } from "../../firebase/firebase";
+import { auth, usersDB } from "../../firebase/config";
+import { setFirestoreUserData } from "../../firebase/firestore";
 
 interface SideBarProps {
   open: string;
@@ -53,11 +55,10 @@ export const SideBarMenu: React.FC = () => {
   };
 
   const handleAddCell = useCallback<React.FormEventHandler<HTMLFormElement>>(
-    async (e) => {
+    (e) => {
       if (!e) return;
       if (!canvasPosition) return;
       e.preventDefault();
-      const user = auth.currentUser;
 
       const {
         target: {
@@ -80,28 +81,7 @@ export const SideBarMenu: React.FC = () => {
           },
         });
 
-        if (user) {
-          try {
-            const { uid } = user;
-            const userDoc = usersDB.doc(uid);
-            const userData = await userDoc.get();
-
-            if (userData.exists) {
-              await userDoc.update({
-                userName: userName,
-                lastVisit: timeStamp,
-              });
-            } else {
-              await userDoc.set({
-                userName: userName,
-                firstVisit: timeStamp,
-                lastVisit: timeStamp,
-              });
-            }
-          } catch (e) {
-            console.log(e);
-          }
-        }
+        setFirestoreUserData(userName);
       } else {
         dispatch(setErrorMsg(error.fillInputs));
       }
@@ -114,17 +94,17 @@ export const SideBarMenu: React.FC = () => {
       if (!e) return;
       if (!canvasPosition) return;
       e.preventDefault();
-      const user = auth.currentUser;
 
       const {
         target: {
           className: { value: className },
-          // position: { value: position },
         },
       } = e;
 
       if (className.length > 0) {
         dispatch(setErrorMsg(error.empty));
+
+        const user = auth.currentUser;
         if (user) {
           try {
             const { uid } = user;
@@ -144,7 +124,7 @@ export const SideBarMenu: React.FC = () => {
                 x: (canvasPosition.x += 50),
                 y: (canvasPosition.y += 50),
               };
-              // dispatch(setCanvasPosition(newCanva));
+              dispatch(setCanvasPosition(newCanva));
 
               await classDoc.set({
                 class: {
