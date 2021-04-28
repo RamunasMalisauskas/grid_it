@@ -2,7 +2,11 @@ import React, { useCallback } from "react";
 import styled from "styled-components";
 import { fadein } from "../../styles";
 import { useSelector, useDispatch } from "react-redux";
-import { setClassName, setClassMenu } from "../../state/actions";
+import {
+  setClassData,
+  setClassMenu,
+  setCanvasPosition,
+} from "../../state/actions";
 import { StateType, menuState, log } from "../../types/types";
 import { SupportButton, PrimaryButton } from "../";
 import { usersDB, auth } from "../../firebase/firebase";
@@ -13,7 +17,7 @@ interface MenuProps {
 
 export const ClassMenu: React.FC = () => {
   const dispatch = useDispatch();
-  const { classNames } = useSelector((state: StateType) => state.canvaState);
+  const { classData } = useSelector((state: StateType) => state.canvaState);
   const { classMenu } = useSelector((state: StateType) => state.appState);
   const { loginStatus } = useSelector((state: StateType) => state.userState);
 
@@ -23,19 +27,20 @@ export const ClassMenu: React.FC = () => {
       const { uid } = user;
       try {
         const snapshot = await usersDB.doc(uid).collection("classInfo").get();
-        const nameArray = await snapshot.docs.map(
-          (doc) => doc.data().class.name
-        );
-        dispatch(setClassName(nameArray));
+        const classArray = await snapshot.docs.map((doc) => doc.data().class);
+        dispatch(setClassData(classArray));
         dispatch(setClassMenu(menuState.open));
       } catch (err) {
         console.log(err);
       }
     }
-  }, [classNames]);
+  }, [classData]);
 
-  const handleClassClick = (className: string) => {
-    console.log("className ", className);
+  console.log();
+
+  const handleClassClick = (position: { x: number; y: number }) => {
+    console.log("className ", position);
+    dispatch(setCanvasPosition(position));
   };
 
   const handleClassMenu = () => {
@@ -54,13 +59,14 @@ export const ClassMenu: React.FC = () => {
             </ControlBLock>
           )}
 
-          {classMenu === menuState.open && classNames && (
+          {classMenu === menuState.open && classData && (
             <>
               <PrimaryButton onClick={handleClassMenu}>close</PrimaryButton>
-              {classNames.map((className: string) => (
-                <ControlBLock key={`btn_index_${className}`}>
-                  <SupportButton onClick={() => handleClassClick(className)}>
-                    {className}
+
+              {classData.map((x) => (
+                <ControlBLock key={`btn_index_${x.name}`}>
+                  <SupportButton onClick={() => handleClassClick(x.position)}>
+                    {x.name}
                   </SupportButton>
                 </ControlBLock>
               ))}
@@ -84,6 +90,7 @@ const ClassMenuBlock = styled.div<MenuProps>`
   -webkit-animation: ${fadein} 1.6s forwards linear;
   animation: ${fadein} 1.6s forwards linear;
 `;
+
 const ControlBLock = styled.div`
   width: 100%;
 `;
