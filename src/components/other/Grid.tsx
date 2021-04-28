@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Cell, Spinner } from "..";
-import { StateType, sideBarState, log } from "../../types/types";
+import { StateType, menuState, log } from "../../types/types";
 
 type CenterCircleProps = {
   size: number;
@@ -55,7 +55,7 @@ export const Grid: React.FC = () => {
           
           <CenterCircle
             size={circleSize}
-            position={sideBar === sideBarState.open}
+            position={sideBar === menuState.open}
           >
             {generatedCanvas}
           </CenterCircle>

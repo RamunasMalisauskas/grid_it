@@ -4,7 +4,7 @@ import {
   ActionType,
   storageItems,
   log,
-  sideBarState,
+  menuState,
   sideBarContentState,
   error,
 } from "../types/types";
@@ -20,6 +20,7 @@ import {
   SET_DATA_LIMIT,
   SET_SIDEBAR_CONTENT,
   SET_CLASS_NAMES,
+  SET_CLASS_MENU,
 } from "./constant";
 
 const userName = localStorage.getItem(storageItems.name);
@@ -28,8 +29,9 @@ const initialState: StateType = {
   appState: {
     errorMsg: error.empty,
     loading: false,
-    sideBar: sideBarState.close,
+    sideBar: menuState.close,
     sideBarContent: sideBarContentState.addCell,
+    classMenu: menuState.close,
   },
   canvaState: {
     dataLimit: false,
@@ -53,6 +55,8 @@ const appState = (state = initialState.appState, action: ActionType) => {
       return { ...state, errorMsg: action.value };
     case SET_LOADING:
       return { ...state, loading: action.value };
+    case SET_CLASS_MENU:
+      return { ...state, classMenu: action.value };
     default:
       return state;
   }

@@ -4,6 +4,7 @@ export type StateType = {
     loading: boolean;
     sideBar: string;
     sideBarContent: string;
+    classMenu: string;
   };
   canvaState: {
     canvasData: CellDataType[];
@@ -94,7 +95,7 @@ export enum storageItems {
   status = "status",
 }
 
-export enum sideBarState {
+export enum menuState {
   open = "open",
   close = "close",
 }
