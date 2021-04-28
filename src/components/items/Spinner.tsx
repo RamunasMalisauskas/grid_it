@@ -1,5 +1,6 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
+import { bounce, rotate } from "../../styles";
 
 interface SpinnerProps {
   color?: string;
@@ -13,21 +14,6 @@ export const Spinner: React.FC<SpinnerProps> = ({ color }: SpinnerProps) => {
     </SpinnerBlock>
   );
 };
-
-const bounce = keyframes`
-{
-  0%, 100% { 
-    transform: scale(0.0);
-    -webkit-transform: scale(0.0);
-  } 50% { 
-    transform: scale(1.0);
-    -webkit-transform: scale(1.0);
-  }
-}
-`;
-const rotate = keyframes`
-{ 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
-`;
 
 const SpinnerBlock = styled.div`
   width: 100px;

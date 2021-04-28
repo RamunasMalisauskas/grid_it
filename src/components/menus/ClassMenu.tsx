@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
+import { fadein } from "../../styles";
 import { useSelector, useDispatch } from "react-redux";
 import { setClassName, setClassMenu } from "../../state/actions";
 import { StateType, menuState, log } from "../../types/types";
@@ -70,13 +71,6 @@ export const ClassMenu: React.FC = () => {
     </ClassMenuBlock>
   );
 };
-
-const fadein = keyframes` {
-  0% { opacity:0; }
-  66% { opacity:0; }
-  100% { opacity:1; }
-}
-`;
 
 const ClassMenuBlock = styled.div<MenuProps>`
   position: absolute;
