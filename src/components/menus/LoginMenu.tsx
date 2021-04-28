@@ -243,9 +243,6 @@ const UserButton = styled.div`
   overflow: hidden;
   &:hover {
     color: white;
-    background: #d15585;
-    border: 2px solid #d15585;
-    box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.4);
     cursor: pointer;
     transform: scale(1.05);
   }
