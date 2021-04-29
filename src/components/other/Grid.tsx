@@ -67,7 +67,7 @@ const Canvas = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #2c2c2c;
+  background-color: ${({ theme }) => theme.colors.dark};
   overflow: hidden;
 `;
 
@@ -78,10 +78,10 @@ const CenterCircle = styled.div<CenterCircleProps>`
   position: absolute;
   z-index: 2;
   top: 50%;
-  left: ${({ position }) => (position ? `calc(50% + 120px)` : `50%`)};
-  transition: all ease-in-out 0.3s 0.3s;
+  left: ${({ position }) => (position ? `calc(50% + 135px)` : `50%`)};
+  transition:  ${({ theme }) => theme.transition.allDelay};
   transform: translate(-50%, -50%);
-  background-color: rgba(209, 209, 209, 0.4);
+  background-color:${({ theme }) => theme.colors.support};;
   & :last-child {
       transform: translateX(${({ size }) => size / 2 + 15}px)
         translateY(${({ size }) => -size / 20}%);

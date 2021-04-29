@@ -109,11 +109,11 @@ const CellBlock = styled.div<CellBlockProps>`
     translateX(${({ circleSize, size }) => (circleSize + size / 2) / 2}px)
     translateY(${({ offset }) => -offset}%)
     rotate(${({ radius }) => -radius}deg);
-  transition: all ease-in-out 0.3s;
+  transition: ${({ theme }) => theme.transition.allSlow};
   &:hover {
     width: ${({ size }) => size * 1.1}px;
     height: ${({ size }) => size * 1.1}px;
-    box-shadow: 2px 5px 3px 2px rgba(0, 0, 0, 0.4);
+    box-shadow: ${({ theme }) => theme.shadow};
     cursor: pointer;
   }
 `;
@@ -126,10 +126,10 @@ const CellInfo = styled.div<CellInfoProps>`
   transform: rotate(${({ radius }) => radius}deg)
     rotate(${({ radius }) => -radius}deg) translate(-25%, -50%);
   z-index: 200;
-  background-color: rgba(209, 209, 209, 0.4);
+  background-color: ${({ theme }) => theme.colors.support};
   padding: 10px;
-  font-family: "Zen Dots", cursive;
+  font-family: ${({ theme }) => theme.fonts.family.primary};
   text-transform: uppercase;
-  border-radius: 10px;
-  max-width: 100px;
+  border-radius: ${({ theme }) => theme.size.s};
+  max-width: ${({ theme }) => theme.size.xxl};
 `;

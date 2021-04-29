@@ -47,17 +47,17 @@ const Canvas = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: #707070;
+  background-color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const FomrBlock = styled.div`
-  padding: 40px;
-  border-radius: 10px;
+  padding: ${({ theme }) => theme.size.xl};
+  border-radius: ${({ theme }) => theme.size.m};
   position: absolute;
   top: 10%;
   left: 50%;
   transform: translate(-50%, -10%);
-  background-color: #2c2c2c;
+  background-color: ${({ theme }) => theme.colors.dark};
 `;
 
 const NavBlock = styled.div`

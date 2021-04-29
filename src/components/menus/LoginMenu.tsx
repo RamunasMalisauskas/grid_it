@@ -235,18 +235,18 @@ const LoginTable = styled.div<NavPropsType>`
 `;
 
 const UserButton = styled.div`
-  color: #d15585;
+  color: ${({ theme }) => theme.colors.primary};
   padding: 5px 2px;
   margin: 5px 0;
-  border-radius: 10px;
-  font-family: "Reenie Beanie", cursive;
-  font-size: 40px;
-  font-weight: bold;
+  border-radius: ${({ theme }) => theme.size.s};
+  font-family: ${({ theme }) => theme.fonts.family.support};
+  font-size: ${({ theme }) => theme.fonts.size.large};
+  font-weight: ${({ theme }) => theme.fonts.weigth.bold};
   text-transform: uppercase;
-  transition: all ease-in-out 0.1s;
+  transition: ${({ theme }) => theme.transition.allFast};
   overflow: hidden;
   &:hover {
-    color: white;
+    color: ${({ theme }) => theme.colors.light};
     cursor: pointer;
     transform: scale(1.05);
   }

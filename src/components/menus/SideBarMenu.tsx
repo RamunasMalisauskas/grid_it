@@ -208,17 +208,17 @@ export const SideBarMenu: React.FC = () => {
 const SideBlock = styled.div<SideBarProps>`
   position: absolute;
   top: 0;
-  left: ${({ open }) => (open === menuState.open ? "0" : "-120px")};
+  left: ${({ open }) => (open === menuState.open ? "0" : "-135px")};
   height: 100%;
-  background: ${({ open }) =>
-    open === menuState.open ? "rgba(104, 104, 104, 0.3)" : "rgba(0, 0, 0, 0)"};
-  transition: all ease-in-out 0.3s;
+  background: ${({ open, theme }) =>
+    open === menuState.open ? theme.colors.supportDark : "transparent"};
+  transition: ${({ theme }) => theme.transition.allSlow};
 `;
 
 const SideBarContainer = styled.div`
-  padding: 15px;
+  padding: ${({ theme }) => theme.size.m};
   margin: 0 auto;
-  width: 285px;
+  width: ${({ theme }) => theme.size.xxxl};
   text-align: right;
 `;
 

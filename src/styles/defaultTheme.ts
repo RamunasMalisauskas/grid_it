@@ -2,9 +2,10 @@ export const defaultTheme = {
   colors: {
     primary: "#d15585",
     secondary: "#707070",
-    ligth: "#ffffff",
+    light: "#ffffff",
     dark: "#2c2c2c",
     support: "rgba(209, 209, 209, 0.4)",
+    supportDark: "rgba(104, 104, 104, 0.3)",
   },
 
   size: {

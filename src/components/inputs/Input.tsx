@@ -52,19 +52,19 @@ export const Input: React.FC<InputProps> = ({
 
 const InputDiv = styled.input`
   box-sizing: border-box;
-  padding: 10px;
-  border: 2px solid #707070;
-  border-radius: 5px;
+  padding: ${({ theme }) => theme.size.s};
+  border: ${({ theme }) => theme.border.secondary};
+  border-radius: ${({ theme }) => theme.size.xs};
   background-color: transparent;
   margin: 10px 0;
-  font-family: "Montserrat", sans-serif;
-  color: white;
+  font-family: ${({ theme }) => theme.fonts.family.secondary};
+  color: ${({ theme }) => theme.colors.light};
   min-width: 100%;
 `;
 
 const LabelDiv = styled.label`
-  font-family: "Montserrat", sans-serif;
-  color: white;
+  font-family: ${({ theme }) => theme.fonts.family.secondary};
+  color: ${({ theme }) => theme.colors.light};
 `;
 
 const LabelBlock = styled.div`

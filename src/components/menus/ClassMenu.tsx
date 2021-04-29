@@ -143,8 +143,8 @@ const ClassMenuBlock = styled.div<MenuProps>`
   right: ${({ close }) => (close ? "0%" : "40px")};
   text-align: right;
   z-index: 1;
-  padding: 15px;
-  height: 350px;
+  padding: ${({ theme }) => theme.size.m};
+  height: ${({ theme }) => theme.size.xxxl};
   overflow-x: hidden;
   overflow-y: scroll;
   transform: ${({ close }) => (close ? "translateY(-40px)" : "translate(0)")};

@@ -35,28 +35,28 @@ export const Subtitle: React.FC<TextProps> = ({
 };
 
 const P = styled.p<TextProps>`
-  color: ${({ color }) => color || "white"};
-  font-family: "Montserrat", sans-serif;
+  color: ${({ color, theme }) => color || theme.colors.light};
+  font-family: ${({ theme }) => theme.fonts.family.secondary};
 `;
 
 const H1 = styled.h1`
-  color: ${({ color }) => color || "white"};
-  font-family: "Zen Dots", cursive;
+  color: ${({ color, theme }) => color || theme.colors.light};
+  font-family: ${({ theme }) => theme.fonts.family.primary};
   text-transform: uppercase;
-  font-weight: normal;
+  font-weight: ${({ theme }) => theme.fonts.weigth.regular};
 `;
 
 const H1Dec = styled.h1`
-  color: ${({ color }) => color || "white"};
-  font-family: "Reenie Beanie", cursive;
+  color: ${({ color, theme }) => color || theme.colors.light};
+  font-family: ${({ theme }) => theme.fonts.family.support};
   text-transform: uppercase;
-  font-size: 200px;
+  font-size: ${({ theme }) => theme.size.xxl};
   line-height: 0;
-  font-weight: bold;
+  font-weight: ${({ theme }) => theme.fonts.weigth.bold};
 `;
 
 const H2 = styled.h2`
-  color: ${({ color }) => color || "white"};
-  font-family: "Zen Dots", cursive;
-  font-weight: normal;
+  color: ${({ color, theme }) => color || theme.colors.light};
+  font-family: ${({ theme }) => theme.fonts.family.primary};
+  font-weight: ${({ theme }) => theme.fonts.weigth.regular};
 `;
