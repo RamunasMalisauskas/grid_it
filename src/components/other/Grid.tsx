@@ -2,7 +2,7 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Cell, TitleMasive } from "..";
+import { Cell, TitleMasive, WelcomeModal } from "..";
 import { StateType, menuState, log } from "../../types/types";
 
 type CenterCircleProps = {
@@ -45,6 +45,8 @@ export const Grid: React.FC = () => {
     <Canvas>
       {loginStatus === log.in && (
         <>
+         <WelcomeModal />
+
           <CenterCircle
             size={circleSize}
             position={sideBar === menuState.open}

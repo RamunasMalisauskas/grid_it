@@ -4,6 +4,7 @@ import { PrimaryButton } from "../";
 import { storageItems, menuState, StateType } from "../../types/types";
 import { setModalState } from "../../state/actions";
 import { useSelector, useDispatch } from "react-redux";
+import modalImage from "../../assets/images/welcome_modal.png";
 
 export const WelcomeModal: React.FC = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,8 @@ export const WelcomeModal: React.FC = () => {
     <>
       {modalState === menuState.open && (
         <Modal>
-          <PrimaryButton onClick={handleModalState}>X</PrimaryButton>
+          <PrimaryButton onClick={handleModalState}>close modal</PrimaryButton>
+          <ModalImage src={modalImage} />
         </Modal>
       )}
       {modalState === menuState.close && <></>}
@@ -30,7 +32,15 @@ const Modal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 200;
-  height: 400px;
-  width: 400px;
-  background-color: red;
+  height: 100vh;
+  width: 100vw;
+  text-align: center;
+  background-color: ${({ theme }) => theme.colors.secondary};
+`;
+
+const ModalImage = styled.img`
+  object-fit: contain;
+  margin: 0 auto;
+  height: 90vh;
+  width: 90vw;
 `;
