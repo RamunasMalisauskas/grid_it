@@ -11,7 +11,8 @@ import {
 } from "../types/types";
 
 const userName = localStorage.getItem(storageItems.name);
-const modal = localStorage.getItem(storageItems.modal);
+const modalStatus = sessionStorage.getItem(storageItems.modal);
+const localStatus = sessionStorage.getItem(storageItems.status);
 
 const initialState: StateType = {
   appState: {
@@ -21,7 +22,7 @@ const initialState: StateType = {
     sideBarContent: sideBarContentState.addCell || "addcell",
     classMenu: menuState.close || "close",
     resetMenu: menuState.close || "close",
-    modalState: menuState.open || modal,
+    modalState: modalStatus || menuState.open || "open",
   },
   canvaState: {
     dataLimit: false,
@@ -32,7 +33,7 @@ const initialState: StateType = {
   },
   userState: {
     userName: userName || "user",
-    loginStatus: log.out || "loggedOut",
+    loginStatus: localStatus || log.out || "loggedOut",
   },
 };
 
@@ -50,6 +51,8 @@ const appState = (state = initialState.appState, action: ActionType) => {
       return { ...state, classMenu: action.value };
     case ActionTypes.SET_RESSET_MENU:
       return { ...state, resetMenu: action.value };
+    case ActionTypes.SET_MODAL_STATE:
+      return { ...state, modalState: action.value };
     default:
       return state;
   }
