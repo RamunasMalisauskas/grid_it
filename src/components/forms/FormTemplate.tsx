@@ -24,7 +24,7 @@ export const FormTemplate: React.FC<FormTemplateProps> = ({
       {inputs.map((input, index) => (
         <Input
           type={input.type}
-          key={input.name + index}
+          key={`input_key_${input.name}_${index}`}
           name={input.name}
           value={input.value}
           label={input.label}

@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
+import { dbCollections } from "../types/types";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCMrr0HrIpG8ev_KVVv3w9n5rGicNqSMZU",
@@ -17,7 +18,7 @@ export const auth = firebase.auth();
 
 export const db = firebase.firestore();
 
-export const usersDB = db.collection("users");
+export const usersDB = db.collection(dbCollections.users);
 
 export const timeStamp = firebase.firestore.FieldValue.serverTimestamp();
 

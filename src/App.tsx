@@ -21,7 +21,6 @@ const App: React.FC = () => {
       if (!newVersion) return;
       if (build.version < newVersion) {
         build.version = newVersion;
-        console.log("APP ", canvasPosition);
         const canvasData = await fetchCanvaData({
           xposition: canvasPosition.x,
           yposition: canvasPosition.y,

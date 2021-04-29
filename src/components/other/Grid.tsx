@@ -11,25 +11,23 @@ type CenterCircleProps = {
 };
 
 export const Grid: React.FC = () => {
-  const circleSize = 300;
+  const circleSize = window.innerWidth / 5;
   const { canvasData, className } = useSelector((state: StateType) => state.canvaState);
   const { loginStatus } = useSelector((state: StateType) => state.userState);
   const { sideBar, loading } = useSelector((state: StateType) => state.appState);
 
   const generatedCanvas = useMemo(() => {
     if (!canvasData) return;
-    // add it to web worker
     const radiusIncrement = 360 / canvasData.length;
     const valueArray = canvasData.map((x) => x.data.data.value);
     const valueSum = valueArray.reduce((a, b) => a + b, 0);
     let startDeg = 0;
-    //
 
     return (
       <>
         {canvasData.map((cell, index) => (
           <Cell
-            key={cell._id}
+            key={`cell_id_${cell._id}`}
             cell={cell}
             cellRadiusIncr={(startDeg += radiusIncrement)}
             valueSum={valueSum}

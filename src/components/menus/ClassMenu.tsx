@@ -11,7 +11,15 @@ import {
   setDataLimit,
   setCanvasData,
 } from "../../state/actions";
-import { StateType, menuState, log, ClassType, error } from "../../types/types";
+import {
+  StateType,
+  menuState,
+  log,
+  ClassType,
+  error,
+  dbCollections,
+  storageItems,
+} from "../../types/types";
 import { SupportButton, PrimaryButton } from "../";
 import { auth, usersDB } from "../../firebase";
 import { fetchCanvaData } from "../../apis";
@@ -31,7 +39,10 @@ export const ClassMenu: React.FC = () => {
     if (user) {
       const { uid } = user;
       try {
-        const snapshot = await usersDB.doc(uid).collection("classInfo").get();
+        const snapshot = await usersDB
+          .doc(uid)
+          .collection(dbCollections.classInfo)
+          .get();
         const classArray: ClassType[] = await snapshot.docs.map(
           (doc) => doc.data().class
         );
@@ -45,14 +56,13 @@ export const ClassMenu: React.FC = () => {
 
   const handleClassSelect = useCallback(
     async (position: { x: number; y: number }, name: string) => {
+      sessionStorage.setItem(storageItems.position, position.x.toString());
+      dispatch(setCanvasPosition(position));
+      dispatch(setClassName(name));
       const canvasData = await fetchCanvaData({
         xposition: position.x,
         yposition: position.y,
       });
-      sessionStorage.setItem("X", position.x.toString());
-      dispatch(setCanvasPosition(position));
-      dispatch(setClassName(name));
-      console.log("class ", position);
       if (canvasData) {
         if (
           canvasData.length === 0 ||
@@ -60,6 +70,7 @@ export const ClassMenu: React.FC = () => {
           !canvasData[0].data.data.value
         ) {
           dispatch(setErrorMsg(error.noData));
+          return;
         }
         if (canvasData.length <= 8 && canvasData.length > 0) {
           dispatch(setErrorMsg(error.empty));

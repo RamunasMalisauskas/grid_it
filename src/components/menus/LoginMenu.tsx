@@ -55,14 +55,15 @@ export const LoginMenu = () => {
         return;
       } else {
         try {
+          await firestoreReg(email, pass, userName);
           dispatch(setLogin(log.in));
           dispatch(setUserName(userName));
           localStorage.setItem(storageItems.name, userName);
           sessionStorage.setItem(storageItems.status, log.in);
-          dispatch(setErrorMsg(error.empty));
-          firestoreReg(email, pass, userName);
         } catch (e) {
           dispatch(setErrorMsg(e.message));
+        } finally {
+          dispatch(setErrorMsg(error.empty));
         }
       }
     },
@@ -80,13 +81,14 @@ export const LoginMenu = () => {
         },
       } = e;
       try {
-        firestoreLogin(email, pass, userName);
+        await firestoreLogin(email, pass, userName);
         dispatch(setLogin(log.in));
         localStorage.setItem(storageItems.name, userName);
         sessionStorage.setItem(storageItems.status, log.in);
-        dispatch(setErrorMsg(error.empty));
       } catch (e) {
         dispatch(setErrorMsg(e.message));
+      } finally {
+        dispatch(setErrorMsg(error.empty));
       }
     },
     []
@@ -109,11 +111,12 @@ export const LoginMenu = () => {
       }
       try {
         if (email === repEmail) {
-          auth.sendPasswordResetEmail(email);
-          dispatch(setErrorMsg(error.passReset));
+          await auth.sendPasswordResetEmail(email);
         }
       } catch (e) {
         dispatch(setErrorMsg(e.message));
+      } finally {
+        dispatch(setErrorMsg(error.passReset));
       }
     },
     []
@@ -124,10 +127,11 @@ export const LoginMenu = () => {
       await auth.signOut();
       dispatch(setLogin(log.out));
       sessionStorage.setItem(storageItems.status, log.out);
-      sessionStorage.setItem("X", "");
-      dispatch(setErrorMsg(error.empty));
+      sessionStorage.removeItem("X");
     } catch (e) {
       dispatch(setErrorMsg(e.message));
+    } finally {
+      dispatch(setErrorMsg(error.empty));
     }
   };
 

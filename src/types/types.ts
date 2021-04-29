@@ -103,6 +103,7 @@ export enum log {
 export enum storageItems {
   name = "userName",
   status = "status",
+  position = "position",
 }
 
 export enum menuState {
@@ -113,6 +114,11 @@ export enum menuState {
 export enum sideBarContentState {
   addCell = "addCell",
   addClass = "addClass",
+}
+
+export enum dbCollections {
+  classInfo = "classInfo",
+  users = "users",
 }
 
 export enum error {

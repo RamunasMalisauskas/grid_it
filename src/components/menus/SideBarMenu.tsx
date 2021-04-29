@@ -2,23 +2,24 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { addToBoard } from "../../apis";
+import { SupportButton, PrimaryButton, Subtitle, FormTemplate } from "../";
+import { addCellFormInputs, addClassFormInputs } from "../../utils/formData";
+import { auth, usersDB, setFirestoreUserData } from "../../firebase";
 import {
   setSideBar,
   setErrorMsg,
   setSideBarContent,
   setCanvasPosition,
 } from "../../state/actions";
-import { addToBoard } from "../../apis";
 import {
   StateType,
   menuState,
   sideBarContentState,
   log,
   error,
+  dbCollections,
 } from "../../types/types";
-import { SupportButton, PrimaryButton, Subtitle, FormTemplate } from "../";
-import { addCellFormInputs, addClassFormInputs } from "../../utils/formData";
-import { auth, usersDB, setFirestoreUserData } from "../../firebase";
 
 interface SideBarProps {
   open: string;
@@ -56,7 +57,6 @@ export const SideBarMenu: React.FC = () => {
   const handleAddCell = useCallback<React.FormEventHandler<HTMLFormElement>>(
     async (e) => {
       if (!e) return;
-      if (!canvasPosition) return;
       e.preventDefault();
       const {
         target: {
@@ -66,27 +66,26 @@ export const SideBarMenu: React.FC = () => {
         },
       } = e;
 
+      dispatch(setErrorMsg(error.empty));
+
       if (number.length > 0 && data.length > 0) {
-        dispatch(setErrorMsg(error.empty));
-        const X = sessionStorage.getItem("X");
-        if (X) {
-          const intX = parseInt(X);
-          addToBoard({
+        try {
+          await addToBoard({
             userName: userName,
             userColor: randomColor(),
-            x: intX + parseInt(number),
-            y: intX + parseInt(number),
+            x: canvasPosition.x + parseInt(number),
+            y: canvasPosition.y + parseInt(number),
             cellData: {
               value: parseInt(data),
               cellName: cellName,
             },
           });
-          console.log("Cell ", canvasPosition);
+          setFirestoreUserData(userName);
+        } catch (e) {
+          console.log(e);
+        } finally {
+          dispatch(setErrorMsg(error.success));
         }
-        // dispatch(setCanvasPosition(canvasPosition));
-
-        setFirestoreUserData(userName);
-        dispatch(setErrorMsg(error.success));
       } else {
         dispatch(setErrorMsg(error.fillInputs));
       }
@@ -107,45 +106,42 @@ export const SideBarMenu: React.FC = () => {
       } = e;
 
       if (className.length > 0) {
-        dispatch(setErrorMsg(error.empty));
-
         const user = auth.currentUser;
-        if (user) {
-          try {
-            const { uid } = user;
-            const classData = await usersDB
-              .doc(uid)
-              .collection("classInfo")
-              .get();
-            const classDoc = await usersDB
-              .doc(uid)
-              .collection("classInfo")
-              .doc();
-            const classAllDocs = classData.docs.map((doc) => doc.data());
-            const nameArray = classAllDocs.map((item) => item.class.name);
+        if (!user) return;
+        try {
+          const { uid } = user;
+          const classData = await usersDB
+            .doc(uid)
+            .collection(dbCollections.classInfo)
+            .get();
+          const classDoc = await usersDB
+            .doc(uid)
+            .collection(dbCollections.classInfo)
+            .doc();
+          const classAllDocs = classData.docs.map((doc) => doc.data());
+          const nameArray = classAllDocs.map((item) => item.class.name);
 
-            if (!nameArray.includes(className)) {
-              dispatch(setErrorMsg(error.success));
-              const random = parseInt((Math.random() * 20).toFixed(0)) * 50;
-
-              const newCanva = {
-                x: canvasPosition.x + random,
-                y: canvasPosition.y + random,
-              };
-              dispatch(setCanvasPosition(newCanva));
-
-              await classDoc.set({
-                class: {
-                  name: className,
-                  position: newCanva,
-                },
-              });
-            } else {
-              dispatch(setErrorMsg(error.classExist));
-            }
-          } catch (e) {
-            console.log(e);
+          if (!nameArray.includes(className)) {
+            const random = parseInt((Math.random() * 20).toFixed(0)) * 50;
+            const newCanva = {
+              x: canvasPosition.x + random,
+              y: canvasPosition.y + random,
+            };
+            await classDoc.set({
+              class: {
+                name: className,
+                position: newCanva,
+              },
+            });
+            dispatch(setCanvasPosition(newCanva));
+            dispatch(setErrorMsg(error.empty));
+          } else {
+            dispatch(setErrorMsg(error.classExist));
           }
+        } catch (e) {
+          console.log(e);
+        } finally {
+          dispatch(setErrorMsg(error.success));
         }
       } else {
         dispatch(setErrorMsg(error.fillInputs));

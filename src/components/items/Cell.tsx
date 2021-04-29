@@ -85,7 +85,7 @@ export const Cell: React.FC<CellProps> = ({
         historic value:
         {historyData &&
           historyData.map((oldCell: CellHistory, index) => (
-            <p key={`Cell_Old_ID_${oldCell.createdAt}_${index}`}>
+            <p key={`cell_old_id_${oldCell.createdAt}_${index}`}>
               {oldCell.data.value}
             </p>
           ))}

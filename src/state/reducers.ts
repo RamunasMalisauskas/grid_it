@@ -14,12 +14,12 @@ const userName = localStorage.getItem(storageItems.name);
 
 const initialState: StateType = {
   appState: {
-    errorMsg: error.empty,
+    errorMsg: error.empty || "",
     loading: false,
-    sideBar: menuState.close,
-    sideBarContent: sideBarContentState.addCell,
-    classMenu: menuState.close,
-    resetMenu: menuState.close,
+    sideBar: menuState.close || "close",
+    sideBarContent: sideBarContentState.addCell || "addcell",
+    classMenu: menuState.close || "close",
+    resetMenu: menuState.close || "close",
   },
   canvaState: {
     dataLimit: false,
@@ -30,7 +30,7 @@ const initialState: StateType = {
   },
   userState: {
     userName: userName || "user",
-    loginStatus: log.out,
+    loginStatus: log.out || "loggedOut",
   },
 };
 
