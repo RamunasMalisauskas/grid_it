@@ -96,3 +96,10 @@ export const setResetMenu = (value: string): ActionType => {
     value,
   };
 };
+
+export const setModalState = (value: string): ActionType => {
+  return {
+    type: ActionTypes.SET_MODAL_STATE,
+    value,
+  };
+};

@@ -6,6 +6,7 @@ export type StateType = {
     sideBarContent: string;
     classMenu: string;
     resetMenu: string;
+    modalState: string;
   };
   canvaState: {
     canvasData: CellDataType[];
@@ -104,6 +105,7 @@ export enum storageItems {
   name = "userName",
   status = "status",
   position = "position",
+  modal = "modal",
 }
 
 export enum menuState {

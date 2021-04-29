@@ -11,6 +11,7 @@ import {
 } from "../types/types";
 
 const userName = localStorage.getItem(storageItems.name);
+const modal = localStorage.getItem(storageItems.modal);
 
 const initialState: StateType = {
   appState: {
@@ -20,6 +21,7 @@ const initialState: StateType = {
     sideBarContent: sideBarContentState.addCell || "addcell",
     classMenu: menuState.close || "close",
     resetMenu: menuState.close || "close",
+    modalState: menuState.open || modal,
   },
   canvaState: {
     dataLimit: false,
