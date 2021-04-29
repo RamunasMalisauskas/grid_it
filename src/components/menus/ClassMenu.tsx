@@ -70,6 +70,7 @@ export const ClassMenu: React.FC = () => {
           !canvasData[0].data.data.value
         ) {
           dispatch(setErrorMsg(error.noData));
+          dispatch(setCanvasData([]));
           return;
         }
         if (canvasData.length <= 8 && canvasData.length > 0) {
