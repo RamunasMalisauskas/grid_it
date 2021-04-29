@@ -2,7 +2,7 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { Cell, Spinner, TitleMasive } from "..";
+import { Cell, TitleMasive } from "..";
 import { StateType, menuState, log } from "../../types/types";
 
 type CenterCircleProps = {
@@ -14,7 +14,7 @@ export const Grid: React.FC = () => {
   const circleSize = window.innerWidth / 5;
   const { canvasData, className } = useSelector((state: StateType) => state.canvaState);
   const { loginStatus } = useSelector((state: StateType) => state.userState);
-  const { sideBar, loading } = useSelector((state: StateType) => state.appState);
+  const { sideBar } = useSelector((state: StateType) => state.appState);
 
   const generatedCanvas = useMemo(() => {
     if (!canvasData) return;
@@ -45,12 +45,6 @@ export const Grid: React.FC = () => {
     <Canvas>
       {loginStatus === log.in && (
         <>
-          {loading && (
-            <CenterBlock>
-              <Spinner color="white" />
-            </CenterBlock>
-          )}
-
           <CenterCircle
             size={circleSize}
             position={sideBar === menuState.open}
@@ -88,11 +82,9 @@ const CenterCircle = styled.div<CenterCircleProps>`
   transition: all ease-in-out 0.3s 0.3s;
   transform: translate(-50%, -50%);
   background-color: rgba(209, 209, 209, 0.4);
-  & ::after {
-    & :last-child {
+  & :last-child {
       transform: translateX(${({ size }) => size / 2 + 15}px)
         translateY(${({ size }) => -size / 20}%);
-    }
   }
 `;
 

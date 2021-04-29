@@ -89,7 +89,9 @@ export const Cell: React.FC<CellProps> = ({
               {oldCell.data.value}
             </p>
           ))}
+        <div></div>
       </CellInfo>
+      <div></div>
     </CellBlock>
   );
 };
