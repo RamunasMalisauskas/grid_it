@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
 export const PrimaryButton = styled.button`
-  color: white;
-  background: #d15585;
-  padding: 10px;
+  color: ${({ theme }) => theme.colors.light};
+  background: ${({ theme }) => theme.colors.primary};
+  padding: ${({ theme }) => theme.size.s};
   margin: 5px 0;
-  border-radius: 10px;
-  border: 2px solid #d15585;
-  font-family: "Zen Dots", cursive;
+  border-radius: ${({ theme }) => theme.size.s};
+  border: ${({ theme }) => theme.border.primary};
+  font-family: ${({ theme }) => theme.fonts.family.primary};
   text-transform: uppercase;
-  transition: all ease-in-out 0.1s;
+  transition: ${({ theme }) => theme.transition.allFast};
   &:hover {
-    box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.4);
+    box-shadow: ${({ theme }) => theme.shadow};
     cursor: pointer;
     transform: scale(1.05);
   }
