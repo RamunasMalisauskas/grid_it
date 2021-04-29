@@ -11,3 +11,4 @@ export * from "./menus/LoginMenu";
 export * from "./menus/SideBarMenu";
 export * from "./menus/ClassMenu";
 export * from "./forms/FormTemplate";
+export * from "./modals/WelcomeModal";
